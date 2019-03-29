@@ -2,7 +2,7 @@
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
         <servlet-name>Servlet</servlet-name>
-        <servlet-class>org.controller.Servlet</servlet-class>
+        <servlet-class>org.com.cinema.controller.Servlet</servlet-class>
         <!--<load-on-startup>1</load-on-startup>-->
     </servlet>
 
@@ -13,7 +13,7 @@
 
     <filter>
         <filter-name>EncodingFilter</filter-name>
-        <filter-class>org.controller.filter.EncodingFilter</filter-class>
+        <filter-class>org.com.cinema.controller.filter.EncodingFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
@@ -22,7 +22,7 @@
 
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
-        <filter-class>org.controller.filter.AuthorizationFilter</filter-class>
+        <filter-class>org.com.cinema.controller.filter.AuthorizationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
@@ -31,7 +31,7 @@
 
     <listener>
         <listener-class>
-            org.controller.listener.SessionListener
+            org.com.cinema.controller.listener.SessionListener
         </listener-class>
     </listener>
 
