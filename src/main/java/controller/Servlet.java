@@ -1,5 +1,7 @@
 package controller;
 
+import inizializer.ServletRuleInitializer;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -8,13 +10,11 @@ import java.io.IOException;
 
 public class Servlet extends HttpServlet {
 
-
+    private ServletRuleInitializer initializer;
 
     @Override
     public void init() throws ServletException {
-
-
-
+        ServletRuleInitializer initializer = ServletRuleInitializer.getInitializer();
     }
 
     @Override
