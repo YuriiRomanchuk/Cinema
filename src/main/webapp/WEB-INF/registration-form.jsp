@@ -8,9 +8,50 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8"/>
+    <title>Registration form</title>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h1>Authorization</h1>
+            <form method="post" action="${pageContext.request.contextPath}/WEB-INF/registration-form.jsp">
+                <div class="form-group">
+                    label for="first_name">First name:</label>
+                    <input type="text" class="form-control" id="first_name" name="first_name"
+                           placeholder="Enter your first name">
+                    <label for="second_name">Second name:</label>
+                    <input type="text" class="form-control" id="second_name" name="second_name"
+                           placeholder="Enter your second name">
+                    label for="middle_name">Middle_name:</label>
+                    <input type="text" class="form-control" id="middle_name" name="middle_name"
+                           placeholder="Enter your middle name">
+                    <label for="nickname">Nickname:</label>
+                    <input type="text" class="form-control" id="nickname" name="nickname"
+                           placeholder="Enter your nickname">
+                    <label for="password">Name:</label>
+                    <input type="text" class="form-control" id="password" name="password"
+                           placeholder="Enter your password">
+                    <label for="email">Name:</label>
+                    <input type="text" class="form-control" id="email" name="email"
+                           placeholder="Enter your email">
+                    <label for="phone">Name:</label>
+                    <input type="text" class="form-control" id="phone" name="phone"
+                           placeholder="Enter your phone">
+                    <label for="role">Name:</label>
+                    <input type="text" class="form-control" id="role" name="role"
+                           placeholder="Enter your role">
+                </div>
+                <button type="submit" class="btn btn-primary">"Apply"</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

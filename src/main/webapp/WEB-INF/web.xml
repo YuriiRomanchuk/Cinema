@@ -2,7 +2,7 @@
     <display-name>Archetype Created Web Application</display-name>
     <servlet>
         <servlet-name>Servlet</servlet-name>
-        <servlet-class>org.com.cinema.controller.Servlet</servlet-class>
+        <servlet-class>org.com.cinema.servlet.Servlet</servlet-class>
         <!--<load-on-startup>1</load-on-startup>-->
     </servlet>
 
