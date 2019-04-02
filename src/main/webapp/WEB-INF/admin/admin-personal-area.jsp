@@ -29,12 +29,12 @@
         <div class="col-sm-4">
             <h1>Admin personal area</h1>
             <form method="post" action="admin-personal-area">
-                <%
+            <%--    <%
                     Role role = (Role) request.getSession().getAttribute("role");
                     if (role == null || role.equals(Role.UNKNOWN)){
                 %> <button type="submit" class="btn btn-primary">Log in</button> <%
                 }
-                %>
+                %>--%>
                 <a href="${pageContext.request.contextPath}/main/" class="btn btn-primary">Main</a>
             </form>
         </div>
