@@ -20,8 +20,8 @@
                         <div style="float: left; width: 200px; height: 200px;">
                             <li>Administration
                                 <ul>
-                                    <li><a href="registration-form">registration</a></li>
-                                    <li><a href="login">add credit line</a></li>
+                                    <li><a href="registration-form">Registration</a></li>
+                                    <li><a href="login">Login</a></li>
                                 </ul>
                             </li>
                         </div>

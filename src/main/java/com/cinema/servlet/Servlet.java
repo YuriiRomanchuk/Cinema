@@ -14,7 +14,7 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        RequestResolver requestResolver = ComponentInitializer.getInstance().getRequestResolver();
+        requestResolver = ComponentInitializer.getInstance().getRequestResolver();
     }
 
     @Override
