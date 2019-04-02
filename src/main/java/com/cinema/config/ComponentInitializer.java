@@ -1,24 +1,24 @@
 package com.cinema.config;
 
-import com.cinema.controller.UserController;
-import com.cinema.model.dao.DataSource;
-import com.cinema.model.dao.UserDao;
-import com.cinema.service.UserService;
+import com.cinema.controller.WelcomeController;
 import com.cinema.servlet.RequestResolver;
 
 public class ComponentInitializer {
 
     private static ComponentInitializer initializer;
     private final RequestResolver requestResolver;
+    private final WelcomeController welcomeController;
 
-    private ComponentInitializer() {
+    public ComponentInitializer() {
 
-        DataSource dataSource = new DataSource();
+        welcomeController = new WelcomeController();
+
+       /* DataSource dataSource = new DataSource();
         UserDao userDao = new UserDao();
         UserService userService = new UserService(userDao);
-        UserController userController = new UserController(userService);
+        UserController userController = new UserController(userService);*/
 
-        requestResolver = new RequestResolver();
+        requestResolver = new RequestResolver(welcomeController);
 
     }
 
@@ -32,5 +32,9 @@ public class ComponentInitializer {
         }
 
         return initializer;
+    }
+
+    public RequestResolver getRequestResolver() {
+        return requestResolver;
     }
 }

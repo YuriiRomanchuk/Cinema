@@ -1,5 +1,6 @@
 package com.cinema.servlet;
 
+import com.cinema.controller.WelcomeController;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 
@@ -21,8 +22,9 @@ public class RequestResolver {
     private Map<String, Function<HttpServletRequest, View>> postControllers = new HashMap<>();
 
 
-    public RequestResolver() {
+    public RequestResolver(WelcomeController welcomeController) {
 
+        getControllers.put("/", r -> welcomeController.showIndexPage());
 
     }
 
@@ -34,7 +36,6 @@ public class RequestResolver {
     public void resolvePostRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         reference(getView(request, postControllers), request, response);
     }
-
 
     private void reference(View view, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (view instanceof RedirectViewModel) {

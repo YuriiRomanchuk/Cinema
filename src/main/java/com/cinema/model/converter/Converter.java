@@ -4,5 +4,5 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface Converter<V> {
 
-    V convertToObject(HttpServletRequest request);
+    V convert(HttpServletRequest request);
 }

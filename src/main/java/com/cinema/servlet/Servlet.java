@@ -10,20 +10,20 @@ import java.io.IOException;
 
 public class Servlet extends HttpServlet {
 
-    private ComponentInitializer initializer;
+    private RequestResolver requestResolver;
 
     @Override
     public void init() throws ServletException {
-        /*ComponentInitializer initializer = ComponentInitializer.getInitializer();*/
+        RequestResolver requestResolver = ComponentInitializer.getInstance().getRequestResolver();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        requestResolver.resolvePostRequest(req, resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        requestResolver.resolveGetRequest(req, resp);
     }
 }

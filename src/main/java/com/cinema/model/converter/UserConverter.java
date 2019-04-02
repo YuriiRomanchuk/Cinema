@@ -4,10 +4,10 @@ import com.cinema.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UserConverter implements Converter {
+public class UserConverter implements Converter<User> {
 
     @Override
-    public User convertToObject(HttpServletRequest request) {
+    public User convert(HttpServletRequest request) {
         return new User();
     }
 }
