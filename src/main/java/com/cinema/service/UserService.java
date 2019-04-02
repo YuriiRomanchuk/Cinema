@@ -20,4 +20,13 @@ public class UserService {
             throw new ModelException("Login or password is not correct", e);
         }
     }
+
+    public void createUser(User user) throws ModelException {
+        try {
+            userDao.createUser(user);
+        } catch (Exception e) {
+            throw new ModelException("Registration failed", e);
+        }
+
+    }
 }

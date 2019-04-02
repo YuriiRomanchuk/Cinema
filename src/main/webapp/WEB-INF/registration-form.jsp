@@ -16,20 +16,28 @@
     <title>Registration form</title>
 </head>
 <body>
+
+<%
+    String error = (String) request.getAttribute("Error");
+    if (error != null) {
+%> <h1><%=error%></h1> <%
+    }
+%>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
             <h1>Authorization</h1>
             <form method="post" action="registration-form">
                 <div class="form-group">
-                    <label for="first_name">First name:</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name"
+                    <label for="firstName">First name:</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName"
                            placeholder="Enter your first name">
-                    <label for="second_name">Second name:</label>
-                    <input type="text" class="form-control" id="second_name" name="second_name"
-                           placeholder="Enter your second name">
-                    <label for="middle_name">Middle_name:</label>
-                    <input type="text" class="form-control" id="middle_name" name="middle_name"
+                    <label for="lastName">Last name:</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName"
+                           placeholder="Enter your last name">
+                    <label for="middleName">Middle_name:</label>
+                    <input type="text" class="form-control" id="middleName" name="middleName"
                            placeholder="Enter your middle name">
                     <label for="login">Nickname:</label>
                     <input type="text" class="form-control" id="login" name="login"

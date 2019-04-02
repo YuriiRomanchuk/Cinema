@@ -10,20 +10,21 @@ public class SessionController {
 
     private HttpServletRequest request;
 
-    public void setUserRoleInSession(Role role, String login, Integer id) {
+    public void setUserRoleInSession(Role role, String email, Integer id) {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
-        context.setAttribute("login", login);
+        context.setAttribute("email", email);
         session.setAttribute("role", role);
         session.setAttribute("id", id);
     }
 
     public boolean checkUserIsLogged() {
-        if (request.getSession().getAttribute("role") != null) {
-            return true;
+        if (Role.UNKNOWN.equals(request.getSession().getAttribute("role"))
+                || request.getSession().getAttribute("role") == null) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     public void setRequest(HttpServletRequest request) {

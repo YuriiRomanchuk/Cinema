@@ -3,11 +3,11 @@ package com.cinema.model.dto;
 public class UserDto {
 
     private int id;
-    private String login;
+    private String email;
     private String password;
 
-    public String getNickname() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -18,8 +18,8 @@ public class UserDto {
         return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {

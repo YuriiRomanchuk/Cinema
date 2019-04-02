@@ -3,6 +3,7 @@ package com.cinema.servlet;
 import com.cinema.controller.UserController;
 import com.cinema.controller.SessionController;
 import com.cinema.controller.WelcomeController;
+import com.cinema.model.converter.UserConverter;
 import com.cinema.model.converter.UserDtoConverter;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
@@ -28,7 +29,8 @@ public class RequestResolver {
     public RequestResolver(WelcomeController welcomeController,
                            UserController userController,
                            SessionController sessionController,
-                           UserDtoConverter userDtoConverter) {
+                           UserDtoConverter userDtoConverter,
+                           UserConverter userConverter) {
 
         Function<HttpServletRequest, SessionController> sc = request -> {
             sessionController.setRequest(request);
@@ -43,7 +45,7 @@ public class RequestResolver {
         getControllers.put("/logout", r -> userController.Logout(sc.apply(r)));
 
         postControllers.put("/login", r -> userController.loginUser(userDtoConverter.convert(r), sc.apply(r)));
-        postControllers.put("/registration-form", r -> userController.loginUser(userDtoConverter.convert(r), sc.apply(r)));
+        postControllers.put("/registration-form", r -> userController.createUser(userConverter.convert(r)));
 
     }
 

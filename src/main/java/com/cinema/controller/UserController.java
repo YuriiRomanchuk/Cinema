@@ -52,7 +52,7 @@ public class UserController {
         View view;
         try {
             User user = userService.loginUser(userDto);
-            sessionController.setUserRoleInSession(user.getRole(), user.getLogin(), user.getId());
+            sessionController.setUserRoleInSession(user.getRole(), user.getEmail(), user.getId());
             view = new ViewModel(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area");
         } catch (ModelException e) {
             view = new ViewModel("login");
@@ -61,9 +61,17 @@ public class UserController {
         return new RedirectViewModel(view);
     }
 
-    public View registrationUser() {
-        View view = new ViewModel("");
+    public View createUser(User user) {
+        View view;
+        try {
+            userService.createUser(user);
+            view = new ViewModel("WEB-INF/login");
+        } catch (ModelException e) {
+            view = new ViewModel("registration-form");
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+        }
         return new RedirectViewModel(view);
+
     }
 
 }

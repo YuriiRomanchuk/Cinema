@@ -25,9 +25,9 @@
             <h1>Authorization</h1>
             <form method="post" action="login">
                 <div class="form-group">
-                    <label for="login">Name:</label>
-                    <input type="text" class="form-control" id="login" name="login"
-                           placeholder="Enter your login">
+                    <label for="email">Name:</label>
+                    <input type="text" class="form-control" id="email" name="email"
+                           placeholder="Enter your email">
                     <label for="password">Password:</label>
                     <input type="text" class="form-control" id="password" name="password"
                            placeholder="Enter your password">

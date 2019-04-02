@@ -4,6 +4,7 @@ import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserDao implements GenericDao<User> {
@@ -43,11 +44,11 @@ public class UserDao implements GenericDao<User> {
     }
 
     public User loginUser(UserDto userDto) {
-        return dataSource.receiveFirstRecord("select * from users where login = ? and password = ?",
+        return dataSource.receiveFirstRecord("select * from users where email = ? and password = ?",
                 userConverter,
                 preparedStatement ->
                 {
-                    preparedStatement.setString(1, userDto.getNickname());
+                    preparedStatement.setString(1, userDto.getEmail());
                     preparedStatement.setString(2, userDto.getPassword());
                 }).orElse(null);
     }
@@ -56,9 +57,9 @@ public class UserDao implements GenericDao<User> {
     private void receiveConverter() {
         userConverter = rs -> {
             User user = new User();
-            user.setFirst_name(rs.getString("first_name"));
-            user.setSecond_name(rs.getString("second_name"));
-            user.setMiddle_name(rs.getString("middle_name"));
+            user.setFirstName(rs.getString("first_name"));
+            user.setLastName(rs.getString("last_name"));
+            user.setMiddleName(rs.getString("middle_name"));
             user.setId(rs.getInt("id"));
             user.setEmail(rs.getString("email"));
             user.setLogin(rs.getString("login"));
@@ -70,4 +71,23 @@ public class UserDao implements GenericDao<User> {
 
     }
 
+    public void createUser(User user) {
+
+        final String query = "insert into users (first_name, last_name, middle_name, login, password, email, phone, role) values(?, ?, ?, ?, ?, ?, ?, ?)";
+
+        dataSource.implementWrite(query, ps -> {
+            try {
+                ps.setString(1, user.getFirstName());
+                ps.setString(2, user.getLastName());
+                ps.setString(3, user.getMiddleName());
+                ps.setString(4, user.getLogin());
+                ps.setString(5, user.getPassword());
+                ps.setString(6, user.getEmail());
+                ps.setInt(7, user.getPhone());
+                ps.setString(8, String.valueOf(user.getRole()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }, r -> user.setId(r.getInt(1)));
+    }
 }

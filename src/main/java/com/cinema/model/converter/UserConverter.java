@@ -13,9 +13,9 @@ public class UserConverter implements Converter<User> {
         user.setLogin(request.getParameter("login"));
         user.setPassword(request.getParameter("password"));
         user.setRole(Role.USER);
-        user.setSecond_name(request.getParameter("second_name"));
-        user.setFirst_name(request.getParameter("first_name"));
-        user.setMiddle_name(request.getParameter("middle_name"));
+        user.setLastName(request.getParameter("lastName"));
+        user.setFirstName(request.getParameter("firstName"));
+        user.setMiddleName(request.getParameter("middleName"));
         user.setEmail(request.getParameter("email"));
         user.setPhone(Integer.valueOf(request.getParameter("phone")));
         return user;
