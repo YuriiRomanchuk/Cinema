@@ -1,5 +1,6 @@
 package com.cinema.servlet;
 
+import com.cinema.controller.UserController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
@@ -22,9 +23,10 @@ public class RequestResolver {
     private Map<String, Function<HttpServletRequest, View>> postControllers = new HashMap<>();
 
 
-    public RequestResolver(WelcomeController welcomeController) {
+    public RequestResolver(WelcomeController welcomeController, UserController userController) {
 
         getControllers.put("/", r -> welcomeController.showIndexPage());
+        getControllers.put("/registration-form", r -> userController.showRegistrationPage());
 
     }
 

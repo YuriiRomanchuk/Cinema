@@ -12,6 +12,11 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    public View showRegistrationPage() {
+        return new ViewModel("WEB-INF/registration-form.jsp");
+    }
+
     public View showUserLoginPage() {
         return new ViewModel("WEB-INF/login.jsp");
     }

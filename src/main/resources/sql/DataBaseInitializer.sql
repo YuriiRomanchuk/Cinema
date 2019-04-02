@@ -8,6 +8,6 @@ create table if not exists users
   password    varchar(250) NOT NULL,
   email       varchar(250) NOT NULL,
   phone       int          NOT NULL,
-  role        varchar(45)  NOT NULL
+  role        varchar(45)  NOT NULL,
     PRIMARY KEY (id)
 );

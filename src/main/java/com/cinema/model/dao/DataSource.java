@@ -33,12 +33,13 @@ public class DataSource {
     private void InitializeDataBase() {
 
 
-        String initBdScript = new Scanner(getClass().getClassLoader().getResourceAsStream("sql/init_database.sql")).useDelimiter("\\A").next();
+        String initBdScript = new Scanner(getClass().getClassLoader().getResourceAsStream("sql/DataBaseInitializer.sql")).useDelimiter("\\A").next();
         implementWrite(initBdScript, ps -> {
         }, rs -> {
         });
 
     }
+
 
     private void testConnection() {
         try {

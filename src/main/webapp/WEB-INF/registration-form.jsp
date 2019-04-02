@@ -22,7 +22,7 @@
             <h1>Authorization</h1>
             <form method="post" action="${pageContext.request.contextPath}/WEB-INF/registration-form.jsp">
                 <div class="form-group">
-                    label for="first_name">First name:</label>
+                    <label for="first_name">First name:</label>
                     <input type="text" class="form-control" id="first_name" name="first_name"
                            placeholder="Enter your first name">
                     <label for="second_name">Second name:</label>
@@ -34,20 +34,17 @@
                     <label for="nickname">Nickname:</label>
                     <input type="text" class="form-control" id="nickname" name="nickname"
                            placeholder="Enter your nickname">
-                    <label for="password">Name:</label>
+                    <label for="password">Password:</label>
                     <input type="text" class="form-control" id="password" name="password"
                            placeholder="Enter your password">
-                    <label for="email">Name:</label>
+                    <label for="email">Email:</label>
                     <input type="text" class="form-control" id="email" name="email"
                            placeholder="Enter your email">
-                    <label for="phone">Name:</label>
+                    <label for="phone">Phone:</label>
                     <input type="text" class="form-control" id="phone" name="phone"
                            placeholder="Enter your phone">
-                    <label for="role">Name:</label>
-                    <input type="text" class="form-control" id="role" name="role"
-                           placeholder="Enter your role">
                 </div>
-                <button type="submit" class="btn btn-primary">"Apply"</button>
+                <button type="submit" class="btn btn-primary">Apply</button>
             </form>
         </div>
     </div>

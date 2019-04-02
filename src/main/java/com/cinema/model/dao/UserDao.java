@@ -5,6 +5,13 @@ import com.cinema.model.entity.User;
 import java.util.List;
 
 public class UserDao implements GenericDao<User> {
+
+    private DataSource dataSource;
+
+    public UserDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void insert(User entity) {
 
