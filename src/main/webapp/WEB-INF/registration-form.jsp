@@ -28,7 +28,7 @@
                     <label for="second_name">Second name:</label>
                     <input type="text" class="form-control" id="second_name" name="second_name"
                            placeholder="Enter your second name">
-                    label for="middle_name">Middle_name:</label>
+                    <label for="middle_name">Middle_name:</label>
                     <input type="text" class="form-control" id="middle_name" name="middle_name"
                            placeholder="Enter your middle name">
                     <label for="nickname">Nickname:</label>
@@ -45,6 +45,7 @@
                            placeholder="Enter your phone">
                 </div>
                 <button type="submit" class="btn btn-primary">Apply</button>
+                <a href="${pageContext.request.contextPath}/main/" class="btn btn-primary">Main</a>
             </form>
         </div>
     </div>

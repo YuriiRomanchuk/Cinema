@@ -25,12 +25,12 @@
                     <input type="text" class="form-control" id="password" name="password"
                            placeholder="Enter your password">
                 </div>
-                <button type="submit" class="btn btn-primary">"Log in"</button>
+                <button type="submit" class="btn btn-primary">Log in</button>
+                <a href="${pageContext.request.contextPath}/main/" class="btn btn-primary">Main</a>
             </form>
         </div>
     </div>
 </div>
 
-<a href="${pageContext.request.contextPath}/logout">Main</a>
 </body>
 </html>

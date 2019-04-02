@@ -27,6 +27,7 @@ public class RequestResolver {
 
         getControllers.put("/", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
+        getControllers.put("/login", r -> userController.showUserLoginPage());
 
     }
 
