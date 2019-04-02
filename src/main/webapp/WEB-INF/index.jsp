@@ -1,3 +1,4 @@
+<%@ page import="com.cinema.model.entity.enums.Role" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,8 +21,21 @@
                         <div style="float: left; width: 200px; height: 200px;">
                             <li>Administration
                                 <ul>
-                                    <li><a href="registration-form">Registration</a></li>
-                                    <li><a href="login">Login</a></li>
+                                    <%
+                                        Role role = (Role) request.getSession().getAttribute("role");
+                                        if (role == null || role.equals(Role.UNKNOWN)) {
+                                    %>  <li><a href="registration-form">Registration</a></li>
+                                        <li><a href="login">Login</a></li><%
+                                    } else {
+                                        if (role.equals(Role.ADMIN)) {
+                                     %>
+                                    <li><a href="admin-personal-area">Personal area</a></li>
+                                    <% } else { %>
+                                    <li><a href="user-personal-area">Personal area</a></li>
+                                    <% }%>
+                                    <li><a href="logout">Logout</a></li>
+                                    <% }
+                                %>
                                 </ul>
                             </li>
                         </div>

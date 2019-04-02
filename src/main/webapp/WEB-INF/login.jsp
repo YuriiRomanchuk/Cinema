@@ -12,16 +12,23 @@
     </head>
 <body>
 
+<%
+    String error = (String) request.getAttribute("Error");
+    if (error != null) {
+%> <h1><%=error%></h1> <%
+    }
+%>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
             <h1>Authorization</h1>
-            <form method="post" action="${pageContext.request.contextPath}/login">
+            <form method="post" action="login">
                 <div class="form-group">
-                    <label for="nickname">Name:</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname"
-                           placeholder="Enter your nickname">
-                    <label for="password">Name:</label>
+                    <label for="login">Name:</label>
+                    <input type="text" class="form-control" id="login" name="login"
+                           placeholder="Enter your login">
+                    <label for="password">Password:</label>
                     <input type="text" class="form-control" id="password" name="password"
                            placeholder="Enter your password">
                 </div>

@@ -31,9 +31,9 @@
                     <label for="middle_name">Middle_name:</label>
                     <input type="text" class="form-control" id="middle_name" name="middle_name"
                            placeholder="Enter your middle name">
-                    <label for="nickname">Nickname:</label>
-                    <input type="text" class="form-control" id="nickname" name="nickname"
-                           placeholder="Enter your nickname">
+                    <label for="login">Nickname:</label>
+                    <input type="text" class="form-control" id="login" name="login"
+                           placeholder="Enter your login">
                     <label for="password">Password:</label>
                     <input type="text" class="form-control" id="password" name="password"
                            placeholder="Enter your password">

@@ -1,7 +1,9 @@
 package com.cinema.servlet;
 
 import com.cinema.controller.UserController;
+import com.cinema.controller.UtilityController;
 import com.cinema.controller.WelcomeController;
+import com.cinema.model.converter.UserDtoConverter;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 
@@ -23,11 +25,23 @@ public class RequestResolver {
     private Map<String, Function<HttpServletRequest, View>> postControllers = new HashMap<>();
 
 
-    public RequestResolver(WelcomeController welcomeController, UserController userController) {
+    public RequestResolver(WelcomeController welcomeController,
+                           UserController userController,
+                           UtilityController utilityController,
+                           UserDtoConverter userDtoConverter) {
+
+        Function<HttpServletRequest, UtilityController> uc = request -> {
+            utilityController.setRequest(request);
+            return utilityController;
+        };
 
         getControllers.put("/", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
-        getControllers.put("/login", r -> userController.showUserLoginPage());
+        getControllers.put("/login", r -> userController.showUserLoginPage(uc.apply(r)));
+        getControllers.put("/admin-personal-area", r -> userController.showAdminPersonalArea(uc.apply(r)));
+        getControllers.put("/logout", r -> userController.Logout(uc.apply(r)));
+
+        postControllers.put("/login", r -> userController.loginUser(userDtoConverter.convert(r), uc.apply(r)));
 
     }
 

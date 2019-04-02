@@ -8,10 +8,10 @@ public class User {
     private String login;
     private String password;
     private String first_name;
-    private String last_name;
+    private String second_name;
     private String middle_name;
     private String email;
-    private String phone;
+    private int phone;
     private Role role;
 
 
@@ -32,7 +32,7 @@ public class User {
     }
 
     public String getLast_name() {
-        return last_name;
+        return second_name;
     }
 
     public String getMiddle_name() {
@@ -43,7 +43,7 @@ public class User {
         return email;
     }
 
-    public String getPhone() {
+    public int getPhone() {
         return phone;
     }
 
@@ -68,8 +68,8 @@ public class User {
         this.first_name = first_name;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setSecond_name(String last_name) {
+        this.second_name = second_name;
     }
 
     public void setMiddle_name(String middle_name) {
@@ -80,7 +80,7 @@ public class User {
         this.email = email;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(int phone) {
         this.phone = phone;
     }
 
