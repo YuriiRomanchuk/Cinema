@@ -1,7 +1,7 @@
 package com.cinema.config;
 
 import com.cinema.controller.UserController;
-import com.cinema.controller.UtilityController;
+import com.cinema.controller.SessionController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.model.converter.UserDtoConverter;
 import com.cinema.model.dao.DataSource;
@@ -19,7 +19,7 @@ public class ComponentInitializer {
 
     public ComponentInitializer() {
 
-        UtilityController utilityController = new UtilityController();
+        SessionController sessionController = new SessionController();
 
         DataSource dataSource = new DataSource();
         UserDao userDao = new UserDao(dataSource);
@@ -30,7 +30,7 @@ public class ComponentInitializer {
         welcomeController = new WelcomeController();
         userController = new UserController(userService);
 
-        requestResolver = new RequestResolver(welcomeController, userController, utilityController,  userDtoConverter);
+        requestResolver = new RequestResolver(welcomeController, userController, sessionController,  userDtoConverter);
 
     }
 

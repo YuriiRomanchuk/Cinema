@@ -18,7 +18,7 @@ public class UserDto {
         return id;
     }
 
-    public void setNickname(String login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 

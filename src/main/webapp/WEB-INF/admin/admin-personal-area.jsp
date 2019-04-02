@@ -31,7 +31,7 @@
             <form method="post" action="admin-personal-area">
                 <%
                     Role role = (Role) request.getSession().getAttribute("role");
-                    if (role == null) {
+                    if (role == null || role.equals(Role.UNKNOWN)){
                 %> <button type="submit" class="btn btn-primary">Log in</button> <%
                 }
                 %>

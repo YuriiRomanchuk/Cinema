@@ -9,7 +9,7 @@ public class UserDtoConverter implements Converter<UserDto> {
     public UserDto convert(HttpServletRequest request) {
 
         UserDto userDto = new UserDto();
-        userDto.setNickname(request.getParameter("login"));
+        userDto.setLogin(request.getParameter("login"));
         userDto.setPassword(request.getParameter("password"));
         return userDto;
     }

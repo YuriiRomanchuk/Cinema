@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-sm-4">
             <h1>Authorization</h1>
-            <form method="post" action="${pageContext.request.contextPath}/WEB-INF/registration-form.jsp">
+            <form method="post" action="registration-form">
                 <div class="form-group">
                     <label for="first_name">First name:</label>
                     <input type="text" class="form-control" id="first_name" name="first_name"
