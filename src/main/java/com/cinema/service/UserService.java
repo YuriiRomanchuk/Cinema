@@ -4,6 +4,7 @@ import com.cinema.exception.ModelException;
 import com.cinema.model.dao.UserDao;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
+import com.cinema.model.entity.enums.Role;
 
 public class UserService {
 
@@ -15,7 +16,7 @@ public class UserService {
 
     public User loginUser(UserDto userDto) throws ModelException {
         try {
-            return userDao.loginUser(userDto);
+            return userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
         } catch (Exception e) {
             throw new ModelException("Login or password is not correct", e);
         }
@@ -28,5 +29,9 @@ public class UserService {
             throw new ModelException("Registration failed", e);
         }
 
+    }
+
+    public Role receiveUserRole(UserDto userDto) {
+        return userDao.findUserRole(userDto.getEmail(), userDto.getPassword());
     }
 }

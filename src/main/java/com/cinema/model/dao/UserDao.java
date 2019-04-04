@@ -1,6 +1,5 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 
@@ -43,14 +42,23 @@ public class UserDao implements GenericDao<User> {
 
     }
 
-    public User loginUser(UserDto userDto) {
+    public User findUserByEmailAndPassword(String email, String password) {
         return dataSource.receiveFirstRecord("select * from users where email = ? and password = ?",
                 userConverter,
                 preparedStatement ->
                 {
-                    preparedStatement.setString(1, userDto.getEmail());
-                    preparedStatement.setString(2, userDto.getPassword());
+                    preparedStatement.setString(1, email);
+                    preparedStatement.setString(2, password);
                 }).orElse(null);
+    }
+
+    public Role findUserRole(String email, String password) {
+        User user = findUserByEmailAndPassword(email, password);
+        if (user != null) {
+            return user.getRole();
+        }
+
+        return null;
     }
 
 

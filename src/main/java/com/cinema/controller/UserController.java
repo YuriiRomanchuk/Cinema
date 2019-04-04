@@ -21,38 +21,27 @@ public class UserController {
         return new ViewModel("WEB-INF/registration-form.jsp");
     }
 
-    public View showUserLoginPage(SessionController sessionController) {
-        sessionController.setUserRoleInSession(Role.UNKNOWN, null, null);
+    public View showUserLoginPage() {
         return new ViewModel("WEB-INF/login.jsp");
     }
 
-    public View showAdminPersonalArea(SessionController sessionController) {
-        if (sessionController.checkUserIsLogged()) {
-            return new ViewModel("WEB-INF/admin/admin-personal-area.jsp");
-        } else {
-            return new ViewModel("WEB-INF/index.jsp");
-        }
+    public View showAdminPersonalArea() {
+        return new ViewModel("WEB-INF/admin/admin-personal-area.jsp");
     }
 
-    public View showUserPersonalArea(SessionController sessionController) {
-        if (sessionController.checkUserIsLogged()) {
-            return new ViewModel("WEB-INF/user/user-personal-area.jsp");
-        } else {
-            return new ViewModel("WEB-INF/index.jsp");
-        }
+    public View showUserPersonalArea() {
+        return new ViewModel("WEB-INF/user/user-personal-area.jsp");
     }
 
-    public View Logout(SessionController sessionController) {
-        sessionController.setUserRoleInSession(Role.UNKNOWN, null, null);
+    public View logout() {
         return new ViewModel("WEB-INF/index.jsp");
     }
 
-    public View loginUser(UserDto userDto, SessionController sessionController) {
+    public View loginUser(UserDto userDto) {
 
         View view;
         try {
             User user = userService.loginUser(userDto);
-            sessionController.setUserRoleInSession(user.getRole(), user.getEmail(), user.getId());
             view = new ViewModel(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area");
         } catch (ModelException e) {
             view = new ViewModel("login");

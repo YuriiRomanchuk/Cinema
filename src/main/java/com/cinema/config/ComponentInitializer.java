@@ -1,7 +1,6 @@
 package com.cinema.config;
 
 import com.cinema.controller.UserController;
-import com.cinema.controller.SessionController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.model.converter.UserConverter;
 import com.cinema.model.converter.UserDtoConverter;
@@ -16,17 +15,26 @@ public class ComponentInitializer {
     private final RequestResolver requestResolver;
     private final WelcomeController welcomeController;
     private final UserController userController;
+
+    public UserDtoConverter getUserDtoConverter() {
+        return userDtoConverter;
+    }
+
     private final UserDtoConverter userDtoConverter;
     private final UserConverter userConverter;
-    private final SessionController sessionController;
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    private final  UserService userService;
+/*    private final SessionController sessionController;*/
 
     public ComponentInitializer() {
 
-        sessionController = new SessionController();
-
         DataSource dataSource = new DataSource();
         UserDao userDao = new UserDao(dataSource);
-        UserService userService = new UserService(userDao);
+        userService = new UserService(userDao);
 
         userDtoConverter = new UserDtoConverter();
         userConverter = new UserConverter();
@@ -36,7 +44,6 @@ public class ComponentInitializer {
 
         requestResolver = new RequestResolver(welcomeController,
                 userController,
-                sessionController,
                 userDtoConverter,
                 userConverter);
 
@@ -57,4 +64,6 @@ public class ComponentInitializer {
     public RequestResolver getRequestResolver() {
         return requestResolver;
     }
+
+
 }

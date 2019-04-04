@@ -1,7 +1,6 @@
 package com.cinema.servlet;
 
 import com.cinema.controller.UserController;
-import com.cinema.controller.SessionController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.model.converter.UserConverter;
 import com.cinema.model.converter.UserDtoConverter;
@@ -28,23 +27,23 @@ public class RequestResolver {
 
     public RequestResolver(WelcomeController welcomeController,
                            UserController userController,
-                           SessionController sessionController,
                            UserDtoConverter userDtoConverter,
                            UserConverter userConverter) {
 
-        Function<HttpServletRequest, SessionController> sc = request -> {
+  /*      Function<HttpServletRequest, SessionController> sc = request -> {
             sessionController.setRequest(request);
             return sessionController;
+            sc.apply(r))
         };
-
+*/
         getControllers.put("/", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
-        getControllers.put("/login", r -> userController.showUserLoginPage(sc.apply(r)));
-        getControllers.put("/admin-personal-area", r -> userController.showAdminPersonalArea(sc.apply(r)));
-        getControllers.put("/user-personal-area", r -> userController.showUserPersonalArea(sc.apply(r)));
-        getControllers.put("/logout", r -> userController.Logout(sc.apply(r)));
+        getControllers.put("/login", r -> userController.showUserLoginPage());
+        getControllers.put("/admin-personal-area", r -> userController.showAdminPersonalArea());
+        getControllers.put("/user-personal-area", r -> userController.showUserPersonalArea());
+        getControllers.put("/logout", r -> userController.logout());
 
-        postControllers.put("/login", r -> userController.loginUser(userDtoConverter.convert(r), sc.apply(r)));
+        postControllers.put("/login", r -> userController.loginUser(userDtoConverter.convert(r)));
         postControllers.put("/registration-form", r -> userController.createUser(userConverter.convert(r)));
 
     }
