@@ -1,4 +1,6 @@
+<%@ page import="com.cinema.config.UserAuthorization" %>
 <%@ page import="com.cinema.model.entity.enums.Role" %>
+<%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -9,6 +11,18 @@
     <meta charset="UTF-8"/>
     <title>Hello</title>
 </head>
+
+<%
+    HttpSession currentSession = request.getSession();
+    Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) currentSession.getServletContext().getAttribute("usersAuthorization");
+    UserAuthorization userAuthorization = usersAuthorization.get(currentSession.getId());
+
+    Role role = Role.UNKNOWN;
+    if (userAuthorization != null) {
+        role = userAuthorization.getRole();
+    }
+%>
+
 <body>
 <div class="container">
     <div class="row">
@@ -22,20 +36,21 @@
                             <li>Administration
                                 <ul>
                                     <%
-                                        Role role = (Role) request.getSession().getAttribute("role");
                                         if (role == null || role.equals(Role.UNKNOWN)) {
-                                    %>  <li><a href="registration-form">Registration</a></li>
-                                        <li><a href="login">Login</a></li><%
+                                    %>
+                                    <li><a href="registration-form">Registration</a></li>
+                                    <li><a href="login">Login</a></li>
+                                    <%
                                     } else {
                                         if (role.equals(Role.ADMIN)) {
-                                     %>
+                                    %>
                                     <li><a href="admin-personal-area">Personal area</a></li>
                                     <% } else { %>
                                     <li><a href="user-personal-area">Personal area</a></li>
                                     <% }%>
                                     <li><a href="logout">Logout</a></li>
                                     <% }
-                                %>
+                                    %>
                                 </ul>
                             </li>
                         </div>

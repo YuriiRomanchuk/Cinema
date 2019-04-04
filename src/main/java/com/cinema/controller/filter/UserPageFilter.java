@@ -29,7 +29,6 @@ public class UserPageFilter implements Filter {
         forbiddenPagesUnknown.add("admin-personal-area");
         forbiddenPagesUnknown.add("user-personal-area");
         forbiddenPagesUnknown.add("error");
-
     }
 
     @Override

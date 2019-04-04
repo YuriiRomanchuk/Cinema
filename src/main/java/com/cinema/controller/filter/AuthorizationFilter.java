@@ -10,15 +10,13 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AuthorizationFilter implements Filter {
 
-    private List<String> bannedPagesForUnknow = new ArrayList<>();
     private final String loginPageName = "login";
+    private final String logoutPageName = "logout";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -46,11 +44,16 @@ public class AuthorizationFilter implements Filter {
                 String foreignUserSession = userSessionOtherSession(email, usersAuthorization, sessionId);
 
                 if (foreignUserSession != null) {
-                    removeUserAuthorization(httpRequest, usersAuthorization, foreignUserSession);
+                    removeUserAuthorization(usersAuthorization, foreignUserSession);
                 }
                 createUserAuthorization(httpRequest, usersAuthorization, email);
             }
         }
+
+        if (httpRequest.getRequestURI().contains(logoutPageName)) {
+            removeUserAuthorization(usersAuthorization, sessionId);
+        }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
@@ -66,8 +69,8 @@ public class AuthorizationFilter implements Filter {
         return null;
     }
 
-    private void removeUserAuthorization(HttpServletRequest httpRequest, Map<String, UserAuthorization> usersAuthorization, String foreignUserSession ) {
-        usersAuthorization.remove(foreignUserSession);
+    private void removeUserAuthorization(Map<String, UserAuthorization> usersAuthorization, String UserSession) {
+        usersAuthorization.remove(UserSession);
     }
 
     private void createUserAuthorization(HttpServletRequest httpRequest,
