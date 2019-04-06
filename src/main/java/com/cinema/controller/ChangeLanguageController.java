@@ -4,13 +4,10 @@ import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
 
-public class WelcomeController {
+public class ChangeLanguageController {
 
-    public View showIndexPage() {
-        return new ViewModel("WEB-INF/jsp/index.jsp");
-    }
-
-    public View showIndexPageRedirect() {
+    public View changeLanguage() {
         return new RedirectViewModel(new ViewModel("index"));
     }
+
 }

@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="${param.lang}"/>
+<fmt:setBundle basename="local"/>
 
-<head>
+<html lang="${sessionScope.lang}">
     <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -12,20 +14,20 @@
     </head>
 <body>
 
-<%--<!-- HEADER -->
-<jsp:include page="/WEB-INF/template/header.jsp"/>--%>
-
-
-<%
-    String error = (String) request.getAttribute("Error");
-    if (error != null) {
-%> <h1><%=error%></h1> <%
-    }
-%>
+<jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
+
+            <%
+                String error = (String) request.getAttribute("Error");
+                if (error != null) {
+            %> <h1><%=error%>
+        </h1> <%
+            }
+        %>
+
             <h1>Authorization</h1>
             <form method="post" action="login">
                 <div class="form-group">
@@ -37,7 +39,7 @@
                            placeholder="Enter your password">
                 </div>
                 <button type="submit" class="btn btn-primary">Log in</button>
-                <a href="${pageContext.request.contextPath}/main/" class="btn btn-primary">Main</a>
+                <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
             </form>
         </div>
     </div>

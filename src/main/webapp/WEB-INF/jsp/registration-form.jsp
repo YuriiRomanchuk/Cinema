@@ -6,7 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<fmt:setLocale value="${param.lang}"/>
+<fmt:setBundle basename="messages"/>
+
+<html lang="${sessionScope.lang}">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -16,6 +19,7 @@
     <title>Registration form</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
 
 <%
     String error = (String) request.getAttribute("Error");
@@ -53,7 +57,7 @@
                            placeholder="Enter your phone">
                 </div>
                 <button type="submit" class="btn btn-primary">Apply</button>
-                <a href="${pageContext.request.contextPath}/main/" class="btn btn-primary">Main</a>
+                <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
             </form>
         </div>
     </div>

@@ -1,5 +1,6 @@
 package com.cinema.servlet;
 
+import com.cinema.controller.ChangeLanguageController;
 import com.cinema.controller.UserController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.model.converter.UserConverter;
@@ -28,15 +29,11 @@ public class RequestResolver {
     public RequestResolver(WelcomeController welcomeController,
                            UserController userController,
                            UserDtoConverter userDtoConverter,
-                           UserConverter userConverter) {
+                           UserConverter userConverter,
+                           ChangeLanguageController changeLanguageController) {
 
-  /*      Function<HttpServletRequest, SessionController> sc = request -> {
-            sessionController.setRequest(request);
-            return sessionController;
-            sc.apply(r))
-        };
-*/
-        getControllers.put("/", r -> welcomeController.showIndexPage());
+
+        getControllers.put("/index", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
         getControllers.put("/login", r -> userController.showUserLoginPage());
         getControllers.put("/admin-personal-area", r -> userController.showAdminPersonalArea());
@@ -45,9 +42,9 @@ public class RequestResolver {
 
         postControllers.put("/login", r -> userController.loginUser(userDtoConverter.convert(r)));
         postControllers.put("/registration-form", r -> userController.createUser(userConverter.convert(r)));
+        postControllers.put("/change_language", r -> changeLanguageController.changeLanguage());
 
     }
-
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         reference(getView(request, getControllers), request, response);

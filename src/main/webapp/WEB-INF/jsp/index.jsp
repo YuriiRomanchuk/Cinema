@@ -2,7 +2,9 @@
 <%@ page import="com.cinema.model.entity.enums.Role" %>
 <%@ page import="java.util.Map" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<fmt:setLocale value="${param.lang}"/>
+<fmt:setBundle basename="messages"/>
+<html lang="${sessionScope.lang}">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -24,6 +26,8 @@
 %>
 
 <body>
+<jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4">

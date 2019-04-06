@@ -1,5 +1,6 @@
 package com.cinema.config;
 
+import com.cinema.controller.ChangeLanguageController;
 import com.cinema.controller.UserController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.model.converter.UserConverter;
@@ -15,6 +16,7 @@ public class ComponentInitializer {
     private final RequestResolver requestResolver;
     private final WelcomeController welcomeController;
     private final UserController userController;
+    private final ChangeLanguageController changeLanguageController;
 
     public UserDtoConverter getUserDtoConverter() {
         return userDtoConverter;
@@ -31,6 +33,8 @@ public class ComponentInitializer {
 
     public ComponentInitializer() {
 
+        changeLanguageController = new ChangeLanguageController();
+
         DataSource dataSource = new DataSource();
         UserDao userDao = new UserDao(dataSource);
         userService = new UserService(userDao);
@@ -44,7 +48,8 @@ public class ComponentInitializer {
         requestResolver = new RequestResolver(welcomeController,
                 userController,
                 userDtoConverter,
-                userConverter);
+                userConverter,
+                changeLanguageController);
 
     }
 
