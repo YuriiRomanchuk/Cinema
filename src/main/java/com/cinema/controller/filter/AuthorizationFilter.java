@@ -36,11 +36,9 @@ public class AuthorizationFilter implements Filter {
         Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) httpRequest.getServletContext().getAttribute("usersAuthorization");
 
         if (httpRequest.getRequestURI().contains(loginPageName)) {
-
             String email = httpRequest.getParameter("email");
 
             if (email != null) {
-
                 String foreignUserSession = userSessionOtherSession(email, usersAuthorization, sessionId);
 
                 if (foreignUserSession != null) {
@@ -58,7 +56,6 @@ public class AuthorizationFilter implements Filter {
     }
 
     private String userSessionOtherSession(String email, Map<String, UserAuthorization> usersAuthorization, String sessionId) {
-
         for (Map.Entry<String, UserAuthorization> stringUserAuthorizationEntry : usersAuthorization.entrySet()) {
             String key = stringUserAuthorizationEntry.getKey();
             UserAuthorization value = stringUserAuthorizationEntry.getValue();

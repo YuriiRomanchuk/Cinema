@@ -55,7 +55,7 @@ public class UserPageFilter implements Filter {
         if (!redirect) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/");
+            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/jsp/main/");
         }
 
     }

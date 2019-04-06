@@ -1,4 +1,6 @@
 <%@ page import="com.cinema.model.entity.enums.Role" %>
+<%@ page import="com.cinema.config.UserAuthorization" %>
+<%@ page import="java.util.Map" %>
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,6 +13,17 @@
 </html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    HttpSession currentSession = request.getSession();
+    Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) currentSession.getServletContext().getAttribute("usersAuthorization");
+    UserAuthorization userAuthorization = usersAuthorization.get(currentSession.getId());
+
+    Role role = Role.UNKNOWN;
+    if (userAuthorization != null) {
+        role = userAuthorization.getRole();
+    }
+%>
 
 <head>
     <head>

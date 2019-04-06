@@ -12,6 +12,10 @@
     </head>
 <body>
 
+<%--<!-- HEADER -->
+<jsp:include page="/WEB-INF/template/header.jsp"/>--%>
+
+
 <%
     String error = (String) request.getAttribute("Error");
     if (error != null) {

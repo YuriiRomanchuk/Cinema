@@ -27,8 +27,7 @@ public class ComponentInitializer {
         return userService;
     }
 
-    private final  UserService userService;
-/*    private final SessionController sessionController;*/
+    private final UserService userService;
 
     public ComponentInitializer() {
 

@@ -6,6 +6,6 @@ import com.cinema.view.ViewModel;
 public class WelcomeController {
 
     public View showIndexPage() {
-        return new ViewModel("WEB-INF/index.jsp");
+        return new ViewModel("WEB-INF/jsp/index.jsp");
     }
 }
