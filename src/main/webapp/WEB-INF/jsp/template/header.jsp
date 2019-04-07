@@ -31,7 +31,6 @@
     }
 %>--%>
 
-
 <div class="container">
     <div class="row">
         <div class="col-md text-right">
@@ -40,7 +39,7 @@
                         key="local.registration"/></a>
                 <a class="btn btn-info" href="login" role="button"><fmt:message key="local.log.in"/></a>
 
-                <div class="col-md text-left">
+                <div class="text-left">
                     <a class="btn btn-info" href="index" role="button"><fmt:message key="local.main"/></a>
                 </div>
             </div>
@@ -54,7 +53,7 @@
                 </form>
                 <form role="form" class="btn btn-info btn-sm" method="post"
                       action="change_language">
-                    <input type="hidden" name="language" value="ua">
+                    <input type="hidden" name="language" value="uk">
                     <button type="submit" class="btn btn-info btn-sm"><fmt:message
                             key="local.lang.ukr"/></button>
                 </form>
