@@ -1,3 +1,6 @@
+<%@ page import="com.cinema.config.UserAuthorization" %>
+<%@ page import="com.cinema.model.entity.enums.Role" %>
+<%@ page import="java.util.Map" %>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page session="true" isELIgnored="false" contentType="text/html; charset=UTF-8" language="java"
          pageEncoding="UTF-8" %>
@@ -9,59 +12,76 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<html lang="${sessionScope.lang}">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8"/>
-    <title>Login in system</title>
-</head>
-<%--<%
+<%
     HttpSession currentSession = request.getSession();
-    <String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) currentSession.getServletContext().getAttribute("usersAuthorization");
+    Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) currentSession.getServletContext().getAttribute("usersAuthorization");
     UserAuthorization userAuthorization = usersAuthorization.get(currentSession.getId());
 
     Role role = Role.UNKNOWN;
-    String email;
     if (userAuthorization != null) {
         role = userAuthorization.getRole();
-        email = userAuthorization.getEmail();
     }
-%>--%>
+%>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md text-right">
-            <div class="menu-bar">
-                <a class="btn btn-info" href="registration-form" role="button"><fmt:message
-                        key="local.registration"/></a>
-                <a class="btn btn-info" href="login" role="button"><fmt:message key="local.log.in"/></a>
+<html lang="${sessionScope.lang}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="<c:url value="/WebContent/css/bootstrap.min.css"/>"/>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/WebContent/css/dashboard.css"/>"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style id="holderjs-style" type="text/css"></style>
+</head>
 
-                <div class="text-left">
-                    <a class="btn btn-info" href="index" role="button"><fmt:message key="local.main"/></a>
-                </div>
-            </div>
+<body style="">
 
-            <div class="col-md text-center">
-                <form role="form" class="btn btn-info btn-sm" method="post"
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid" style=" display: flex">
+        <a class="navbar-brand" href="#">Cinema</a>
+        <ul class="nav navbar-nav navbar-center">
+            <li>
+                <form role="form" method="post"
                       action="change_language">
                     <input type="hidden" name="language" value="en">
-                    <button type="submit" class="btn btn-info btn-sm"><fmt:message
+                    <button type="submit"><fmt:message
                             key="local.lang.eng"/></button>
                 </form>
-                <form role="form" class="btn btn-info btn-sm" method="post"
+            </li>
+            <li>
+                <form role="form" method="post"
                       action="change_language">
                     <input type="hidden" name="language" value="uk">
-                    <button type="submit" class="btn btn-info btn-sm"><fmt:message
+                    <button type="submit"><fmt:message
                             key="local.lang.ukr"/></button>
                 </form>
-            </div>
-        </div>
+            </li>
+        </ul>
+
+        <%
+            if (role == null || role.equals(Role.UNKNOWN)) {
+        %>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="registration-form" role="button"><fmt:message
+                    key="local.registration"/></a></li>
+            <li><a href="login" role="button"><fmt:message key="local.log.in"/></a></li>
+        </ul>
+        <%
+        } else {
+        %>
+        <ul class="nav navbar-nav navbar-rightLogout">
+            <li><a href="logout" role="button"><fmt:message key="local.logout"/></a></li>
+        </ul>
+        <%
+            }
+        %>
+
     </div>
 </div>
+
+</body>
 </html>
-
-
 

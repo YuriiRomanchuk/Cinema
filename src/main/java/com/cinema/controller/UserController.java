@@ -34,7 +34,7 @@ public class UserController {
     }
 
     public View logout() {
-        return new RedirectViewModel(new ViewModel("/main/"));
+        return new RedirectViewModel(new ViewModel("index"));
     }
 
     public View loginUser(UserDto userDto) {
