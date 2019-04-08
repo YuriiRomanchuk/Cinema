@@ -1,6 +1,6 @@
 package com.cinema.controller;
 
-import com.cinema.exception.ModelException;
+import com.cinema.exception.ServiceException;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
@@ -43,7 +43,7 @@ public class UserController {
         try {
             User user = userService.loginUser(userDto);
             view = new ViewModel(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area");
-        } catch (ModelException e) {
+        } catch (ServiceException e) {
             view = new ViewModel("login");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
@@ -55,7 +55,7 @@ public class UserController {
         try {
             userService.createUser(user);
             view = new ViewModel("WEB-INF/jsp/login");
-        } catch (ModelException e) {
+        } catch (ServiceException e) {
             view = new ViewModel("registration-form");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }

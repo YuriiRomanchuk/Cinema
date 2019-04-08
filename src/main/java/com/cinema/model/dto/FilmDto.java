@@ -1,18 +1,13 @@
-package com.cinema.model.entity;
+package com.cinema.model.dto;
 
 import java.util.Date;
 
-public class Film {
+public class FilmDto {
 
-    private int id;
     private String name;
     private String nameEnglish;
-    private Date releaseDate;
+    private String releaseDate;
     private String description;
-
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -22,7 +17,7 @@ public class Film {
         return nameEnglish;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
@@ -30,9 +25,6 @@ public class Film {
         return description;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -42,7 +34,7 @@ public class Film {
         this.nameEnglish = nameEnglish;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
 

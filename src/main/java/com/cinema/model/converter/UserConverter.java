@@ -1,11 +1,12 @@
 package com.cinema.model.converter;
 
+import com.cinema.model.converter.dtoConverter.DtoConverter;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UserConverter implements Converter<User> {
+public class UserConverter implements DtoConverter<User> {
 
     @Override
     public User convert(HttpServletRequest request) {

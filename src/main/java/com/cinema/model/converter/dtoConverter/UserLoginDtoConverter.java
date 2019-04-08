@@ -1,10 +1,10 @@
-package com.cinema.model.converter;
+package com.cinema.model.converter.dtoConverter;
 
 import com.cinema.model.dto.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UserDtoConverter implements Converter<UserDto> {
+public class UserLoginDtoConverter implements DtoConverter<UserDto> {
     @Override
     public UserDto convert(HttpServletRequest request) {
 

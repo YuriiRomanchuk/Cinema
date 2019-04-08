@@ -1,12 +1,14 @@
 package com.cinema.config;
 
 import com.cinema.controller.ChangeLanguageController;
+import com.cinema.controller.FilmController;
 import com.cinema.controller.UserController;
 import com.cinema.controller.WelcomeController;
 import com.cinema.model.converter.UserConverter;
-import com.cinema.model.converter.UserDtoConverter;
+import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
 import com.cinema.model.dao.DataSource;
 import com.cinema.model.dao.UserDao;
+import com.cinema.service.FilmService;
 import com.cinema.service.UserService;
 import com.cinema.servlet.RequestResolver;
 
@@ -17,39 +19,40 @@ public class ComponentInitializer {
     private final WelcomeController welcomeController;
     private final UserController userController;
     private final ChangeLanguageController changeLanguageController;
-
-    public UserDtoConverter getUserDtoConverter() {
-        return userDtoConverter;
-    }
-
-    private final UserDtoConverter userDtoConverter;
-    private final UserConverter userConverter;
-
-    public UserService getUserService() {
-        return userService;
-    }
+    private final FilmController filmController;
+    private final FilmService filmService;
 
     private final UserService userService;
+    private final UserLoginDtoConverter userLoginDtoConverter;
+    private final UserConverter userConverter;
+
+
 
     public ComponentInitializer() {
 
-        changeLanguageController = new ChangeLanguageController();
-
         DataSource dataSource = new DataSource();
         UserDao userDao = new UserDao(dataSource);
+
+
+
+        changeLanguageController = new ChangeLanguageController();
         userService = new UserService(userDao);
 
-        userDtoConverter = new UserDtoConverter();
+        userLoginDtoConverter = new UserLoginDtoConverter();
         userConverter = new UserConverter();
 
         welcomeController = new WelcomeController();
         userController = new UserController(userService);
+        filmService = new FilmService();
+        filmController = new FilmController(filmService);
+
 
         requestResolver = new RequestResolver(welcomeController,
                 userController,
-                userDtoConverter,
+                userLoginDtoConverter,
                 userConverter,
-                changeLanguageController);
+                changeLanguageController,
+                filmController);
 
     }
 
@@ -63,6 +66,15 @@ public class ComponentInitializer {
         }
 
         return initializer;
+    }
+
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public UserLoginDtoConverter getUserLoginDtoConverter() {
+        return userLoginDtoConverter;
     }
 
     public RequestResolver getRequestResolver() {

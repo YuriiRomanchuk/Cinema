@@ -16,8 +16,8 @@
 
 <jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
 
-<div class="container">
-    <div class="row">
+<div class="container h-100" >
+    <div class="row h-100 justify-content-center">
         <div class="col-sm-4">
 
             <%

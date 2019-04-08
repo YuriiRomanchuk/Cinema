@@ -17,7 +17,7 @@ create table if not exists films
   id           SERIAL       NOT NULL,
   name         varchar(250) NOT NULL,
   name_english varchar(250) NOT NULL,
-  year         int          NOT NULL,
+  release_date timestamp    NOT NULL,
   description  varchar(250) NOT NULL,
   PRIMARY KEY (id)
 );

@@ -35,22 +35,39 @@
 <jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
 <jsp:include page="/WEB-INF/jsp/template/admin-bar.jsp"/>
 
-<%--<div class="container">
-    <div class="row">
+<div class="container h-100" >
+    <div class="row h-100 justify-content-center">
         <div class="col-sm-4">
-            <h1>Admin personal area</h1>
-            <form method="post" action="admin-personal-area">
-                &lt;%&ndash;    <%
-                        Role role = (Role) request.getSession().getAttribute("role");
-                        if (role == null || role.equals(Role.UNKNOWN)){
-                    %> <button type="submit" class="btn btn-primary">Log in</button> <%
-                    }
-                    %>&ndash;%&gt;
+
+            <%
+                String error = (String) request.getAttribute("Error");
+                if (error != null) {
+            %> <h1><%=error%>
+        </h1> <%
+            }
+        %>
+            <h1>Add film</h1>
+            <form method="post" action="admin-add-film">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           placeholder="Enter film's name">
+                    <label for="name_english">Name(eng):</label>
+                    <input type="text" class="form-control" id="name_english" name="name_english"
+                           placeholder="Enter film's english name">
+                    <label for="release_date">Year:</label>
+                    <input type="date" class="form-control" id="release_date" name="release_date"
+                           placeholder="Enter release date">
+                    <label for="description">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description"
+                           placeholder="Enter description">
+                </div>
+                <button type="submit" class="btn btn-primary">Add</button>
                 <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
             </form>
         </div>
     </div>
-</div>--%>
+</div>
 
 
 </body>

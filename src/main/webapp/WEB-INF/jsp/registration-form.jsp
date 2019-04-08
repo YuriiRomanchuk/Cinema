@@ -28,10 +28,10 @@
     }
 %>
 
-<div class="container">
-    <div class="row">
+<div class="container h-100">
+    <div class="row justify-content-center">
         <div class="col-sm-4">
-            <h1>Authorization</h1>
+            <h1>Registration</h1>
             <form method="post" action="registration-form">
                 <div class="form-group">
                     <label for="firstName">First name:</label>

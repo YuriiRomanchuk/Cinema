@@ -1,6 +1,6 @@
 package com.cinema.service;
 
-import com.cinema.exception.ModelException;
+import com.cinema.exception.ServiceException;
 import com.cinema.model.dao.UserDao;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
@@ -14,19 +14,19 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public User loginUser(UserDto userDto) throws ModelException {
+    public User loginUser(UserDto userDto) throws ServiceException {
         try {
             return userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
         } catch (Exception e) {
-            throw new ModelException("Login or password is not correct", e);
+            throw new ServiceException("Login or password is not correct", e);
         }
     }
 
-    public void createUser(User user) throws ModelException {
+    public void createUser(User user) throws ServiceException {
         try {
             userDao.createUser(user);
         } catch (Exception e) {
-            throw new ModelException("Registration failed", e);
+            throw new ServiceException("Registration failed", e);
         }
 
     }

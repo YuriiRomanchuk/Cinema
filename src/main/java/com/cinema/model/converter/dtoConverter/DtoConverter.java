@@ -1,8 +1,8 @@
-package com.cinema.model.converter;
+package com.cinema.model.converter.dtoConverter;
 
 import javax.servlet.http.HttpServletRequest;
 
-public interface Converter<V> {
+public interface DtoConverter<V> {
 
     V convert(HttpServletRequest request);
 }
