@@ -1,7 +1,10 @@
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<%@ page session="true" isELIgnored="false" contentType="text/html; charset=UTF-8" language="java"
+         pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${param.lang}"/>
 <fmt:setBundle basename="messages"/>
