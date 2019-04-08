@@ -1,11 +1,10 @@
 package com.cinema.servlet;
 
+import com.cinema.config.ComponentInitializer;
 import com.cinema.controller.ChangeLanguageController;
 import com.cinema.controller.FilmController;
 import com.cinema.controller.UserController;
 import com.cinema.controller.WelcomeController;
-import com.cinema.model.converter.UserConverter;
-import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 
@@ -29,11 +28,8 @@ public class RequestResolver {
 
     public RequestResolver(WelcomeController welcomeController,
                            UserController userController,
-                           UserLoginDtoConverter userLoginDtoConverter,
-                           UserConverter userConverter,
                            ChangeLanguageController changeLanguageController,
                            FilmController filmController) {
-
 
         getControllers.put("/index", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
@@ -44,9 +40,10 @@ public class RequestResolver {
         getControllers.put("/admin-add-film", r -> filmController.showAddFilmPage());
 
 
-        postControllers.put("/login", r -> userController.loginUser(userLoginDtoConverter.convert(r)));
-        postControllers.put("/registration-form", r -> userController.createUser(userConverter.convert(r)));
+        postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convert(r)));
+        postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convert(r)));
         postControllers.put("/change_language", r -> changeLanguageController.changeLanguage());
+        postControllers.put("/admin-add-film", r -> filmController.createFilm(ComponentInitializer.getInstance().getFilmDtoConverter().convert(r)));
 
     }
 

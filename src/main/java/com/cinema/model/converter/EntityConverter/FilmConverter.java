@@ -18,7 +18,7 @@ public class FilmConverter implements EntityConverter<FilmDto, Film> {
 
         String filmReleaseDate = filmDto.getReleaseDate();
         SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy");
+        format.applyPattern("yyyy-mm-dd");
         film.setReleaseDate(format.parse(filmReleaseDate));
 
         return film;

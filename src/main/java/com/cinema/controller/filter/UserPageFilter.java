@@ -25,10 +25,15 @@ public class UserPageFilter implements Filter {
         forbiddenPagesUser.add("login");
         forbiddenPagesUser.add("registration-form");
         forbiddenPagesUser.add("error");
+        forbiddenPagesUser.add("admin-add-film");
 
         forbiddenPagesUnknown.add("admin-personal-area");
         forbiddenPagesUnknown.add("user-personal-area");
         forbiddenPagesUnknown.add("error");
+        forbiddenPagesUnknown.add("admin-add-film");
+
+        forbiddenPagesAdmin.add("user-personal-area");
+        forbiddenPagesAdmin.add("error");
     }
 
     @Override
@@ -55,7 +60,7 @@ public class UserPageFilter implements Filter {
         if (!redirect) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/jsp/main/");
+            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");
         }
 
     }
