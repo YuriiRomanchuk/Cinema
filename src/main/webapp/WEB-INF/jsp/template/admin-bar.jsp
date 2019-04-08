@@ -38,7 +38,8 @@
                         key="local.add.film"/></a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="">Rooms</a></li>
+                <li><a href="admin-add-room" role="button"><fmt:message
+                        key="local.add.room"/></a></li>
                 <li><a href="">Add rooms</a></li>
                 <li><a href="">Edit rooms</a></li>
             </ul>
