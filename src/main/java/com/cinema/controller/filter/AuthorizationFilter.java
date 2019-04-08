@@ -35,17 +35,16 @@ public class AuthorizationFilter implements Filter {
         String sessionId = httpRequest.getSession().getId();
         Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) httpRequest.getServletContext().getAttribute("usersAuthorization");
 
-        if (httpRequest.getRequestURI().contains(loginPageName)) {
-            String email = httpRequest.getParameter("email");
+        String email = httpRequest.getParameter("email");
 
-            if (email != null) {
-                String foreignUserSession = userSessionOtherSession(email, usersAuthorization, sessionId);
+        if (httpRequest.getRequestURI().contains(loginPageName) && (email != null)) {
 
-                if (foreignUserSession != null) {
-                    removeUserAuthorization(usersAuthorization, foreignUserSession);
-                }
-                createUserAuthorization(httpRequest, usersAuthorization, email);
+            String foreignUserSession = userSessionOtherSession(email, usersAuthorization, sessionId);
+
+            if (foreignUserSession != null) {
+                removeUserAuthorization(usersAuthorization, foreignUserSession);
             }
+            createUserAuthorization(httpRequest, usersAuthorization, email);
         }
 
         if (httpRequest.getRequestURI().contains(logoutPageName)) {
