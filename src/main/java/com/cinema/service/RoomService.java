@@ -35,12 +35,12 @@ public class RoomService {
 
     public List<RoomDto> recieveAllRoomsDto() {
 
-        List<RoomDto> roomDtos = new ArrayList<>();
+        List<RoomDto> roomsDto = new ArrayList<>();
         List<Room> rooms = roomDao.findAll();
 
-        rooms.forEach(r -> roomDtos.add(roomDtoConverter.convertFromRoomEntity(r)));
+        rooms.forEach(r -> roomsDto.add(roomDtoConverter.convertFromRoomEntity(r)));
 
-        return roomDtos;
+        return roomsDto;
     }
 
 

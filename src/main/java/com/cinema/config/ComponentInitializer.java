@@ -65,7 +65,7 @@ public class ComponentInitializer {
         roomPlaceDtoConverter = new RoomPlaceDtoConverter();
 
         userService = new UserService(userDao);
-        filmService = new FilmService(filmDao, filmConverter);
+        filmService = new FilmService(filmDao, filmConverter, filmDtoConverter);
         roomService = new RoomService(roomDao, roomConverter, roomDtoConverter);
         roomPlaceService = new RoomPlaceService(roomPlaceDao);
 

@@ -2,6 +2,7 @@ package com.cinema.model.dto;
 
 public class FilmDto {
 
+    private int id;
     private String name;
     private String nameEnglish;
     private String releaseDate;
@@ -47,5 +48,13 @@ public class FilmDto {
 
     public void setDescriptionEnglish(String descriptionEnglish) {
         this.descriptionEnglish = descriptionEnglish;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

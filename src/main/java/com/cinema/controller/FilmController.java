@@ -33,4 +33,18 @@ public class FilmController {
     public View showAddFilmPage() {
         return new ViewModel("WEB-INF/jsp/admin/admin-add-film.jsp");
     }
+
+    public View showAllFilms() {
+        View view;
+        try {
+            view = new ViewModel("WEB-INF/jsp/admin/admin-show-all-films.jsp");
+            view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
+            return view;
+        } catch (ServiceException e) {
+            view = new ViewModel("admin-personal-area");
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            return new RedirectViewModel(view);
+        }
+
+    }
 }

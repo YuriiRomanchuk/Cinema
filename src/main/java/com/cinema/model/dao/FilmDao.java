@@ -1,7 +1,6 @@
 package com.cinema.model.dao;
 
 import com.cinema.model.entity.Film;
-import com.cinema.model.entity.User;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -10,10 +9,11 @@ import java.util.List;
 public class FilmDao implements GenericDao<Film> {
 
     private DataSource dataSource;
-    private DataSource.SqlFunction<User> userConverter;
+    private DataSource.SqlFunction<Film> filmConverter;
 
     public FilmDao(DataSource dataSource) {
         this.dataSource = dataSource;
+        receiveConverter();
     }
 
     @Override
@@ -27,8 +27,7 @@ public class FilmDao implements GenericDao<Film> {
                 ps.setString(2, entity.getNameEnglish());
                 ps.setTimestamp(3, new Timestamp(entity.getReleaseDate().getTime()));
                 ps.setString(4, entity.getDescription());
-                ps.setString(4, entity.getDescription());
-                ps.setString(5, entity.getDescriptiomEnglish());
+                ps.setString(5, entity.getDescriptionEnglish());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -42,7 +41,10 @@ public class FilmDao implements GenericDao<Film> {
 
     @Override
     public List findAll() {
-        return null;
+        return dataSource.receiveRecords("select id, name, name_english, description, release_date, description_english from films",
+                filmConverter,
+                preparedStatement -> {
+                });
     }
 
     @Override
@@ -53,5 +55,18 @@ public class FilmDao implements GenericDao<Film> {
     @Override
     public void delete(int id) {
 
+    }
+
+    private void receiveConverter() {
+        filmConverter = rs -> {
+            Film film = new Film();
+            film.setName(rs.getString("name"));
+            film.setNameEnglish(rs.getString("name_english"));
+            film.setId(rs.getInt("id"));
+            film.setDescription(rs.getString("description"));
+            film.setReleaseDate(rs.getTimestamp("release_date"));
+            film.setDescriptionEnglish(rs.getString("description_english"));
+            return film;
+        };
     }
 }

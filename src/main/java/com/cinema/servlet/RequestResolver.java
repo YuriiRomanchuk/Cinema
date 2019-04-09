@@ -37,8 +37,10 @@ public class RequestResolver {
         getControllers.put("/user-personal-area", r -> userController.showUserPersonalArea());
         getControllers.put("/logout", r -> userController.logout());
         getControllers.put("/admin-add-film", r -> filmController.showAddFilmPage());
+        getControllers.put("/admin-show-all-films", r -> filmController.showAllFilms());
         getControllers.put("/admin-add-room", r -> roomController.showAddRoomPage());
         getControllers.put("/admin-add-room-place", r -> roomPlaceController.showRoomPlace());
+
 
 
         postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convertFromHttpRequest(r)));
