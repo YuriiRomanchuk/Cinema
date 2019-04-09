@@ -1,17 +1,18 @@
 package com.cinema.config;
 
-import com.cinema.controller.ChangeLanguageController;
-import com.cinema.controller.FilmController;
-import com.cinema.controller.UserController;
-import com.cinema.controller.WelcomeController;
-import com.cinema.model.converter.EntityConverter.FilmConverter;
+import com.cinema.controller.*;
+import com.cinema.model.converter.dtoConverter.RoomPlaceDtoConverter;
+import com.cinema.model.converter.entityConverter.FilmConverter;
+import com.cinema.model.converter.entityConverter.RoomConverter;
 import com.cinema.model.converter.UserConverter;
 import com.cinema.model.converter.dtoConverter.FilmDtoConverter;
+import com.cinema.model.converter.dtoConverter.RoomDtoConverter;
 import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
-import com.cinema.model.dao.DataSource;
-import com.cinema.model.dao.FilmDao;
-import com.cinema.model.dao.UserDao;
+import com.cinema.model.converter.entityConverter.RoomPlaceConverter;
+import com.cinema.model.dao.*;
 import com.cinema.service.FilmService;
+import com.cinema.service.RoomPlaceService;
+import com.cinema.service.RoomService;
 import com.cinema.service.UserService;
 import com.cinema.servlet.RequestResolver;
 
@@ -24,43 +25,64 @@ public class ComponentInitializer {
     private final UserController userController;
     private final ChangeLanguageController changeLanguageController;
     private final FilmController filmController;
+    private final RoomController roomController;
+    private final RoomPlaceController roomPlaceController;
 
     private final FilmService filmService;
     private final UserService userService;
+    private final RoomService roomService;
+    private final RoomPlaceService roomPlaceService;
 
     private final UserLoginDtoConverter userLoginDtoConverter;
     private final FilmDtoConverter filmDtoConverter;
+    private final RoomDtoConverter roomDtoConverter;
+    private final RoomPlaceDtoConverter roomPlaceDtoConverter;
     private final UserConverter userConverter;
     private final FilmConverter filmConverter;
+    private final RoomConverter roomConverter;
+    private final RoomPlaceConverter roomPlaceConverter;
 
     private final UserDao userDao;
     private final FilmDao filmDao;
+    private final RoomDao roomDao;
+    private final RoomPlaceDao roomPlaceDao;
 
     public ComponentInitializer() {
 
         DataSource dataSource = new DataSource();
         userDao = new UserDao(dataSource);
         filmDao = new FilmDao(dataSource);
-
-        changeLanguageController = new ChangeLanguageController();
-        userService = new UserService(userDao);
+        roomDao = new RoomDao(dataSource);
+        roomPlaceDao = new RoomPlaceDao(dataSource);
 
         userLoginDtoConverter = new UserLoginDtoConverter();
-
         userConverter = new UserConverter();
         filmConverter = new FilmConverter();
+        roomConverter = new RoomConverter();
+        roomPlaceConverter = new RoomPlaceConverter();
         filmDtoConverter = new FilmDtoConverter();
+        roomDtoConverter = new RoomDtoConverter();
+        roomPlaceDtoConverter = new RoomPlaceDtoConverter();
 
+        userService = new UserService(userDao);
+        filmService = new FilmService(filmDao, filmConverter);
+        roomService = new RoomService(roomDao, roomConverter, roomDtoConverter);
+        roomPlaceService = new RoomPlaceService(roomPlaceDao);
+
+        changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController();
         userController = new UserController(userService);
-        filmService = new FilmService(filmDao, filmConverter);
         filmController = new FilmController(filmService);
+        roomController = new RoomController(roomService);
+        roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
 
 
         requestResolver = new RequestResolver(welcomeController,
                 userController,
                 changeLanguageController,
-                filmController);
+                filmController,
+                roomController,
+                roomPlaceController);
 
     }
 
@@ -98,5 +120,13 @@ public class ComponentInitializer {
 
     public FilmDtoConverter getFilmDtoConverter() {
         return filmDtoConverter;
+    }
+
+    public RoomDtoConverter getRoomDtoConverter() {
+        return roomDtoConverter;
+    }
+
+    public RoomPlaceDtoConverter getRoomPlaceDtoConverter() {
+        return roomPlaceDtoConverter;
     }
 }

@@ -3,7 +3,6 @@ package com.cinema.model.dao;
 import com.cinema.model.entity.Film;
 import com.cinema.model.entity.User;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,7 +19,7 @@ public class FilmDao implements GenericDao<Film> {
     @Override
     public void insert(Film entity) {
 
-        final String query = "insert into films (name, name_english, release_date, description) values(?, ?, ?, ?)";
+        final String query = "insert into films (name, name_english, release_date, description, description_english) values(?, ?, ?, ?, ?)";
 
         dataSource.implementWrite(query, ps -> {
             try {
@@ -28,11 +27,12 @@ public class FilmDao implements GenericDao<Film> {
                 ps.setString(2, entity.getNameEnglish());
                 ps.setTimestamp(3, new Timestamp(entity.getReleaseDate().getTime()));
                 ps.setString(4, entity.getDescription());
+                ps.setString(4, entity.getDescription());
+                ps.setString(5, entity.getDescriptiomEnglish());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }, r -> entity.setId(r.getInt(1)));
-
     }
 
     @Override

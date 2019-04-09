@@ -73,7 +73,7 @@ public class AuthorizationFilter implements Filter {
                                          Map<String, UserAuthorization> usersAuthorization, String email) {
 
         UserService userService = ComponentInitializer.getInstance().getUserService();
-        UserDto userDto = ComponentInitializer.getInstance().getUserLoginDtoConverter().convert(httpRequest);
+        UserDto userDto = ComponentInitializer.getInstance().getUserLoginDtoConverter().convertFromHttpRequest(httpRequest);
 
         Role role = userService.receiveUserRole(userDto);
         if (role != null) {

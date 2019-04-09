@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserConverter implements DtoConverter<User> {
 
     @Override
-    public User convert(HttpServletRequest request) {
+    public User convertFromHttpRequest(HttpServletRequest request) {
         User user = new User();
         user.setLogin(request.getParameter("login"));
         user.setPassword(request.getParameter("password"));

@@ -4,5 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface DtoConverter<V> {
 
-    V convert(HttpServletRequest request);
+    V convertFromHttpRequest(HttpServletRequest request);
 }
+

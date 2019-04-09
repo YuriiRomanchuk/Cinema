@@ -54,11 +54,7 @@ public class UserDao implements GenericDao<User> {
 
     public Role findUserRole(String email, String password) {
         User user = findUserByEmailAndPassword(email, password);
-        if (user != null) {
-            return user.getRole();
-        }
-
-        return null;
+        return user != null ? user.getRole() : null;
     }
 
 

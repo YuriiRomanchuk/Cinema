@@ -4,7 +4,15 @@ import com.cinema.model.entity.RoomPlace;
 
 import java.util.List;
 
-public class RoomPlaceDao implements  GenericDao<RoomPlace> {
+public class RoomPlaceDao implements GenericDao<RoomPlace> {
+
+    private DataSource dataSource;
+    private DataSource.SqlFunction<RoomPlace> roomPlaceConverter;
+
+    public RoomPlaceDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public void insert(RoomPlace entity) {
 
@@ -29,4 +37,5 @@ public class RoomPlaceDao implements  GenericDao<RoomPlace> {
     public void delete(int id) {
 
     }
+
 }

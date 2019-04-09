@@ -4,6 +4,7 @@ public class Room {
 
     private int id;
     private String name;
+    private String nameEnglish;
 
     public int getId() {
         return id;
@@ -19,5 +20,13 @@ public class Room {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNameEnglish() {
+        return nameEnglish;
+    }
+
+    public void setNameEnglish(String nameEnglish) {
+        this.nameEnglish = nameEnglish;
     }
 }

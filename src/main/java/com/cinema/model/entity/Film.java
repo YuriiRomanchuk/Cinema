@@ -10,6 +10,7 @@ public class Film {
     private String nameEnglish;
     private Date releaseDate;
     private String description;
+    private String descriptiomEnglish;
 
     public int getId() {
         return id;
@@ -49,5 +50,13 @@ public class Film {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDescriptiomEnglish() {
+        return descriptiomEnglish;
+    }
+
+    public void setDescriptiomEnglish(String descriptiomEnglish) {
+        this.descriptiomEnglish = descriptiomEnglish;
     }
 }

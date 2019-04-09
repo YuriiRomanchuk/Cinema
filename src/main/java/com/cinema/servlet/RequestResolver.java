@@ -1,10 +1,7 @@
 package com.cinema.servlet;
 
 import com.cinema.config.ComponentInitializer;
-import com.cinema.controller.ChangeLanguageController;
-import com.cinema.controller.FilmController;
-import com.cinema.controller.UserController;
-import com.cinema.controller.WelcomeController;
+import com.cinema.controller.*;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 
@@ -29,7 +26,9 @@ public class RequestResolver {
     public RequestResolver(WelcomeController welcomeController,
                            UserController userController,
                            ChangeLanguageController changeLanguageController,
-                           FilmController filmController) {
+                           FilmController filmController,
+                           RoomController roomController,
+                           RoomPlaceController roomPlaceController) {
 
         getControllers.put("/index", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
@@ -38,12 +37,16 @@ public class RequestResolver {
         getControllers.put("/user-personal-area", r -> userController.showUserPersonalArea());
         getControllers.put("/logout", r -> userController.logout());
         getControllers.put("/admin-add-film", r -> filmController.showAddFilmPage());
+        getControllers.put("/admin-add-room", r -> roomController.showAddRoomPage());
+        getControllers.put("/admin-add-room-place", r -> roomPlaceController.showRoomPlace());
 
 
-        postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convert(r)));
-        postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convert(r)));
+        postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convertFromHttpRequest(r)));
+        postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convertFromHttpRequest(r)));
         postControllers.put("/change_language", r -> changeLanguageController.changeLanguage());
-        postControllers.put("/admin-add-film", r -> filmController.createFilm(ComponentInitializer.getInstance().getFilmDtoConverter().convert(r)));
+        postControllers.put("/admin-add-film", r -> filmController.createFilm(ComponentInitializer.getInstance().getFilmDtoConverter().convertFromHttpRequest(r)));
+        postControllers.put("/admin-add-room", r -> roomController.createRoom(ComponentInitializer.getInstance().getRoomDtoConverter().convertFromHttpRequest(r)));
+        postControllers.put("/admin-add-room-place", r -> roomPlaceController.createRoomPlace(ComponentInitializer.getInstance().getRoomPlaceDtoConverter().convertFromHttpRequest(r)));
 
     }
 

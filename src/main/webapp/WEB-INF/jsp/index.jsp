@@ -1,72 +1,42 @@
-<%@ page import="com.cinema.config.UserAuthorization" %>
-<%@ page import="com.cinema.model.entity.enums.Role" %>
-<%@ page import="java.util.Map" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="${param.lang}"/>
-<fmt:setBundle basename="messages"/>
-<html lang="${sessionScope.lang}">
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/WebContent/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/WebContent/css/dashboard.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <meta charset="UTF-8"/>
-    <title>Hello</title>
-</head>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<%
-    HttpSession currentSession = request.getSession();
-    Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) currentSession.getServletContext().getAttribute("usersAuthorization");
-    UserAuthorization userAuthorization = usersAuthorization.get(currentSession.getId());
+<t:genericpage>
+    <jsp:attribute name="title">
+      Template Page
+    </jsp:attribute>
+    <jsp:attribute name="header">
+        <jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
+    </jsp:attribute>
+    <jsp:attribute name="footer">
+    </jsp:attribute>
 
-    Role role = Role.UNKNOWN;
-    if (userAuthorization != null) {
-        role = userAuthorization.getRole();
-    }
-%>
+    <jsp:body>
+        <div class="row h-100">
+        <!-- left sidebar -->
+    <%--        <jsp:include page="/WEB-INF/jsp/template/admin-bar.jsp"/>--%>
 
-<body>
-<jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4">
-            <form class="form" role="form">
-                <h3>Hello!</h3>
-
-                <div style="overflow: hidden;">
-                    <div style="width: 1000%;">
-                        <div style="float: left; width: 200px; height: 200px;">
-                            <li>Administration
-                                <ul>
-                                    <%
-                                        if (role == null || role.equals(Role.UNKNOWN)) {
-                                    %>
-                                    <li><a href="registration-form">Registration</a></li>
-                                    <li><a href="login">Login</a></li>
-                                    <%
-                                    } else {
-                                        if (role.equals(Role.ADMIN)) {
-                                    %>
-                                    <li><a href="admin-personal-area">Personal area</a></li>
-                                    <% } else { %>
-                                    <li><a href="user-personal-area">Personal area</a></li>
-                                    <% }%>
-                                    <li><a href="logout">Logout</a></li>
-                                    <% }
-                                    %>
-                                </ul>
-                            </li>
-                        </div>
-                    </div>
+        <!-- center content -->
+        <div class="col fluid bg-faded py-3">
+            <div class="row my-3 offset-md-3">
+                <div class="col-sm-4">
+                        <%--<h1>Authorization</h1>
+                        <form method="post" action="login">
+                            <div class="form-group">
+                                <label for="email">Name:</label>
+                                <input type="text" class="form-control" id="email" name="email"
+                                       placeholder="Enter your email">
+                                <label for="password">Password:</label>
+                                <input type="text" class="form-control" id="password" name="password"
+                                       placeholder="Enter your password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Log in</button>
+                            <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
+                        </form>--%>
                 </div>
 
-            </form>
+            </div>
         </div>
-    </div>
-</div>
-
-</body>
-</html>
+        </div>
+    </jsp:body>
+</t:genericpage>

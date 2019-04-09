@@ -1,7 +1,7 @@
 package com.cinema.service;
 
 import com.cinema.exception.ServiceException;
-import com.cinema.model.converter.EntityConverter.FilmConverter;
+import com.cinema.model.converter.entityConverter.FilmConverter;
 import com.cinema.model.dao.FilmDao;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;

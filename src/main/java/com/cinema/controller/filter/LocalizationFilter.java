@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class LocalizationFilter implements Filter {
 
-    private final String defaultLanguage = "en";
+    private final String defaultLanguage = "uk";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -25,13 +25,11 @@ public class LocalizationFilter implements Filter {
             session.setAttribute("lang", defaultLanguage);
         }
 
-
-        if (httpRequest.getParameter("language") != null) {
-            if (!session.getAttribute("lang").equals(httpRequest.getParameter("language"))) {
-                session.setAttribute("lang", httpRequest.getParameter("language"));
-            }
-
+        String languageRequest = httpRequest.getParameter("language");
+        if (languageRequest != null && !session.getAttribute("lang").equals(languageRequest)) {
+            session.setAttribute("lang", httpRequest.getParameter("language"));
         }
+
         filterChain.doFilter(servletRequest, servletResponse);
     }
 

@@ -1,7 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
+
 <t:genericpage>
+
     <jsp:attribute name="title">
       Template Page
     </jsp:attribute>
@@ -20,7 +22,7 @@
             <div class="col fluid bg-faded py-3">
                 <div class="row my-3 offset-md-3">
                     <div class="col-sm-4">
-                        <jsp:include page="/WEB-INF/jsp/admin/adminBody/admin-add-film-body.jsp"/>
+                        <jsp:include page="/WEB-INF/jsp/admin/adminBody/admin-add-room-place-body.jsp"/>
                     </div>
                 </div>
             </div>
