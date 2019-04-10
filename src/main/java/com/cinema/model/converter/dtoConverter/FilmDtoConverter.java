@@ -34,7 +34,11 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
 
     public FilmDto convertFromFilmSessionRequest(HttpServletRequest request) {
         FilmDto filmDto = new FilmDto();
-        filmDto.setId(Integer.valueOf(request.getParameter("film_id")));
+        if (request.getParameter("film_id") != null) {
+            filmDto.setId(Integer.valueOf(request.getParameter("film_id")));
+        } else {
+            filmDto.setId(-1);
+        }
         return filmDto;
     }
 
