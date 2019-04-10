@@ -3,6 +3,7 @@ package com.cinema.model.dto;
 public class FilmDto {
 
     private int id;
+    private int runningTime;
     private String name;
     private String nameEnglish;
     private String releaseDate;
@@ -56,5 +57,13 @@ public class FilmDto {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getRunningTime() {
+        return runningTime;
+    }
+
+    public void setRunningTime(int runningTime) {
+        this.runningTime = runningTime;
     }
 }

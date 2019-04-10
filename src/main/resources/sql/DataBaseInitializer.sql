@@ -14,19 +14,20 @@ create table if not exists users
 
 create table if not exists films
 (
-  id           SERIAL       NOT NULL,
-  name         varchar(250) NOT NULL,
-  nameEnglish varchar(250) NOT NULL,
-  release_date timestamp    NOT NULL,
-  description  varchar(250) NOT NULL,
-  descriptionEnglish  varchar(250) NOT NULL,
+  id                 SERIAL       NOT NULL,
+  name               varchar(250) NOT NULL,
+  nameEnglish        varchar(250) NOT NULL,
+  release_date       timestamp    NOT NULL,
+  description        varchar(250) NOT NULL,
+  descriptionEnglish varchar(250) NOT NULL,
+  runningTime           int          NOT NULL,
   PRIMARY KEY (id)
 );
 
 create table if not exists rooms
 (
-  id   SERIAL       NOT NULL,
-  name varchar(250) NOT NULL,
+  id          SERIAL       NOT NULL,
+  name        varchar(250) NOT NULL,
   nameEnglish varchar(250) NOT NULL,
   PRIMARY KEY (id)
 );

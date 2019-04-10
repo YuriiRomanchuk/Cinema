@@ -18,7 +18,7 @@ public class FilmDao implements GenericDao<Film> {
     @Override
     public void insert(Film entity) {
 
-        final String query = "insert into films (name, name_english, release_date, description, description_english) values(?, ?, ?, ?, ?)";
+        final String query = "insert into films (name, name_english, release_date, description, description_english, running_time) values(?, ?, ?, ?, ?, ?)";
 
         dataSource.implementWrite(query, ps -> {
             ps.setString(1, entity.getName());
@@ -26,6 +26,7 @@ public class FilmDao implements GenericDao<Film> {
             ps.setTimestamp(3, new Timestamp(entity.getReleaseDate().getTime()));
             ps.setString(4, entity.getDescription());
             ps.setString(5, entity.getDescriptionEnglish());
+            ps.setInt(6, entity.getRunningTime());
         }, r -> entity.setId(r.getInt(1)));
     }
 
@@ -36,7 +37,7 @@ public class FilmDao implements GenericDao<Film> {
 
     @Override
     public List findAll() {
-        return dataSource.receiveRecords("select id, name, name_english, description, release_date, description_english from films",
+        return dataSource.receiveRecords("select id, name, name_english, description, release_date, description_english, running_time from films",
                 filmConverter,
                 preparedStatement -> {
                 });
@@ -61,6 +62,7 @@ public class FilmDao implements GenericDao<Film> {
             film.setDescription(rs.getString("description"));
             film.setReleaseDate(rs.getTimestamp("release_date"));
             film.setDescriptionEnglish(rs.getString("description_english"));
+            film.setRunningTime(rs.getInt("running_time"));
             return film;
         };
     }

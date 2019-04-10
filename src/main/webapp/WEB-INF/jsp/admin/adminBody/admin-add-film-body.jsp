@@ -43,6 +43,11 @@
         <input type="text" class="form-control" id="descriptionEnglish"
                name="descriptionEnglish"
                placeholder="Enter english description">
+        <label for="runningTime">Running time:</label>
+        <input type="text" class="form-control" id="runningTime"
+               name="descriptionEnglish"
+               placeholder="Enter running time"
+               value=2 readonly>
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
     <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>

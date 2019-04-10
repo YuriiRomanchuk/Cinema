@@ -6,6 +6,7 @@ import java.util.Date;
 public class Film {
 
     private int id;
+    private int runningTime;
     private String name;
     private String nameEnglish;
     private Date releaseDate;
@@ -58,5 +59,13 @@ public class Film {
 
     public void setDescriptionEnglish(String descriptionEnglish) {
         this.descriptionEnglish = descriptionEnglish;
+    }
+
+    public int getRunningTime() {
+        return runningTime;
+    }
+
+    public void setRunningTime(int runningTime) {
+        this.runningTime = runningTime;
     }
 }

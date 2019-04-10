@@ -32,11 +32,10 @@ public class FilmService {
         }
     }
 
-    public List<FilmDto> receiveAllFilmsDto() throws ServiceException{
+    public List<FilmDto> receiveAllFilmsDto() throws ServiceException {
         try {
             List<FilmDto> filmsDto = new ArrayList<>();
             List<Film> films = filmDao.findAll();
-
             films.forEach(f -> filmsDto.add(filmDtoConverter.convertFromFilmEntity(f)));
             return filmsDto;
         } catch (Exception e) {

@@ -16,6 +16,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         filmDto.setReleaseDate(request.getParameter("release_date"));
         filmDto.setDescription(request.getParameter("description"));
         filmDto.setDescriptionEnglish(request.getParameter("description_english"));
+        filmDto.setRunningTime(Integer.valueOf(request.getParameter("runningTime")));
         return filmDto;
     }
 
@@ -27,6 +28,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         filmDto.setReleaseDate(String.valueOf(film.getReleaseDate()));
         filmDto.setDescription(film.getDescription());
         filmDto.setDescriptionEnglish(film.getDescriptionEnglish());
+        filmDto.setRunningTime(film.getRunningTime());
         return filmDto;
     }
 

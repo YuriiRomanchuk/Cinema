@@ -34,6 +34,7 @@
         <th>Id</th>
         <th>Name</th>
         <th>Released</th>
+        <th>Running time(h)</th>
         <th>Description</th>
     </thead>
     <%
@@ -48,6 +49,9 @@
         </td>
         <td>
             <%=film.getReleaseDate()%>
+        </td>
+        <td>
+            <%=film.getRunningTime()%>
         </td>
         <td>
             <%=film.getDescription()%>
