@@ -21,7 +21,6 @@ public class TimeConverter {
         return receiveMomentOfDay(date, 23, 59, 59, 999);
     }
 
-
     private static Date receiveMomentOfDay(Date date, int hour, int minute, int second, int millisecond) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -29,9 +28,14 @@ public class TimeConverter {
         cal.set(Calendar.MINUTE, minute);
         cal.set(Calendar.SECOND, second);
         cal.set(Calendar.MILLISECOND, millisecond);
-
         return cal.getTime();
     }
 
+    public static Date addHourToDate(Date date, int hour) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.HOUR_OF_DAY, 1);
+        return cal.getTime();
+    }
 
 }

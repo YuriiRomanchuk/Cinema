@@ -2,6 +2,7 @@ package com.cinema.controller;
 
 import com.cinema.exception.ServiceException;
 import com.cinema.model.dto.FilmSessionDto;
+import com.cinema.service.FilmSessionService;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
@@ -22,8 +23,8 @@ public class FilmSessionController {
 
         View view;
         try {
-            filmSessionService.showFilmSession(filmSessionDto);
             view = new ViewModel("WEB-INF/jsp/admin/admin-session.jsp");
+            view.addParameter("filmsSessionDto", filmSessionService.showFilmSession(filmSessionDto));
             return view;
         } catch (ServiceException e) {
             view = new ViewModel("admin-session.jsp");

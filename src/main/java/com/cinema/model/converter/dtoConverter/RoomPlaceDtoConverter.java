@@ -12,7 +12,6 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
 
     private final RoomDtoConverter roomDtoConverter;
 
-
     public RoomPlaceDtoConverter(RoomDtoConverter roomDtoConverter) {
         this.roomDtoConverter = roomDtoConverter;
     }
