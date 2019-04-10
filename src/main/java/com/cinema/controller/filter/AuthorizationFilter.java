@@ -5,7 +5,6 @@ import com.cinema.config.UserAuthorization;
 import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.enums.Role;
-import com.cinema.service.UserService;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

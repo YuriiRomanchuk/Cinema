@@ -52,11 +52,11 @@ public class RoomDao implements GenericDao<Room> {
 
     private void receiveConverter() {
         roomConverter = rs -> {
-            Room bank = new Room();
-            bank.setName(rs.getString("name"));
-            bank.setNameEnglish(rs.getString("name_english"));
-            bank.setId(rs.getInt("id"));
-            return bank;
+            Room room = new Room();
+            room.setName(rs.getString("name"));
+            room.setNameEnglish(rs.getString("name_english"));
+            room.setId(rs.getInt("id"));
+            return room;
         };
 
     }

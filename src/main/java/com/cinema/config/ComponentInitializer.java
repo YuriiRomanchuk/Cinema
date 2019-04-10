@@ -10,10 +10,6 @@ import com.cinema.model.converter.dtoConverter.RoomDtoConverter;
 import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
 import com.cinema.model.converter.entityConverter.RoomPlaceConverter;
 import com.cinema.model.dao.*;
-import com.cinema.service.FilmService;
-import com.cinema.service.RoomPlaceService;
-import com.cinema.service.RoomService;
-import com.cinema.service.UserService;
 import com.cinema.servlet.RequestResolver;
 
 public class ComponentInitializer {

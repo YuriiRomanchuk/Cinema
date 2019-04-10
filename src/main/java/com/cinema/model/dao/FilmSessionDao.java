@@ -1,10 +1,21 @@
 package com.cinema.model.dao;
 
+import com.cinema.model.entity.Film;
 import com.cinema.model.entity.FilmSession;
+import com.cinema.model.entity.Room;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 public class FilmSessionDao implements GenericDao<FilmSession> {
+
+    private final DataSource dataSource;
+    private DataSource.SqlFunction<FilmSession> filmSessionConverter;
+
+    public FilmSessionDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
     public void insert(FilmSession entity) {
@@ -26,8 +37,63 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
     }
 
+    public List<FilmSession> findByFilters(Date beginOfDay, Date endOfDay, int film_id) {
+
+        String query = "SELECT temp.id as id_session, film_id, room_id, date" +
+                ", films.name as film_name, films.name_english as film_name_english, films.description as film_description," +
+                "films.release_date as film_release_date, films.description_english as film_description_english, films.running_time as film_running_time" +
+                "rooms.name as room_name, rooms.name_english as room_name_english " +
+                "FROM (select id, film_id, room_id, date from session where date >= ? and date <= ? and 1 = 1) " +
+                "temp LEFT JOIN films ON film_id = films.id LEFT JOIN rooms ON room_id = rooms.id";
+
+        if (film_id >= 0) {
+            query.replace("1 = 1", "film_id = ?");
+        }
+
+        List<FilmSession> filmsSession = dataSource.receiveRecords("select id, name, name_english, description, release_date, description_english, running_time from films",
+                filmSessionConverter,
+                preparedStatement -> {
+                    preparedStatement.setTimestamp(2, new Timestamp(beginOfDay.getTime()));
+                    preparedStatement.setTimestamp(2, new Timestamp(endOfDay.getTime()));
+                    if (film_id >= 0) {
+                        preparedStatement.setInt(3, film_id);
+                    }
+                });
+
+        return filmsSession;
+    }
+
+
     @Override
     public void delete(int id) {
 
     }
+
+    private void receiveConverter() {
+        filmSessionConverter = rs -> {
+            FilmSession filmSession = new FilmSession();
+            Film film = new Film();
+            Room room = new Room();
+
+            film.setName(rs.getString("film_name"));
+            film.setNameEnglish(rs.getString("film_name_english"));
+            film.setId(rs.getInt("film_id"));
+            film.setDescription(rs.getString("film_description"));
+            film.setReleaseDate(rs.getTimestamp("film_release_date"));
+            film.setDescriptionEnglish(rs.getString("film_description_english"));
+            film.setRunningTime(rs.getInt("film_running_time"));
+
+            room.setName(rs.getString("room_name"));
+            room.setNameEnglish(rs.getString("room_name_english"));
+            room.setId(rs.getInt("room_id"));
+
+            filmSession.setId(rs.getInt("id_session"));
+            filmSession.setDate(rs.getTimestamp("date"));
+            filmSession.setFilm(film);
+            filmSession.setRoom(room);
+
+            return filmSession;
+        };
+    }
+
 }
