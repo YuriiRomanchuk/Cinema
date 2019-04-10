@@ -2,6 +2,7 @@ package com.cinema.controller;
 
 import com.cinema.exception.ServiceException;
 import com.cinema.model.dto.RoomDto;
+import com.cinema.service.RoomService;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;

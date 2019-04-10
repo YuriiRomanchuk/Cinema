@@ -28,7 +28,8 @@ public class RequestResolver {
                            ChangeLanguageController changeLanguageController,
                            FilmController filmController,
                            RoomController roomController,
-                           RoomPlaceController roomPlaceController) {
+                           RoomPlaceController roomPlaceController,
+                           FilmSessionController filmSessionController) {
 
         getControllers.put("/index", r -> welcomeController.showIndexPage());
         getControllers.put("/registration-form", r -> userController.showRegistrationPage());
