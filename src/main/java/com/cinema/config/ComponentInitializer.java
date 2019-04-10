@@ -59,15 +59,15 @@ public class ComponentInitializer {
         userConverter = new UserConverter();
         filmConverter = new FilmConverter();
         roomConverter = new RoomConverter();
-        roomPlaceConverter = new RoomPlaceConverter();
+        roomPlaceConverter = new RoomPlaceConverter(roomConverter);
         filmDtoConverter = new FilmDtoConverter();
         roomDtoConverter = new RoomDtoConverter();
-        roomPlaceDtoConverter = new RoomPlaceDtoConverter();
+        roomPlaceDtoConverter = new RoomPlaceDtoConverter(roomDtoConverter);
 
         userService = new UserService(userDao);
         filmService = new FilmService(filmDao, filmConverter, filmDtoConverter);
         roomService = new RoomService(roomDao, roomConverter, roomDtoConverter);
-        roomPlaceService = new RoomPlaceService(roomPlaceDao);
+        roomPlaceService = new RoomPlaceService(roomPlaceDao, roomPlaceConverter);
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController();

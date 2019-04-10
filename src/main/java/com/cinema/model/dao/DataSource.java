@@ -65,6 +65,24 @@ public class DataSource {
         }
     }
 
+    public void implementWriteBatch(String query, SqlConsumer<PreparedStatement> parameters, SqlConsumer<ResultSet> resultProcessor) {
+
+        try (
+                Connection connection = receiveConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        ) {
+            parameters.accept(preparedStatement);
+            preparedStatement.executeBatch();
+            try (ResultSet rs = preparedStatement.getGeneratedKeys();) {
+                while (rs.next()) {
+                    resultProcessor.accept(rs);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public <T> List<T> receiveRecords(String query, SqlFunction<T> converter, SqlConsumer<PreparedStatement> parameters) {
 
         List<T> objects = new ArrayList<>();

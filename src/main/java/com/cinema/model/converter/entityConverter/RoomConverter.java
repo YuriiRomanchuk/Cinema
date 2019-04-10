@@ -9,7 +9,9 @@ public class RoomConverter implements Converter<RoomDto, Room> {
     @Override
     public Room convert(RoomDto roomDto) {
         Room room = new Room();
+        room.setId(roomDto.getId());
         room.setName(roomDto.getName());
         return room;
     }
+
 }

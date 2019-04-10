@@ -24,4 +24,10 @@ public class RoomDtoConverter implements Converter<HttpServletRequest, RoomDto> 
 
         return roomDto;
     }
+
+    public RoomDto convertFromRoomPlaceRequest(HttpServletRequest request) {
+        RoomDto roomDto = new RoomDto();
+        roomDto.setId(Integer.valueOf(request.getParameter("room")));
+        return roomDto;
+    }
 }

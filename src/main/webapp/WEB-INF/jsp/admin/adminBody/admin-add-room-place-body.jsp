@@ -46,11 +46,15 @@
     <div class="form-group">
         <label for="row"><fmt:message
                 key="local.room.places.rows"/></label>
-        <input type="text" class="form-control" id="row" name="row"
+        <input type="number" class="form-control" id="row" name="row"
                placeholder="Enter count of row">
         <label for="place">Places:</label>
-        <input type="text" class="form-control" id="place" name="place"
+        <input type="number" class="form-control" id="place" name="place"
                placeholder="Enter count of places">
+        <label for="placesInRow">Places in row:</label>
+        <input type="number" class="form-control" id="placesInRow" name="placesInRow"
+               placeholder="Enter count of places in row"
+        value = 10>
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
     <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>

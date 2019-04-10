@@ -18,6 +18,22 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
 
     }
 
+    public void insertRoomPlaces(List<RoomPlace> roomPlaces) {
+
+        final String query = "insert into places (row, place, room_id) values(?, ?, ?)";
+
+        dataSource.implementWriteBatch(query, ps -> {
+            for (RoomPlace roomPlace : roomPlaces) {
+                ps.setInt(1, roomPlace.getRow());
+                ps.setInt(2, roomPlace.getPlace());
+                ps.setInt(3, roomPlace.getRoom().getId());
+                ps.addBatch();
+            }
+        }, r -> {});
+
+
+    }
+
     @Override
     public RoomPlace findById(int id) {
         return null;
