@@ -9,7 +9,7 @@ import com.cinema.view.ViewModel;
 
 public class FilmController {
 
-    private FilmService filmService;
+    private final FilmService filmService;
 
     public FilmController(FilmService filmService) {
         this.filmService = filmService;

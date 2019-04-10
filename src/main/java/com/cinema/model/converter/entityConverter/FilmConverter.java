@@ -1,12 +1,13 @@
 package com.cinema.model.converter.entityConverter;
 
+import com.cinema.model.converter.Converter;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class FilmConverter implements EntityConverter<FilmDto, Film> {
+public class FilmConverter implements Converter<FilmDto, Film> {
 
     @Override
     public Film convert(FilmDto filmDto) {

@@ -8,8 +8,8 @@ import com.cinema.view.ViewModel;
 
 public class RoomPlaceController {
 
-    private RoomPlaceService roomPlaceService;
-    private RoomService roomService;
+    private final RoomPlaceService roomPlaceService;
+    private final RoomService roomService;
 
     public RoomPlaceController(RoomPlaceService roomPlaceService, RoomService roomService) {
         this.roomPlaceService = roomPlaceService;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RoomPlaceDao implements GenericDao<RoomPlace> {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
     private DataSource.SqlFunction<RoomPlace> roomPlaceConverter;
 
     public RoomPlaceDao(DataSource dataSource) {

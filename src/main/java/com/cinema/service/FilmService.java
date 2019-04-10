@@ -12,9 +12,9 @@ import java.util.List;
 
 public class FilmService {
 
-    private FilmDao filmDao;
-    private FilmConverter filmConverter;
-    private FilmDtoConverter filmDtoConverter;
+    private final FilmDao filmDao;
+    private final FilmConverter filmConverter;
+    private final FilmDtoConverter filmDtoConverter;
 
     public FilmService(FilmDao filmDao, FilmConverter filmConverter, FilmDtoConverter filmDtoConverter) {
         this.filmDao = filmDao;

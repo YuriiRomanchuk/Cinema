@@ -8,7 +8,7 @@ import com.cinema.model.entity.enums.Role;
 
 public class UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
@@ -32,6 +32,7 @@ public class UserService {
     }
 
     public Role receiveUserRole(UserDto userDto) {
-        return userDao.findUserRole(userDto.getEmail(), userDto.getPassword());
+        User user = userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
+        return user != null ? user.getRole() : Role.UNKNOWN;
     }
 }

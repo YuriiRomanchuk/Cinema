@@ -12,9 +12,9 @@ import java.util.List;
 
 public class RoomService {
 
-    private RoomDao roomDao;
-    private RoomConverter roomConverter;
-    private RoomDtoConverter roomDtoConverter;
+    private final RoomDao roomDao;
+    private final RoomConverter roomConverter;
+    private final RoomDtoConverter roomDtoConverter;
 
     public RoomService(RoomDao roomDao, RoomConverter roomConverter, RoomDtoConverter roomDtoConverter) {
         this.roomDao = roomDao;

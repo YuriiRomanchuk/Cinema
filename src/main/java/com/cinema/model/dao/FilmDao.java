@@ -2,13 +2,12 @@ package com.cinema.model.dao;
 
 import com.cinema.model.entity.Film;
 
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
 public class FilmDao implements GenericDao<Film> {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
     private DataSource.SqlFunction<Film> filmConverter;
 
     public FilmDao(DataSource dataSource) {
@@ -22,15 +21,11 @@ public class FilmDao implements GenericDao<Film> {
         final String query = "insert into films (name, name_english, release_date, description, description_english) values(?, ?, ?, ?, ?)";
 
         dataSource.implementWrite(query, ps -> {
-            try {
-                ps.setString(1, entity.getName());
-                ps.setString(2, entity.getNameEnglish());
-                ps.setTimestamp(3, new Timestamp(entity.getReleaseDate().getTime()));
-                ps.setString(4, entity.getDescription());
-                ps.setString(5, entity.getDescriptionEnglish());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            ps.setString(1, entity.getName());
+            ps.setString(2, entity.getNameEnglish());
+            ps.setTimestamp(3, new Timestamp(entity.getReleaseDate().getTime()));
+            ps.setString(4, entity.getDescription());
+            ps.setString(5, entity.getDescriptionEnglish());
         }, r -> entity.setId(r.getInt(1)));
     }
 

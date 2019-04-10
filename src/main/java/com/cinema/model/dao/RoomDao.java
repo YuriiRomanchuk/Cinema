@@ -2,12 +2,11 @@ package com.cinema.model.dao;
 
 import com.cinema.model.entity.Room;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class RoomDao implements GenericDao<Room> {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
     private DataSource.SqlFunction<Room> roomConverter;
 
     public RoomDao(DataSource dataSource) {
@@ -21,12 +20,8 @@ public class RoomDao implements GenericDao<Room> {
         final String query = "insert into rooms (name, name_english) values(?,?)";
 
         dataSource.implementWrite(query, ps -> {
-            try {
-                ps.setString(1, entity.getName());
-                ps.setString(1, entity.getNameEnglish());
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            ps.setString(1, entity.getName());
+            ps.setString(1, entity.getNameEnglish());
         }, r -> entity.setId(r.getInt(1)));
 
     }

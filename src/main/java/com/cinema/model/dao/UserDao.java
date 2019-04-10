@@ -3,14 +3,12 @@ package com.cinema.model.dao;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserDao implements GenericDao<User> {
 
-    private DataSource dataSource;
+    private final DataSource dataSource;
     private DataSource.SqlFunction<User> userConverter;
-
 
     public UserDao(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -80,18 +78,14 @@ public class UserDao implements GenericDao<User> {
         final String query = "insert into users (first_name, last_name, middle_name, login, password, email, phone, role) values(?, ?, ?, ?, ?, ?, ?, ?)";
 
         dataSource.implementWrite(query, ps -> {
-            try {
-                ps.setString(1, user.getFirstName());
-                ps.setString(2, user.getLastName());
-                ps.setString(3, user.getMiddleName());
-                ps.setString(4, user.getLogin());
-                ps.setString(5, user.getPassword());
-                ps.setString(6, user.getEmail());
-                ps.setInt(7, user.getPhone());
-                ps.setString(8, String.valueOf(user.getRole()));
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getMiddleName());
+            ps.setString(4, user.getLogin());
+            ps.setString(5, user.getPassword());
+            ps.setString(6, user.getEmail());
+            ps.setInt(7, user.getPhone());
+            ps.setString(8, String.valueOf(user.getRole()));
         }, r -> user.setId(r.getInt(1)));
     }
 }

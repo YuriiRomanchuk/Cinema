@@ -42,13 +42,12 @@ public class RequestResolver {
         getControllers.put("/admin-add-room-place", r -> roomPlaceController.showRoomPlace());
 
 
-
-        postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convertFromHttpRequest(r)));
-        postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convertFromHttpRequest(r)));
+        postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convert(r)));
+        postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convert(r)));
         postControllers.put("/change_language", r -> changeLanguageController.changeLanguage());
-        postControllers.put("/admin-add-film", r -> filmController.createFilm(ComponentInitializer.getInstance().getFilmDtoConverter().convertFromHttpRequest(r)));
-        postControllers.put("/admin-add-room", r -> roomController.createRoom(ComponentInitializer.getInstance().getRoomDtoConverter().convertFromHttpRequest(r)));
-        postControllers.put("/admin-add-room-place", r -> roomPlaceController.createRoomPlace(ComponentInitializer.getInstance().getRoomPlaceDtoConverter().convertFromHttpRequest(r)));
+        postControllers.put("/admin-add-film", r -> filmController.createFilm(ComponentInitializer.getInstance().getFilmDtoConverter().convert(r)));
+        postControllers.put("/admin-add-room", r -> roomController.createRoom(ComponentInitializer.getInstance().getRoomDtoConverter().convert(r)));
+        postControllers.put("/admin-add-room-place", r -> roomPlaceController.createRoomPlace(ComponentInitializer.getInstance().getRoomPlaceDtoConverter().convert(r)));
 
     }
 

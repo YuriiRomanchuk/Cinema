@@ -1,14 +1,15 @@
 package com.cinema.model.converter.dtoConverter;
 
+import com.cinema.model.converter.Converter;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class FilmDtoConverter implements DtoConverter<FilmDto> {
+public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> {
 
     @Override
-    public FilmDto convertFromHttpRequest(HttpServletRequest request) {
+    public FilmDto convert(HttpServletRequest request) {
         FilmDto filmDto = new FilmDto();
         filmDto.setName(request.getParameter("name"));
         filmDto.setNameEnglish(request.getParameter("name_english"));
@@ -28,4 +29,5 @@ public class FilmDtoConverter implements DtoConverter<FilmDto> {
         filmDto.setDescriptionEnglish(film.getDescriptionEnglish());
         return filmDto;
     }
+
 }
