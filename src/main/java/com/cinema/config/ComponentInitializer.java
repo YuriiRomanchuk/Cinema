@@ -81,7 +81,7 @@ public class ComponentInitializer {
         filmController = new FilmController(filmService);
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
-        filmSessionController = new FilmSessionController(filmSessionService);
+        filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService);
 
         requestResolver = new RequestResolver(welcomeController,
                 userController,
@@ -135,5 +135,13 @@ public class ComponentInitializer {
 
     public RoomPlaceDtoConverter getRoomPlaceDtoConverter() {
         return roomPlaceDtoConverter;
+    }
+
+    public FilmSessionConverter getFilmSessionConverter() {
+        return filmSessionConverter;
+    }
+
+    public FilmSessionDtoConverter getFilmSessionDtoConverter() {
+        return filmSessionDtoConverter;
     }
 }

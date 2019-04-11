@@ -15,6 +15,7 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
     public FilmSessionDao(DataSource dataSource) {
         this.dataSource = dataSource;
+        receiveConverter();
     }
 
     @Override
@@ -41,19 +42,20 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
         String query = "SELECT temp.id as id_session, film_id, room_id, date" +
                 ", films.name as film_name, films.name_english as film_name_english, films.description as film_description," +
-                "films.release_date as film_release_date, films.description_english as film_description_english, films.running_time as film_running_time" +
+                "films.release_date as film_release_date, films.description_english as film_description_english, films.running_time as film_running_time," +
                 "rooms.name as room_name, rooms.name_english as room_name_english " +
                 "FROM (select id, film_id, room_id, date from session where date >= ? and date <= ? and 1 = 1) " +
                 "temp LEFT JOIN films ON film_id = films.id LEFT JOIN rooms ON room_id = rooms.id";
 
         if (film_id >= 0) {
-            query.replace("1 = 1", "film_id = ?");
+          /*  query.replace("1 = 1", "film_id = ?");*/
+            query =  query.replaceAll("1 = 1", "film_id = ?");
         }
 
-        List<FilmSession> filmsSession = dataSource.receiveRecords("select id, name, name_english, description, release_date, description_english, running_time from films",
+        List<FilmSession> filmsSession = dataSource.receiveRecords(query,
                 filmSessionConverter,
                 preparedStatement -> {
-                    preparedStatement.setTimestamp(2, new Timestamp(beginOfDay.getTime()));
+                    preparedStatement.setTimestamp(1, new Timestamp(beginOfDay.getTime()));
                     preparedStatement.setTimestamp(2, new Timestamp(endOfDay.getTime()));
                     if (film_id >= 0) {
                         preparedStatement.setInt(3, film_id);

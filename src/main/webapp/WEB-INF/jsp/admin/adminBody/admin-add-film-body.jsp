@@ -30,8 +30,8 @@
         <label for="name">Name:</label>
         <input type="text" class="form-control" id="name" name="name"
                placeholder="Enter film's name">
-        <label for="nameEnglish">Name(en):</label>
-        <input type="text" class="form-control" id="nameEnglish" name="nameEnglish"
+        <label for="name_english">Name(en):</label>
+        <input type="text" class="form-control" id="name_english" name="name_english"
                placeholder="Enter film's english name">
         <label for="release_date">Year:</label>
         <input type="date" class="form-control" id="release_date" name="release_date"
@@ -39,13 +39,13 @@
         <label for="description">Description:</label>
         <input type="text" class="form-control" id="description" name="description"
                placeholder="Enter description">
-        <label for="descriptionEnglish">Description(en):</label>
-        <input type="text" class="form-control" id="descriptionEnglish"
-               name="descriptionEnglish"
+        <label for="description_english">Description(en):</label>
+        <input type="text" class="form-control" id="description_english"
+               name="description_english"
                placeholder="Enter english description">
-        <label for="runningTime">Running time:</label>
-        <input type="text" class="form-control" id="runningTime"
-               name="descriptionEnglish"
+        <label for="running_time">Running time:</label>
+        <input type="text" class="form-control" id="running_time"
+               name="running_time"
                placeholder="Enter running time"
                value=2 readonly>
     </div>

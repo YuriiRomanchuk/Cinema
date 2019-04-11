@@ -16,7 +16,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         filmDto.setReleaseDate(request.getParameter("release_date"));
         filmDto.setDescription(request.getParameter("description"));
         filmDto.setDescriptionEnglish(request.getParameter("description_english"));
-        filmDto.setRunningTime(Integer.valueOf(request.getParameter("runningTime")));
+        filmDto.setRunningTime(Integer.valueOf(request.getParameter("running_time")));
         return filmDto;
     }
 
@@ -34,8 +34,9 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
 
     public FilmDto convertFromFilmSessionRequest(HttpServletRequest request) {
         FilmDto filmDto = new FilmDto();
-        if (request.getParameter("film_id") != null) {
-            filmDto.setId(Integer.valueOf(request.getParameter("film_id")));
+        String film_filter_id = request.getParameter("film_filter");
+        if (film_filter_id != null && !film_filter_id.equals("Choose...")) {
+            filmDto.setId(Integer.valueOf(film_filter_id));
         } else {
             filmDto.setId(-1);
         }

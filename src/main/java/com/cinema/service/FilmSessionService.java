@@ -21,20 +21,25 @@ public class FilmSessionService {
         this.filmSessionDtoConverter = filmSessionDtoConverter;
     }
 
-    public  List<FilmSessionDto> showFilmSession(FilmSessionDto filmSessionDto) throws ServiceException {
+    public List<FilmSessionDto> showFilmSession(FilmSessionDto filmSessionDto) throws ServiceException {
         try {
-            Date currentFilmSessionDate = TimeConverter.convertStringDate(filmSessionDto.getDate());
+            Date currentFilmSessionDate = new Date();
+            if (filmSessionDto.getDate() != null) {
+                currentFilmSessionDate = TimeConverter.convertStringDate(filmSessionDto.getDate(), "E MMM dd HH:mm:ss Z yyyy");
+            }
+
+            int filmIdFilter = filmSessionDto.getFilmDto().getId();
             Date beginOfDay = TimeConverter.receiveBeginOfDay(currentFilmSessionDate);
             Date endOfDay = TimeConverter.receiveEndOfDay(currentFilmSessionDate);
-            List<FilmSession> filmsSession = filmSessionDao.findByFilters(beginOfDay, endOfDay, filmSessionDto.getFilmDto().getId());
-            return prepareDailySchedule(filmsSession, beginOfDay, endOfDay);
+            List<FilmSession> filmsSession = filmSessionDao.findByFilters(beginOfDay, endOfDay, filmIdFilter);
+            return prepareDailySchedule(filmsSession, beginOfDay, endOfDay, filmIdFilter);
 
         } catch (Exception e) {
             throw new ServiceException("Create film session failed", e);
         }
     }
 
-    private List<FilmSessionDto> prepareDailySchedule(List<FilmSession> filmsSession, Date beginOfDay, Date endOfDay) {
+    private List<FilmSessionDto> prepareDailySchedule(List<FilmSession> filmsSession, Date beginOfDay, Date endOfDay, int filmIdFilter) {
 
         int timeStartSession = 9;
 
@@ -45,7 +50,7 @@ public class FilmSessionService {
 
         for (FilmSession filmSession : filmsSession) {
 
-            while (!actualSessionDate.equals(filmSession.getDate())) {
+            while (!actualSessionDate.equals(filmSession.getDate()) && filmIdFilter < 0) {
                 filmsSessionDto.add(createFilmSessionDtoEmpty(actualSessionDate));
                 actualSessionDate = TimeConverter.addHourToDate(actualSessionDate, filmSession.getFilm().getRunningTime());
             }
@@ -54,7 +59,7 @@ public class FilmSessionService {
             actualSessionDate = TimeConverter.addHourToDate(actualSessionDate, filmSession.getFilm().getRunningTime());
         }
 
-        while (actualSessionDate.before(endOfDay)) {
+        while (actualSessionDate.before(endOfDay) && filmIdFilter < 0) {
             filmsSessionDto.add(createFilmSessionDtoEmpty(actualSessionDate));
             actualSessionDate = TimeConverter.addHourToDate(actualSessionDate, 2);
         }

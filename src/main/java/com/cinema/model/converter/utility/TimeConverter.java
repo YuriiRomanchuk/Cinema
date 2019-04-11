@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class TimeConverter {
 
-    public static Date convertStringDate(String date) throws ParseException {
+    public static Date convertStringDate(String date, String timeFormat) throws ParseException {
         SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("yyyy-mm-dd hh:mm:ss");
+        format.applyPattern(timeFormat);
         return format.parse(date);
     }
 
@@ -33,9 +33,20 @@ public class TimeConverter {
 
     public static Date addHourToDate(Date date, int hour) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
-        cal.add(Calendar.HOUR_OF_DAY, 1);
+        cal.setTime(date);
+        cal.add(Calendar.HOUR_OF_DAY, hour);
         return cal.getTime();
+    }
+
+    public static String changeStringDataFormat(String date, String timeFormat) {
+
+        SimpleDateFormat dt = new SimpleDateFormat(timeFormat);
+        try {
+            return String.valueOf(dt.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 
 }
