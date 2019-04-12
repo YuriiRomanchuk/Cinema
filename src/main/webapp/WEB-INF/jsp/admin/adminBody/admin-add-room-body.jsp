@@ -23,19 +23,20 @@
         <h1>${error}"</h1>
     </c:if>
     <div class="w-100 d-none d-md-block"></div>
-
+<%--
     <div class="w-100 justify-content-center">
         <h1>Add room</h1>
-    </div>
+    </div>--%>
 </div>
 
+<h1>Add room</h1>
 <form method="post" action="admin-add-room">
     <div class="form-group">
         <label for="name">Name:</label>
-        <input type="text" class="form-control" id="name" name="name"
+        <input required type="text" class="form-control" id="name" name="name"
                placeholder="Enter room's name">
         <label for="nameEnglish">Name(en):</label>
-        <input type="text" class="form-control" id="nameEnglish" name="nameEnglish"
+        <input required type="text" class="form-control" id="nameEnglish" name="nameEnglish"
                placeholder="Enter room's english name">
     </div>
     <button type="submit" class="btn btn-primary">Add</button>

@@ -25,7 +25,7 @@ public class FilmSessionService {
         try {
             Date currentFilmSessionDate = new Date();
             if (filmSessionDto.getDate() != null) {
-                currentFilmSessionDate = TimeConverter.convertStringDate(filmSessionDto.getDate(), "E MMM dd HH:mm:ss Z yyyy");
+                currentFilmSessionDate = TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd HH:mm:ss Z yyyy");
             }
 
             int filmIdFilter = filmSessionDto.getFilmDto().getId();
@@ -69,7 +69,7 @@ public class FilmSessionService {
 
     private FilmSessionDto createFilmSessionDtoEmpty(Date sessionDate) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
-        filmSessionDto.setDate(TimeConverter.changeDataStingFormat(String.valueOf(sessionDate), "yyyy-mm-dd hh:mm:ss"));
+        filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(sessionDate, "yyyy-MM-dd hh:mm:ss"));
         return filmSessionDto;
     }
 

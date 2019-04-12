@@ -6,6 +6,8 @@ import com.cinema.model.dto.FilmSessionDto;
 import com.cinema.model.entity.FilmSession;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+
 
 public class FilmSessionDtoConverter implements Converter<HttpServletRequest, FilmSessionDto> {
 
@@ -20,11 +22,10 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
     @Override
     public FilmSessionDto convert(HttpServletRequest request) {
 
-        String currentDate = request.getParameter("date_filter");
+        String date_filter = request.getParameter("date_filter");
+        String currentDate = (date_filter== null) ? String.valueOf(new Date()) :
+                String.valueOf(TimeConverter.convertStringToDate(date_filter, "yyyy-MM-dd"));
 
-        if (currentDate != null) {
-            currentDate = TimeConverter.changeDataStingFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
-        }
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request));
@@ -34,10 +35,10 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
 
     /*public FilmSessionDto convertSessionWithLine(HttpServletRequest request) {
 
-        String numberOfLine = request.getParameter("add-session");
+        String numberOfLine = request.getParameter("add-session");changeDataToStringFormat
 
         if (currentDate != null) {
-            currentDate = TimeConverter.changeDataStingFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
+            currentDate = TimeConverter.changeDataToStringFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
         }
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
@@ -52,7 +53,7 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         filmSessionDto.setRoomDto(roomDtoConverter.convertFromRoomEntity(filmSession.getRoom()));
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmEntity(filmSession.getFilm()));
         filmSessionDto.setId(filmSession.getId());
-        filmSessionDto.setDate(TimeConverter.changeDataStingFormat(String.valueOf(filmSession.getDate()),"yyyy-MM-dd hh:mm:ss"));
+        filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(filmSession.getDate(), "yyyy-MM-dd hh:mm:ss"));
         return filmSessionDto;
     }
 }

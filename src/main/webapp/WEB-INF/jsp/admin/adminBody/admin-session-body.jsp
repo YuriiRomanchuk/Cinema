@@ -18,6 +18,7 @@
 
 <body>
 <c:set var='filmSessionDto' value="${filmSessionDto}"/>
+<c:set var='currentFilm_id' value="${currentFilm_id}"/>
 
 <div class="col-6 col-sm-4">
     <c:set var='error' value="${Error}"/>
@@ -30,6 +31,7 @@
         <h1>Film session</h1>
     </div>
 </div>
+<div class="w-100 d-none d-md-block"></div>
 
 <form method="post" action="admin-session">
     <div class="form-group field-middle_name row">
@@ -38,15 +40,22 @@
             <select name="film_filter" id="film_filter" class="form-control" title="Film" required="required">
                 <option selected>Choose...</option>
                 <c:forEach var="film" items="${filmsDto}">
-                    <option value=${film.getId()}>${film.getName() }
-                    </option>
+                    <c:choose>
+                        <c:when test="${ (currentFilm_id !=null && film.getId() == currentFilm_id)}">
+                            <option selected="selected" value=${film.getId()}>${film.getName()}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value=${film.getId()}>${film.getName() }
+                            </option>
+                        </c:otherwise>
+                    </c:choose>
                 </c:forEach>
             </select>
         </div>
         <div class="col-sm-6 col-md-6 col-xs-6 no-padding">
             <label for="date_filter">Session date:</label>
-            <input type="date" class="form-control" id="date_filter" name="date_filter"
-                   placeholder="Enter release date"
+            <input required type="date" class="form-control" id="date_filter" name="date_filter"
+                   placeholder="Enter session date"
                    value=${currentDate}>
         </div>
     </div>

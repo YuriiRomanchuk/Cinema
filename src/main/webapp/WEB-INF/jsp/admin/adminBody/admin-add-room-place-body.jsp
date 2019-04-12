@@ -24,11 +24,12 @@
     </c:if>
     <div class="w-100 d-none d-md-block"></div>
 
-    <div class="w-100 justify-content-center">
+  <%--  <div class="w-100 justify-content-center">
         <h1>Add room places</h1>
-    </div>
+    </div>--%>
 </div>
 
+<h1>Add room places</h1>
 <form method="post" action="admin-add-room-place">
 
     <label for="row">Room:</label>

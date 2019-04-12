@@ -5,7 +5,6 @@ import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;
 
-import java.text.ParseException;
 import java.util.Date;
 
 public class FilmConverter implements Converter<FilmDto, Film> {
@@ -21,12 +20,8 @@ public class FilmConverter implements Converter<FilmDto, Film> {
         film.setRunningTime(filmDto.getRunningTime());
 
         String filmReleaseDate = filmDto.getReleaseDate();
-        try {
-            Date currentDate = TimeConverter.convertStringDate(filmReleaseDate, "yyyy-mm-dd");
-            film.setReleaseDate(currentDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        Date currentDate = TimeConverter.convertStringToDate(filmReleaseDate, "yyyy-mm-dd");
+        film.setReleaseDate(currentDate);
 
         return film;
     }

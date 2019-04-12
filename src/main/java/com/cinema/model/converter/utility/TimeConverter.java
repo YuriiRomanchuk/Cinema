@@ -7,10 +7,16 @@ import java.util.Date;
 
 public class TimeConverter {
 
-    public static Date convertStringDate(String date, String timeFormat) throws ParseException {
+    public static Date convertStringToDate(String date, String timeFormat) {
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern(timeFormat);
-        return format.parse(date);
+        try {
+            return format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static Date receiveBeginOfDay(Date date) {
@@ -38,16 +44,13 @@ public class TimeConverter {
         return cal.getTime();
     }
 
-    public static String changeDataStingFormat(String date, String timeFormat) {
-
+    public static String changeDataToStringFormat(Date currentDate, String timeFormat) {
         SimpleDateFormat dt = new SimpleDateFormat(timeFormat);
-        try {
-            Date currentDate = convertStringDate(date, timeFormat);
-            return dt.format(currentDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return date;
+        return dt.format(currentDate);
     }
 
+    public static String changeStingDataToStingFormat(String date, String timeFormatFromSting, String timeFormatToString) {
+        Date currentDate = convertStringToDate(date, timeFormatFromSting);
+        return changeDataToStringFormat(currentDate, timeFormatToString);
+    }
 }

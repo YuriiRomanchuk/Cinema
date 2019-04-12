@@ -1,6 +1,7 @@
 package com.cinema.model.converter.dtoConverter;
 
 import com.cinema.model.converter.Converter;
+import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;
 
@@ -25,7 +26,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         filmDto.setId(film.getId());
         filmDto.setName(film.getName());
         filmDto.setNameEnglish(film.getNameEnglish());
-        filmDto.setReleaseDate(String.valueOf(film.getReleaseDate()));
+        filmDto.setReleaseDate(TimeConverter.changeDataToStringFormat(film.getReleaseDate(), "yyyy-MM-dd"));
         filmDto.setDescription(film.getDescription());
         filmDto.setDescriptionEnglish(film.getDescriptionEnglish());
         filmDto.setRunningTime(film.getRunningTime());
