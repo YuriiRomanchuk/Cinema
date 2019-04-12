@@ -90,7 +90,7 @@
                 </td>
                 <td>
                     <select
-                            <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
+                        <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
                             class="custom-select mr-sm-2" id="session_room_ <%=counter%>"
                             name="session_room_<%=counter%>">
                         <option selected>Choose...</option>
@@ -102,7 +102,7 @@
                 </td>
                 <td>
                     <select
-                            <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
+                        <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
                             class="custom-select mr-sm-2" id="session_film_<%=counter%>"
                             name="session_film_<%=counter%>">
                         <option selected>Choose...</option>
@@ -127,14 +127,17 @@
                                     class="btn btn-primary ml-2 mr-1">
                                 show
                             </button>
-                            <button onclick="form.action='delete-session';" type="submit" name="delete-session"
-                                    value="<%=counter%>"
-                                    class="btn btn-primary">
-                                delete
-                            </button>
+
+                            <c:if test="${!isLastDay}">
+                                <button onclick="form.action='delete-session';" type="submit" name="delete-session"
+                                        value="<%=counter%>"
+                                        class="btn btn-primary">
+                                    delete
+                                </button>
+                            </c:if>
                         </c:if>
 
-                        <c:if test="${filmSessionDto.getId() <=0}">
+                        <c:if test="${filmSessionDto.getId() <=0 and !isLastDay}">
                             <button onclick="form.action='add-session';" type="submit" name="add-session"
                                     value="<%=counter%>"
                                     class="btn btn-primary ml-2">

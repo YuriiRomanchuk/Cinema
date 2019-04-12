@@ -24,13 +24,6 @@ public class FilmSessionController {
         this.roomService = roomService;
     }
 
-    public View showFilmSessionPage() {
-        View view = new ViewModel("WEB-INF/jsp/admin/admin-session.jsp");
-        view.addParameter("currentDate", TimeConverter.changeStingDataToStingFormat(String.valueOf(new Date()), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd"));
-        return view;
-    }
-
-
     public View addFilmSession(FilmSessionDto filmSessionDto) {
         View view;
         try {
@@ -77,6 +70,10 @@ public class FilmSessionController {
         view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
         view.addParameter("roomsDto", roomService.recieveAllRoomsDto());
         view.addParameter("filterDate", TimeConverter.changeStingDataToStingFormat(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd"));
+
+        Date sessionDate = TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy");
+        Date endOfTodayDate = TimeConverter.receiveEndOfDay(new Date());
+        view.addParameter("isLastDay", sessionDate.before(endOfTodayDate));
     }
 
 }
