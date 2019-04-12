@@ -73,7 +73,7 @@ public class ComponentInitializer {
         filmService = new FilmService(filmDao, filmConverter, filmDtoConverter);
         roomService = new RoomService(roomDao, roomConverter, roomDtoConverter);
         roomPlaceService = new RoomPlaceService(roomPlaceDao, roomPlaceConverter);
-        filmSessionService = new FilmSessionService(filmSessionDao, filmSessionDtoConverter);
+        filmSessionService = new FilmSessionService(filmSessionDao, filmSessionDtoConverter, filmSessionConverter);
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController();

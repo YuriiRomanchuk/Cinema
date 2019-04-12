@@ -28,32 +28,30 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
 
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
-        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request));
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("film_filter")));
 
         return filmSessionDto;
     }
 
-    /*public FilmSessionDto convertSessionWithLine(HttpServletRequest request) {
+    public FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request) {
 
-        String numberOfLine = request.getParameter("add-session");changeDataToStringFormat
+        String numberOfLine = request.getParameter("add-session");
+        String currentDate = String.valueOf(TimeConverter.convertStringToDate(request.getParameter("session_date_"+ numberOfLine), "yyyy-MM-dd kk:mm:ss"));
 
-        if (currentDate != null) {
-            currentDate = TimeConverter.changeDataToStringFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
-        }
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
-        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request));
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("session_film_"+ numberOfLine)));
+        filmSessionDto.setRoomDto(roomDtoConverter.convertForRoomId(request.getParameter("session_room_"+ numberOfLine)));
 
         return filmSessionDto;
     }
-*/
 
     public FilmSessionDto convertFromFilmEntity(FilmSession filmSession) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setRoomDto(roomDtoConverter.convertFromRoomEntity(filmSession.getRoom()));
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmEntity(filmSession.getFilm()));
         filmSessionDto.setId(filmSession.getId());
-        filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(filmSession.getDate(), "yyyy-MM-dd hh:mm:ss"));
+        filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(filmSession.getDate(), "yyyy-MM-dd kk:mm:ss"));
         return filmSessionDto;
     }
 }

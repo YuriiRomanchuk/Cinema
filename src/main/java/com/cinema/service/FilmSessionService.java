@@ -2,6 +2,7 @@ package com.cinema.service;
 
 import com.cinema.exception.ServiceException;
 import com.cinema.model.converter.dtoConverter.FilmSessionDtoConverter;
+import com.cinema.model.converter.entityConverter.FilmSessionConverter;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dao.FilmSessionDao;
 import com.cinema.model.dto.FilmSessionDto;
@@ -15,17 +16,19 @@ public class FilmSessionService {
 
     private final FilmSessionDao filmSessionDao;
     private final FilmSessionDtoConverter filmSessionDtoConverter;
+    private final FilmSessionConverter filmSessionConverter;
 
-    public FilmSessionService(FilmSessionDao filmSessionDao, FilmSessionDtoConverter filmSessionDtoConverter) {
+    public FilmSessionService(FilmSessionDao filmSessionDao, FilmSessionDtoConverter filmSessionDtoConverter, FilmSessionConverter filmSessionConverter) {
         this.filmSessionDao = filmSessionDao;
         this.filmSessionDtoConverter = filmSessionDtoConverter;
+        this.filmSessionConverter = filmSessionConverter;
     }
 
-    public List<FilmSessionDto> showFilmSession(FilmSessionDto filmSessionDto) throws ServiceException {
+    public List<FilmSessionDto> showFilmSessions(FilmSessionDto filmSessionDto) throws ServiceException {
         try {
             Date currentFilmSessionDate = new Date();
             if (filmSessionDto.getDate() != null) {
-                currentFilmSessionDate = TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd HH:mm:ss Z yyyy");
+                currentFilmSessionDate = TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy");
             }
 
             int filmIdFilter = filmSessionDto.getFilmDto().getId();
@@ -42,15 +45,13 @@ public class FilmSessionService {
     private List<FilmSessionDto> prepareDailySchedule(List<FilmSession> filmsSession, Date beginOfDay, Date endOfDay, int filmIdFilter) {
 
         int timeStartSession = 9;
-
         List<FilmSessionDto> filmsSessionDto = new ArrayList<>();
         Date startSession = TimeConverter.addHourToDate(beginOfDay, timeStartSession);
-
         Date actualSessionDate = startSession;
 
         for (FilmSession filmSession : filmsSession) {
 
-            while (!actualSessionDate.equals(filmSession.getDate()) && filmIdFilter < 0) {
+            while (!actualSessionDate.equals(filmSession.getDate()) && filmIdFilter < 0 && actualSessionDate.before(endOfDay)) {
                 filmsSessionDto.add(createFilmSessionDtoEmpty(actualSessionDate));
                 actualSessionDate = TimeConverter.addHourToDate(actualSessionDate, filmSession.getFilm().getRunningTime());
             }
@@ -63,22 +64,24 @@ public class FilmSessionService {
             filmsSessionDto.add(createFilmSessionDtoEmpty(actualSessionDate));
             actualSessionDate = TimeConverter.addHourToDate(actualSessionDate, 2);
         }
-
         return filmsSessionDto;
     }
 
     private FilmSessionDto createFilmSessionDtoEmpty(Date sessionDate) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
-        filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(sessionDate, "yyyy-MM-dd hh:mm:ss"));
+        filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(sessionDate, "yyyy-MM-dd kk:mm:ss"));
         return filmSessionDto;
     }
 
-    public void addFilmSession(FilmSessionDto filmSessionDto) {
-
-
-
-
-
+    public void addFilmSession(FilmSessionDto filmSessionDto) throws ServiceException {
+        try {
+            Date date = TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy");
+            int filmId = filmSessionDto.getFilmDto().getId();
+            int roomId = filmSessionDto.getRoomDto().getId();
+            filmSessionDao.insert(filmId, roomId, date);
+        } catch (Exception e) {
+            throw new ServiceException("Create film session failed", e);
+        }
     }
 }
 

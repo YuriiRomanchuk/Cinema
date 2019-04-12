@@ -33,11 +33,10 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         return filmDto;
     }
 
-    public FilmDto convertFromFilmSessionRequest(HttpServletRequest request) {
+    public FilmDto convertFromFilmSessionRequest(String film_id) {
         FilmDto filmDto = new FilmDto();
-        String film_filter_id = request.getParameter("film_filter");
-        if (film_filter_id != null && !film_filter_id.equals("Choose...")) {
-            filmDto.setId(Integer.valueOf(film_filter_id));
+        if (film_id != null && !film_id.equals("Choose...")) {
+            filmDto.setId(Integer.valueOf(film_id));
         } else {
             filmDto.setId(-1);
         }

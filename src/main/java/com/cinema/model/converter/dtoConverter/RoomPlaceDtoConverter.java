@@ -25,7 +25,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         int maxCountPlacesInRow = countOfPlaces <= placesInRow ? countOfPlaces : placesInRow;
         int countOfRow = countOfPlaces <= placesInRow ? 1 : Integer.valueOf(request.getParameter("row"));
 
-        RoomDto roomDto = roomDtoConverter.convertFromRoomPlaceRequest(request);
+        RoomDto roomDto = roomDtoConverter.convertForRoomId(request.getParameter("room"));
 
         int countAllPlaces = 1;
         for (int r = 1; r <= countOfRow && countAllPlaces < countOfPlaces; r++) {

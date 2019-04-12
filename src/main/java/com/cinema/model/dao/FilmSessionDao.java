@@ -21,6 +21,13 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
     @Override
     public void insert(FilmSession entity) {
 
+        final String query = "insert into session (film_id, room_id, date) values(?, ?, ?)";
+
+        dataSource.implementWrite(query, ps -> {
+            ps.setInt(1, entity.getFilm().getId());
+            ps.setInt(2, entity.getRoom().getId());
+            ps.setTimestamp(3, new Timestamp(entity.getDate().getTime()));
+        }, r -> entity.setId(r.getInt(1)));
     }
 
     @Override
@@ -45,11 +52,10 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
                 "films.release_date as film_release_date, films.description_english as film_description_english, films.running_time as film_running_time," +
                 "rooms.name as room_name, rooms.name_english as room_name_english " +
                 "FROM (select id, film_id, room_id, date from session where date >= ? and date <= ? and 1 = 1) " +
-                "temp LEFT JOIN films ON film_id = films.id LEFT JOIN rooms ON room_id = rooms.id";
+                "temp LEFT JOIN films ON film_id = films.id LEFT JOIN rooms ON room_id = rooms.id order by date";
 
         if (film_id >= 0) {
-          /*  query.replace("1 = 1", "film_id = ?");*/
-            query =  query.replaceAll("1 = 1", "film_id = ?");
+            query = query.replaceAll("1 = 1", "film_id = ?");
         }
 
         List<FilmSession> filmsSession = dataSource.receiveRecords(query,
@@ -98,4 +104,15 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
         };
     }
 
+    public void insert(int filmId, int roomId, Date sessionDate) {
+
+        final String query = "insert into session (film_id, room_id, date) values(?, ?, ?)";
+
+        dataSource.implementWrite(query, ps -> {
+            ps.setInt(1, filmId);
+            ps.setInt(2, roomId);
+            ps.setTimestamp(3, new Timestamp(sessionDate.getTime()));
+        }, r -> {
+        });
+    }
 }
