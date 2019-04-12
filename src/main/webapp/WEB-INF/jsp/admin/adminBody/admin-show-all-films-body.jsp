@@ -1,5 +1,3 @@
-<%@ page import="com.cinema.model.dto.FilmDto" %>
-<%@ page import="java.util.List" %>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page session="true" isELIgnored="false" contentType="text/html; charset=UTF-8" language="java"
          pageEncoding="UTF-8" %>
@@ -19,15 +17,20 @@
 </head>
 
 <body>
-<%
-    String error = (String) request.getAttribute("Error");
-    if (error != null) {
-%> <h1><%=error%>
-</h1> <%
-    }
-%>
 
-<h1>All films</h1>
+<div class="row w-100 justify-content-center">
+    <div class="col-6 col-sm-4">
+        <c:set var='error' value="${Error}"/>
+        <c:if test="${error !=null}">
+            <h1>${error}"</h1>
+        </c:if>
+        <div class="w-100 d-none d-md-block"></div>
+
+        <div class="w-100 justify-content-center">
+            <h1>All films</h1>
+        </div>
+    </div>
+</div>
 <table class="table table-bordered">
     <thead>
     <tr>
@@ -37,28 +40,16 @@
         <th>Running time(h)</th>
         <th>Description</th>
     </thead>
-    <%
-        List<FilmDto> films = (List<FilmDto>) request.getAttribute("filmsDto");
-        for (FilmDto film : films) { %>
-    <tr>
-        <td>
-            <%=film.getId()%>
-        </td>
-        <td>
-            <%=film.getName()%>
-        </td>
-        <td>
-            <%=film.getReleaseDate()%>
-        </td>
-        <td>
-            <%=film.getRunningTime()%>
-        </td>
-        <td>
-            <%=film.getDescription()%>
-        </td>
-    </tr>
 
-    <%} %>
+    <c:forEach var="film" items="${filmsDto}">
+        <tr>
+            <td>${film.getId()}</td>
+            <td>${film.getName()}</td>
+            <td>${film.getReleaseDate()}</td>
+            <td>${film.getRunningTime()}</td>
+            <td>${film.getDescription()}</td>
+        </tr>
+    </c:forEach>
 </table>
 
 </body>

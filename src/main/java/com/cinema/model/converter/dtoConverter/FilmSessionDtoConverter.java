@@ -23,7 +23,7 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         String currentDate = request.getParameter("date_filter");
 
         if (currentDate != null) {
-            currentDate = TimeConverter.changeStringDataFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
+            currentDate = TimeConverter.changeDataStingFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
         }
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
@@ -32,12 +32,27 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return filmSessionDto;
     }
 
+    /*public FilmSessionDto convertSessionWithLine(HttpServletRequest request) {
+
+        String numberOfLine = request.getParameter("add-session");
+
+        if (currentDate != null) {
+            currentDate = TimeConverter.changeDataStingFormat(request.getParameter("date_filter"), "yyyy-MM-dd");
+        }
+        FilmSessionDto filmSessionDto = new FilmSessionDto();
+        filmSessionDto.setDate(currentDate);
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request));
+
+        return filmSessionDto;
+    }
+*/
+
     public FilmSessionDto convertFromFilmEntity(FilmSession filmSession) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setRoomDto(roomDtoConverter.convertFromRoomEntity(filmSession.getRoom()));
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmEntity(filmSession.getFilm()));
         filmSessionDto.setId(filmSession.getId());
-        filmSessionDto.setDate(TimeConverter.changeStringDataFormat(String.valueOf(filmSession.getDate()),"yyyyy-mm-dd hh:mm:ss"));
+        filmSessionDto.setDate(TimeConverter.changeDataStingFormat(String.valueOf(filmSession.getDate()),"yyyy-MM-dd hh:mm:ss"));
         return filmSessionDto;
     }
 }

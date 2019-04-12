@@ -1,5 +1,3 @@
-<%@ page import="com.cinema.model.dto.RoomDto" %>
-<%@ page import="java.util.List" %>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page session="true" isELIgnored="false" contentType="text/html; charset=UTF-8" language="java"
          pageEncoding="UTF-8" %>
@@ -19,28 +17,27 @@
 </head>
 <body>
 
-<%
-    String error = (String) request.getAttribute("Error");
-    if (error != null) {
-%> <h1><%=error%>
-</h1> <%
-    }
-%>
+<div class="col-6 col-sm-4">
+    <c:set var='error' value="${Error}"/>
+    <c:if test="${error !=null}">
+        <h1>${error}"</h1>
+    </c:if>
+    <div class="w-100 d-none d-md-block"></div>
 
-<h1>Add room places</h1>
+    <div class="w-100 justify-content-center">
+        <h1>Add room places</h1>
+    </div>
+</div>
+
 <form method="post" action="admin-add-room-place">
 
     <label for="row">Room:</label>
     <select class="custom-select mr-sm-2" id="room" name="room">
         <option selected>Choose...</option>
-
-        <% List<RoomDto> rooms = (List<RoomDto>) request.getAttribute("roomsDto");
-            for (RoomDto room : rooms) { %>
-        <option value="<%=  room.getId()%>"><%=room.getName() %>
-        </option>
-        <%
-            }
-        %>
+        <c:forEach var="room" items="${roomsDto}">
+            <option value=${room.getId()}>${room.getName() }
+            </option>
+        </c:forEach>
     </select>
 
     <div class="form-group">
@@ -54,7 +51,7 @@
         <label for="placesInRow">Places in row:</label>
         <input type="number" class="form-control" id="placesInRow" name="placesInRow"
                placeholder="Enter count of places in row"
-        value = 10>
+               value=10>
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
     <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>

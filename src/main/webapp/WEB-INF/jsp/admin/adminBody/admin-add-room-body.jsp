@@ -17,14 +17,18 @@
 </head>
 <body>
 
-<%
-    String error = (String) request.getAttribute("Error");
-    if (error != null) {
-%> <h1><%=error%>
-</h1> <%
-    }
-%>
-<h1>Add room</h1>
+<div class="col-6 col-sm-4">
+    <c:set var='error' value="${Error}"/>
+    <c:if test="${error !=null}">
+        <h1>${error}"</h1>
+    </c:if>
+    <div class="w-100 d-none d-md-block"></div>
+
+    <div class="w-100 justify-content-center">
+        <h1>Add room</h1>
+    </div>
+</div>
+
 <form method="post" action="admin-add-room">
     <div class="form-group">
         <label for="name">Name:</label>

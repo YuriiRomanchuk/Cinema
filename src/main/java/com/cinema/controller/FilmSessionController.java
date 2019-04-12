@@ -26,12 +26,41 @@ public class FilmSessionController {
     }
 
 
-    public View addSession(FilmSessionDto filmSessionDt) {
+/*
+    public View addSession(FilmSessionDto filmSessionDto) {
+        View view;
+        try {
+            view = new ViewModel("WEB-INF/jsp/admin/admin-session.jsp");
+            filmSessionService.addFilmSession(filmSessionDto);
 
+
+          */
+/*
+            view.addParameter("filmsSessionDto", filmSessionService.addFilmSession(filmSessionDto));
+            view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
+            view.addParameter("roomsDto", roomService.recieveAllRoomsDto());
+            view.addParameter("currentDate", filmSessionDto.getDate());
+            view.addParameter("currentFilm_id", filmSessionDto.getFilmDto() != null ? filmSessionDto.getFilmDto().getId() : -1);
+        *//*
+    return view;
+        } catch (ServiceException e) {
+         */
+/*   view = new ViewModel("admin-session");
+         *//*
+*/
+/*   view.addParameter("currentDate", filmSessionDto.getDate());
+            view.addParameter("currentFilm_id", filmSessionDto.getFilmDto() != null ? filmSessionDto.getFilmDto().getId() : -1);
+        *//*
+*/
+/*    view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+          *//*
+  return new RedirectViewModel(view);
+        }
 
 
 
     }
+*/
 
 
     public View showFilmSessionPageFilters(FilmSessionDto filmSessionDto) {

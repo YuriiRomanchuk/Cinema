@@ -69,8 +69,16 @@ public class FilmSessionService {
 
     private FilmSessionDto createFilmSessionDtoEmpty(Date sessionDate) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
-        filmSessionDto.setDate(String.valueOf(sessionDate));
+        filmSessionDto.setDate(TimeConverter.changeDataStingFormat(String.valueOf(sessionDate), "yyyy-mm-dd hh:mm:ss"));
         return filmSessionDto;
     }
 
+    public void addFilmSession(FilmSessionDto filmSessionDto) {
+
+
+
+
+
+    }
 }
+

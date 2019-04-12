@@ -38,11 +38,12 @@ public class TimeConverter {
         return cal.getTime();
     }
 
-    public static String changeStringDataFormat(String date, String timeFormat) {
+    public static String changeDataStingFormat(String date, String timeFormat) {
 
         SimpleDateFormat dt = new SimpleDateFormat(timeFormat);
         try {
-            return String.valueOf(dt.parse(date));
+            Date currentDate = convertStringDate(date, timeFormat);
+            return dt.format(currentDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }

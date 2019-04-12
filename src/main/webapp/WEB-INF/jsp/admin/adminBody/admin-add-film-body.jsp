@@ -16,13 +16,17 @@
     <title>Title</title>
 </head>
 
-<%
-    String error = (String) request.getAttribute("Error");
-    if (error != null) {
-%> <h1><%=error%>
-</h1> <%
-    }
-%>
+<div class="col-6 col-sm-4">
+    <c:set var='error' value="${Error}"/>
+    <c:if test="${error !=null}">
+        <h1>${error}"</h1>
+    </c:if>
+    <div class="w-100 d-none d-md-block"></div>
+
+    <div class="w-100 justify-content-center">
+        <h1>Add film</h1>
+    </div>
+</div>
 
 <h1>Add film</h1>
 <form method="post" action="admin-add-film">
