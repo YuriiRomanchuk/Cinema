@@ -1,7 +1,6 @@
 package com.cinema.model.converter.dtoConverter;
 
 import com.cinema.model.converter.Converter;
-import com.cinema.model.dto.FilmDto;
 import com.cinema.model.dto.RoomDto;
 import com.cinema.model.entity.Room;
 
@@ -28,7 +27,7 @@ public class RoomDtoConverter implements Converter<HttpServletRequest, RoomDto> 
 
     public RoomDto convertForRoomId(String room_id) {
         RoomDto roomDto = new RoomDto();
-        roomDto.setId(Integer.valueOf(room_id));
+        roomDto.setId(room_id == null ? 0 : Integer.valueOf(room_id));
         return roomDto;
     }
 

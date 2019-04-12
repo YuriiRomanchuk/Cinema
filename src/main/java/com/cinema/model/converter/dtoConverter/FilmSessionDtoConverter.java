@@ -23,7 +23,7 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
     public FilmSessionDto convert(HttpServletRequest request) {
 
         String date_filter = request.getParameter("date_filter");
-        String currentDate = (date_filter== null) ? String.valueOf(new Date()) :
+        String currentDate = (date_filter == null) ? String.valueOf(new Date()) :
                 String.valueOf(TimeConverter.convertStringToDate(date_filter, "yyyy-MM-dd"));
 
         FilmSessionDto filmSessionDto = new FilmSessionDto();
@@ -33,15 +33,23 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return filmSessionDto;
     }
 
-    public FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request) {
+    public FilmSessionDto convertFilmSessionWithLineAdd(HttpServletRequest request) {
+        return convertFilmSessionWithLine(request, request.getParameter("add-session"));
+    }
 
-        String numberOfLine = request.getParameter("add-session");
-        String currentDate = String.valueOf(TimeConverter.convertStringToDate(request.getParameter("session_date_"+ numberOfLine), "yyyy-MM-dd kk:mm:ss"));
+    public FilmSessionDto convertFilmSessionWithLineDelete(HttpServletRequest request) {
+        return convertFilmSessionWithLine(request, request.getParameter("delete-session"));
+    }
+
+    private FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request, String numberOfLine) {
+
+        String currentDate = String.valueOf(TimeConverter.convertStringToDate(request.getParameter("session_date_" + numberOfLine), "yyyy-MM-dd kk:mm:ss"));
 
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
-        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("session_film_"+ numberOfLine)));
-        filmSessionDto.setRoomDto(roomDtoConverter.convertForRoomId(request.getParameter("session_room_"+ numberOfLine)));
+        filmSessionDto.setId(Integer.valueOf(request.getParameter("session_id_" + numberOfLine).trim()));
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("session_film_" + numberOfLine)));
+        filmSessionDto.setRoomDto(roomDtoConverter.convertForRoomId(request.getParameter("session_room_" + numberOfLine)));
 
         return filmSessionDto;
     }

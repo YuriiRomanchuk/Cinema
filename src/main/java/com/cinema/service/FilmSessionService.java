@@ -79,8 +79,18 @@ public class FilmSessionService {
             int filmId = filmSessionDto.getFilmDto().getId();
             int roomId = filmSessionDto.getRoomDto().getId();
             filmSessionDao.insert(filmId, roomId, date);
+            filmSessionDto.getFilmDto().setId(-1);
         } catch (Exception e) {
             throw new ServiceException("Create film session failed", e);
+        }
+    }
+
+    public void deleteFilmSession(FilmSessionDto filmSessionDto) throws ServiceException {
+        try {
+        filmSessionDao.delete(filmSessionDto.getId());
+        filmSessionDto.getFilmDto().setId(-1);
+        } catch (Exception e) {
+            throw new ServiceException("Delete film session failed", e);
         }
     }
 }

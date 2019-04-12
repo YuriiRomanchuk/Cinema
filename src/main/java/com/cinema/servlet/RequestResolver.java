@@ -42,7 +42,6 @@ public class RequestResolver {
         getControllers.put("/admin-add-room", r -> roomController.showAddRoomPage());
         getControllers.put("/admin-add-room-place", r -> roomPlaceController.showRoomPlace());
         getControllers.put("/admin-session", r -> filmSessionController.showFilmSessionPageFilters(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convert(r)));
-        //getControllers.put("/add-session", r -> filmSessionController.addFilmSession(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convertFilmSessionWithLine(r)));
 
         postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convert(r)));
         postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convert(r)));
@@ -51,7 +50,8 @@ public class RequestResolver {
         postControllers.put("/admin-add-room", r -> roomController.createRoom(ComponentInitializer.getInstance().getRoomDtoConverter().convert(r)));
         postControllers.put("/admin-add-room-place", r -> roomPlaceController.createRoomPlace(ComponentInitializer.getInstance().getRoomPlaceDtoConverter().convert(r)));
         postControllers.put("/admin-session", r -> filmSessionController.showFilmSessionPageFilters(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convert(r)));
-        postControllers.put("/add-session", r -> filmSessionController.addFilmSession(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convertFilmSessionWithLine(r)));
+        postControllers.put("/add-session", r -> filmSessionController.addFilmSession(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convertFilmSessionWithLineAdd(r)));
+        postControllers.put("/delete-session", r -> filmSessionController.deleteFilmSession(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convertFilmSessionWithLineDelete(r)));
     }
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -73,8 +73,13 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
 
     @Override
-    public void delete(int id) {
+    public void delete(int filmId) {
+        final String query = "delete from session where session.id = ?";
 
+        dataSource.implementWrite(query, ps -> {
+            ps.setInt(1, filmId);
+        }, r -> {
+        });
     }
 
     private void receiveConverter() {

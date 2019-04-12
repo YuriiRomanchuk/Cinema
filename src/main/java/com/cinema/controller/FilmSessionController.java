@@ -34,16 +34,14 @@ public class FilmSessionController {
     public View addFilmSession(FilmSessionDto filmSessionDto) {
         View view;
         try {
-            view = new ViewModel("WEB-INF/jsp/admin/admin-session.jsp");
+            view = new ViewModel("admin-session");
             filmSessionService.addFilmSession(filmSessionDto);
             showAdminFilmSessionPage(filmSessionDto, view);
         } catch (ServiceException e) {
             view = new ViewModel("admin-personal-area");
-            /*             showAdminFilmSessionPage(filmSessionDto, view);*/
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
-            return new RedirectViewModel(view);
         }
-        return view;
+        return new RedirectViewModel(view);
     }
 
 
@@ -52,15 +50,26 @@ public class FilmSessionController {
         try {
             view = new ViewModel("WEB-INF/jsp/admin/admin-session.jsp");
             showAdminFilmSessionPage(filmSessionDto, view);
+            view.addParameter("filterFilmId", filmSessionDto.getFilmDto() != null ? filmSessionDto.getFilmDto().getId() : -1);
             return view;
         } catch (ServiceException e) {
             view = new ViewModel("admin-personal-area");
-         /*   view.addParameter("currentDate", filmSessionDto.getDate());
-            view.addParameter("currentFilm_id", filmSessionDto.getFilmDto() != null ? filmSessionDto.getFilmDto().getId() : -1);
-        */
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
             return new RedirectViewModel(view);
         }
+    }
+
+    public View deleteFilmSession(FilmSessionDto filmSessionDto) {
+        View view;
+        try {
+            view = new ViewModel("admin-session");
+            filmSessionService.deleteFilmSession(filmSessionDto);
+            showAdminFilmSessionPage(filmSessionDto, view);
+        } catch (ServiceException e) {
+            view = new ViewModel("admin-personal-area");
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+        }
+        return new RedirectViewModel(view);
     }
 
     private void showAdminFilmSessionPage(FilmSessionDto filmSessionDto, View view) throws ServiceException {
@@ -68,7 +77,6 @@ public class FilmSessionController {
         view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
         view.addParameter("roomsDto", roomService.recieveAllRoomsDto());
         view.addParameter("filterDate", TimeConverter.changeStingDataToStingFormat(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd"));
-        view.addParameter("filterFilmId", filmSessionDto.getFilmDto() != null ? filmSessionDto.getFilmDto().getId() : -1);
     }
 
 }
