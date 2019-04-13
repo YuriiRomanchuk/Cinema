@@ -29,4 +29,10 @@ public class RoomPlaceService {
             throw new ServiceException("Create room places failed", e);
         }
     }
+
+    public List<RoomPlaceDto> receiveRoomPlacesForRoom(int roomId) throws ServiceException {
+
+        return null;
+
+    }
 }

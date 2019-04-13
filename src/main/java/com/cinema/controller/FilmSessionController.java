@@ -3,9 +3,7 @@ package com.cinema.controller;
 import com.cinema.exception.ServiceException;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.FilmSessionDto;
-import com.cinema.service.FilmService;
-import com.cinema.service.FilmSessionService;
-import com.cinema.service.RoomService;
+import com.cinema.service.*;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
@@ -17,11 +15,19 @@ public class FilmSessionController {
     private final FilmSessionService filmSessionService;
     private final FilmService filmService;
     private final RoomService roomService;
+    private final TicketService ticketService;
+    private final RoomPlaceService roomPlaceService;
 
-    public FilmSessionController(FilmSessionService filmSessionService, FilmService filmService, RoomService roomService) {
+    public FilmSessionController(FilmSessionService filmSessionService,
+                                 FilmService filmService,
+                                 RoomService roomService,
+                                 TicketService ticketService,
+                                 RoomPlaceService roomPlaceService) {
         this.filmSessionService = filmSessionService;
         this.filmService = filmService;
         this.roomService = roomService;
+        this.ticketService = ticketService;
+        this.roomPlaceService = roomPlaceService;
     }
 
     public View addFilmSession(FilmSessionDto filmSessionDto) {
@@ -58,6 +64,20 @@ public class FilmSessionController {
             view = new ViewModel("admin-session");
             filmSessionService.deleteFilmSession(filmSessionDto);
             showAdminFilmSessionPage(filmSessionDto, view);
+        } catch (ServiceException e) {
+            view = new ViewModel("admin-personal-area");
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+        }
+        return new RedirectViewModel(view);
+    }
+
+    public View showSessionRoom(FilmSessionDto filmSessionDto) {
+        View view;
+        try {
+            view = new ViewModel("admin-session-room");
+            view.addParameter("filmSessionDto", filmSessionDto);
+            view.addParameter("purchasedSessionTickets", ticketService.receivePurchasedSessionTickets(filmSessionDto.getId()));
+            view.addParameter("purchasedSessionTickets", roomPlaceService.receiveRoomPlacesForRoom(filmSessionDto.getRoomDto().getId()));
         } catch (ServiceException e) {
             view = new ViewModel("admin-personal-area");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
