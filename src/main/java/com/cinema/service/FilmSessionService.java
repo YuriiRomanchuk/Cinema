@@ -36,7 +36,6 @@ public class FilmSessionService {
             Date endOfDay = TimeConverter.receiveEndOfDay(currentFilmSessionDate);
             List<FilmSession> filmsSession = filmSessionDao.findByFilters(beginOfDay, endOfDay, filmIdFilter);
             return prepareDailySchedule(filmsSession, beginOfDay, endOfDay, filmIdFilter);
-
         } catch (Exception e) {
             throw new ServiceException("Create film session failed", e);
         }
@@ -87,8 +86,8 @@ public class FilmSessionService {
 
     public void deleteFilmSession(FilmSessionDto filmSessionDto) throws ServiceException {
         try {
-        filmSessionDao.delete(filmSessionDto.getId());
-        filmSessionDto.getFilmDto().setId(-1);
+            filmSessionDao.delete(filmSessionDto.getId());
+            filmSessionDto.getFilmDto().setId(-1);
         } catch (Exception e) {
             throw new ServiceException("Delete film session failed", e);
         }

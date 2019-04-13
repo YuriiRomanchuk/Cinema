@@ -88,7 +88,7 @@ public class FilmSessionController {
     private void showAdminFilmSessionPage(FilmSessionDto filmSessionDto, View view) throws ServiceException {
         view.addParameter("filmsSessionDto", filmSessionService.showFilmSessions(filmSessionDto));
         view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
-        view.addParameter("roomsDto", roomService.recieveAllRoomsDto());
+        view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
         view.addParameter("filterDate", TimeConverter.changeStingDataToStingFormat(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd"));
 
         Date sessionDate = TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy");

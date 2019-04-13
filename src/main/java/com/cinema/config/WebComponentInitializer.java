@@ -62,7 +62,7 @@ public class WebComponentInitializer {
         userService = new UserService(dataComponentInitializer.getUserDao());
         filmService = new FilmService(dataComponentInitializer.getFilmDao(), filmConverter, filmDtoConverter);
         roomService = new RoomService(dataComponentInitializer.getRoomDao(), roomConverter, roomDtoConverter);
-        roomPlaceService = new RoomPlaceService(dataComponentInitializer.getRoomPlaceDao(), roomPlaceConverter);
+        roomPlaceService = new RoomPlaceService(dataComponentInitializer.getRoomPlaceDao(), roomPlaceConverter, roomPlaceDtoConverter);
         filmSessionService = new FilmSessionService(dataComponentInitializer.getFilmSessionDao(), filmSessionDtoConverter, filmSessionConverter);
         ticketService = new TicketService();
 

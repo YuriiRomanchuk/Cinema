@@ -27,7 +27,6 @@ public class FilmService {
             Film film = filmConverter.convert(filmDto);
             filmDao.insert(film);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new ServiceException("Create film failed", e);
         }
     }
@@ -39,8 +38,7 @@ public class FilmService {
             films.forEach(f -> filmsDto.add(filmDtoConverter.convertFromFilmEntity(f)));
             return filmsDto;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServiceException("Create film failed", e);
+            throw new ServiceException("Create film dto failed", e);
         }
 
     }

@@ -28,7 +28,6 @@ public class UserService {
         } catch (Exception e) {
             throw new ServiceException("Registration failed", e);
         }
-
     }
 
     public Role receiveUserRole(UserDto userDto) {

@@ -22,7 +22,7 @@ public class RoomPlaceController {
 
     public View showRoomPlace() {
         View view = new ViewModel("WEB-INF/jsp/admin/admin-add-room-place.jsp");
-        view.addParameter("roomsDto", roomService.recieveAllRoomsDto());
+        view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
         return view;
     }
 
