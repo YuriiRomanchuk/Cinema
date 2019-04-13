@@ -33,20 +33,23 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
             }
         }, r -> {
         });
-
-
     }
 
     @Override
     public RoomPlace findById(int id) {
-        return dataSource.receiveFirstRecord("SELECT places_id, row, place, room_id, rooms.name as room_name, " +
+        return null;
+    }
+
+
+    public List<RoomPlace> findAllbyRoomId(int room_id) {
+        return dataSource.receiveRecords("SELECT places_id, row, place, room_id, rooms.name as room_name, " +
                         "rooms.name_english as rooms_name_english FROM(select id as places_id, row, place, room_id " +
                         "from places where room_id = ?) temp LEFT JOIN rooms ON temp.room_id = rooms.id",
                 roomPlaceConverter,
                 preparedStatement ->
                 {
-                    preparedStatement.setInt(1, id);
-                }).orElse(null);
+                    preparedStatement.setInt(1, room_id);
+                });
     }
 
     @Override

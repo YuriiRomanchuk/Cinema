@@ -58,6 +58,5 @@ public class RoomDao implements GenericDao<Room> {
             room.setId(rs.getInt("id"));
             return room;
         };
-
     }
 }
