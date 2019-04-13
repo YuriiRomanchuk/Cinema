@@ -41,6 +41,10 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return convertFilmSessionWithLine(request, request.getParameter("delete-session"));
     }
 
+    public FilmSessionDto convertFilmSessionWithLineShow(HttpServletRequest request) {
+        return convertFilmSessionWithLine(request, request.getParameter("show-session"));
+    }
+
     private FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request, String numberOfLine) {
 
         String currentDate = String.valueOf(TimeConverter.convertStringToDate(request.getParameter("session_date_" + numberOfLine), "yyyy-MM-dd kk:mm:ss"));

@@ -36,6 +36,8 @@ public class RequestResolver {
         getControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().showAddRoomPage());
         getControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
         getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFilters(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+        getControllers.put("/admin-session-room", r -> webComponentInitializer.getTicketController().showSessionRoom());
+
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
         postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserConverter().convert(r)));
@@ -46,6 +48,7 @@ public class RequestResolver {
         postControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFilters(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         postControllers.put("/add-session", r -> webComponentInitializer.getFilmSessionController().addFilmSession(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineAdd(r)));
         postControllers.put("/delete-session", r -> webComponentInitializer.getFilmSessionController().deleteFilmSession(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineDelete(r)));
+        postControllers.put("/show-session", r -> webComponentInitializer.getFilmSessionController().showSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineShow(r)));
     }
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

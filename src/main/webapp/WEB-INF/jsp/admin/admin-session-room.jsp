@@ -1,16 +1,27 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yromanchuk
-  Date: 4/13/19
-  Time: 4:35 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-</body>
-</html>
+<t:genericpage>
+    <jsp:attribute name="title">
+      Template Page
+    </jsp:attribute>
+    <jsp:attribute name="header">
+        <jsp:include page="/WEB-INF/jsp/template/header.jsp"/>
+    </jsp:attribute>
+    <jsp:attribute name="footer">
+    </jsp:attribute>
+
+    <jsp:body>
+        <div class="row h-100">
+            <!-- left sidebar -->
+            <jsp:include page="/WEB-INF/jsp/template/admin-bar.jsp"/>
+
+            <!-- center content -->
+            <div class="col fluid bg-faded py-3 h-100 justify-content-center">
+                <div class="row my-3 justify-content-center">
+                    <jsp:include page="/WEB-INF/jsp/admin/adminBody/admin-session-room-body.jsp"/>
+                </div>
+            </div>
+        </div>
+    </jsp:body>
+</t:genericpage>

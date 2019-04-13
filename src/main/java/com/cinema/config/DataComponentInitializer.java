@@ -78,4 +78,8 @@ public class DataComponentInitializer {
     public FilmSessionDao getFilmSessionDao() {
         return filmSessionDao;
     }
+
+    public TicketDao getTicketDao() {
+        return ticketDao;
+    }
 }

@@ -44,7 +44,7 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
     public List<RoomPlace> findAllByRoomId(int room_id) {
         return dataSource.receiveRecords("SELECT place_id, place_row, place_place, room_id, rooms.name as room_name, " +
                         "rooms.name_english as room_name_english FROM(select id as place_id, row as place_row, place as place_place, room_id " +
-                        "from places where room_id = ?) temp LEFT JOIN rooms ON temp.room_id = rooms.id",
+                        "from places where room_id = ?) temp LEFT JOIN rooms ON temp.room_id = rooms.id order by place_row, place_place",
                 resultSet -> roomPlaceResultSetConverter.convert(resultSet),
                 preparedStatement ->
                 {

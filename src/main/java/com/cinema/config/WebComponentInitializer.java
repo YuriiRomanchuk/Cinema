@@ -31,27 +31,31 @@ public class WebComponentInitializer {
     private final TicketService ticketService;
 
     private final UserLoginDtoConverter userLoginDtoConverter;
+    private final UserDtoConverter userDtoConverter;
     private final FilmDtoConverter filmDtoConverter;
     private final RoomDtoConverter roomDtoConverter;
     private final RoomPlaceDtoConverter roomPlaceDtoConverter;
     private final FilmSessionDtoConverter filmSessionDtoConverter;
+    private final TicketDtoConverter ticketDtoConverter;
 
     private final UserConverter userConverter;
     private final FilmConverter filmConverter;
     private final RoomConverter roomConverter;
     private final RoomPlaceConverter roomPlaceConverter;
     private final FilmSessionConverter filmSessionConverter;
-
+    private final TicketController ticketController;
 
     private WebComponentInitializer() {
 
         DataComponentInitializer dataComponentInitializer = DataComponentInitializer.getInstance();
 
         userLoginDtoConverter = new UserLoginDtoConverter();
+        userDtoConverter = new UserDtoConverter();
         filmDtoConverter = new FilmDtoConverter();
         roomDtoConverter = new RoomDtoConverter();
         roomPlaceDtoConverter = new RoomPlaceDtoConverter(roomDtoConverter);
         filmSessionDtoConverter = new FilmSessionDtoConverter(filmDtoConverter, roomDtoConverter);
+        ticketDtoConverter = new TicketDtoConverter(userDtoConverter, roomPlaceDtoConverter, filmSessionDtoConverter);
 
         userConverter = new UserConverter();
         filmConverter = new FilmConverter();
@@ -64,7 +68,7 @@ public class WebComponentInitializer {
         roomService = new RoomService(dataComponentInitializer.getRoomDao(), roomConverter, roomDtoConverter);
         roomPlaceService = new RoomPlaceService(dataComponentInitializer.getRoomPlaceDao(), roomPlaceConverter, roomPlaceDtoConverter);
         filmSessionService = new FilmSessionService(dataComponentInitializer.getFilmSessionDao(), filmSessionDtoConverter, filmSessionConverter);
-        ticketService = new TicketService();
+        ticketService = new TicketService(dataComponentInitializer.getTicketDao(), ticketDtoConverter);
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController();
@@ -73,6 +77,7 @@ public class WebComponentInitializer {
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);
+        ticketController = new TicketController(ticketService);
 
         requestResolver = new RequestResolver(this);
     }
@@ -155,5 +160,9 @@ public class WebComponentInitializer {
 
     public FilmSessionController getFilmSessionController() {
         return filmSessionController;
+    }
+
+    public TicketController getTicketController() {
+        return ticketController;
     }
 }

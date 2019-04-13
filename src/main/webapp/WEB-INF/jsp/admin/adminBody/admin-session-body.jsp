@@ -11,7 +11,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="${sessionScope.lang}">
 <head>
     <title>Title</title>
 </head>
@@ -73,26 +73,27 @@
             <th>Film</th>
             <th>Action</th>
         </thead>
-        <% int counter = 1;%>
+    <%--    <% int counter = 1;%>--%>
+        <c:set var="counter">1</c:set>
         <c:forEach var="filmSessionDto" items="${filmsSessionDto}">
             <tr>
                 <td>
-                    <input type="text" class="form-control" id="session_id_<%=counter%>"
-                           name="session_id_<%=counter%>" size="1"
+                    <input type="text" class="form-control" id="session_id_${counter}"
+                           name="session_id_${counter}" size="1"
                            readonly
                            value=" ${filmSessionDto.getId()}">
                 </td>
                 <td>
-                    <input type="text" class="form-control" id="session_date_<%=counter%>"
-                           name="session_date_<%=counter%>"
+                    <input type="text" class="form-control" id="session_date_${counter}"
+                           name="session_date_${counter}"
                            placeholder="Enter film's name" readonly
                            value="${filmSessionDto.getDate()}">
                 </td>
                 <td>
                     <select
                         <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
-                            class="custom-select mr-sm-2" id="session_room_ <%=counter%>"
-                            name="session_room_<%=counter%>">
+                            class="custom-select mr-sm-2" id="session_room_${counter}"
+                            name="session_room_${counter}">
                         <option selected>Choose...</option>
                         <c:forEach var="room" items="${roomsDto}">
                             <option selected="selected" value=${room.getId()}>${room.getName()}
@@ -103,8 +104,8 @@
                 <td>
                     <select
                         <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
-                            class="custom-select mr-sm-2" id="session_film_<%=counter%>"
-                            name="session_film_<%=counter%>">
+                            class="custom-select mr-sm-2" id="session_film_${counter}"
+                            name="session_film_${counter}">
                         <option selected>Choose...</option>
                         <c:forEach var="film" items="${filmsDto}">
                             <option value=${film.getId()}>${film.getName()}
@@ -123,14 +124,14 @@
 
                         <c:if test="${filmSessionDto.getId() !=0}">
                             <button onclick="form.action='show-session';" type="submit" name="show-session"
-                                    value="<%=counter%>"
+                                    value="${counter}"
                                     class="btn btn-primary ml-2 mr-1">
                                 show
                             </button>
 
                             <c:if test="${!isLastDay}">
                                 <button onclick="form.action='delete-session';" type="submit" name="delete-session"
-                                        value="<%=counter%>"
+                                        value="${counter}"
                                         class="btn btn-primary">
                                     delete
                                 </button>
@@ -139,7 +140,7 @@
 
                         <c:if test="${filmSessionDto.getId() <=0 and !isLastDay}">
                             <button onclick="form.action='add-session';" type="submit" name="add-session"
-                                    value="<%=counter%>"
+                                    value="${counter}"
                                     class="btn btn-primary ml-2">
                                 add
                             </button>
@@ -148,8 +149,7 @@
                     </div>
                 </td>
             </tr>
-
-            <%counter++;%>
+            <c:set var="counter">"${counter}++"</c:set>
         </c:forEach>
     </table>
 </form>

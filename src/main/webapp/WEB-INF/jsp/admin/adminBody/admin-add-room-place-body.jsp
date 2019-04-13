@@ -11,7 +11,7 @@
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="${sessionScope.lang}">
 <head>
     <title>Title</title>
 </head>
