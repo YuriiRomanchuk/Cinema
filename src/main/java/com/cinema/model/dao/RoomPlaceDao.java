@@ -1,6 +1,6 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.converter.utility.DaoConverter;
+import com.cinema.model.converter.resultSetConverter.RoomPlaceResultSetConverter;
 import com.cinema.model.entity.RoomPlace;
 
 import java.util.List;
@@ -8,11 +8,11 @@ import java.util.List;
 public class RoomPlaceDao implements GenericDao<RoomPlace> {
 
     private final DataSource dataSource;
-    private DataSource.SqlFunction<RoomPlace> roomPlaceConverter;
+    private final RoomPlaceResultSetConverter roomPlaceResultSetConverter;
 
-    public RoomPlaceDao(DataSource dataSource) {
+    public RoomPlaceDao(DataSource dataSource, RoomPlaceResultSetConverter roomPlaceResultSetConverter) {
         this.dataSource = dataSource;
-        receiveConverter();
+        this.roomPlaceResultSetConverter = roomPlaceResultSetConverter;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
         return dataSource.receiveRecords("SELECT place_id, place_row, place_place, room_id, rooms.name as room_name, " +
                         "rooms.name_english as room_name_english FROM(select id as place_id, row as place_row, place as place_place, room_id " +
                         "from places where room_id = ?) temp LEFT JOIN rooms ON temp.room_id = rooms.id",
-                roomPlaceConverter,
+                resultSet -> roomPlaceResultSetConverter.convert(resultSet),
                 preparedStatement ->
                 {
                     preparedStatement.setInt(1, room_id);
@@ -65,9 +65,5 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
     @Override
     public void delete(int id) {
 
-    }
-
-    private void receiveConverter() {
-        roomPlaceConverter = rs -> DaoConverter.convertResultSetToRoomPlace(rs);
     }
 }

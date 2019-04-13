@@ -11,6 +11,7 @@ public class RoomConverter implements Converter<RoomDto, Room> {
         Room room = new Room();
         room.setId(roomDto.getId());
         room.setName(roomDto.getName());
+        room.setNameEnglish(roomDto.getNameEnglish());
         return room;
     }
 

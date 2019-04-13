@@ -1,5 +1,6 @@
 package com.cinema.model.dao;
 
+import com.cinema.model.converter.resultSetConverter.FilmSessionResultSetConverter;
 import com.cinema.model.converter.utility.DaoConverter;
 import com.cinema.model.entity.FilmSession;
 
@@ -10,11 +11,11 @@ import java.util.List;
 public class FilmSessionDao implements GenericDao<FilmSession> {
 
     private final DataSource dataSource;
-    private DataSource.SqlFunction<FilmSession> filmSessionConverter;
+    private final FilmSessionResultSetConverter filmSessionResultSetConverter;
 
-    public FilmSessionDao(DataSource dataSource) {
+    public FilmSessionDao(DataSource dataSource, FilmSessionResultSetConverter filmSessionResultSetConverter) {
         this.dataSource = dataSource;
-        receiveConverter();
+        this.filmSessionResultSetConverter = filmSessionResultSetConverter;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
         }
 
         List<FilmSession> filmsSession = dataSource.receiveRecords(query,
-                filmSessionConverter,
+                resultSet -> filmSessionResultSetConverter.convert(resultSet),
                 preparedStatement -> {
                     preparedStatement.setTimestamp(1, new Timestamp(beginOfDay.getTime()));
                     preparedStatement.setTimestamp(2, new Timestamp(endOfDay.getTime()));
@@ -77,10 +78,6 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
             ps.setInt(1, filmId);
         }, r -> {
         });
-    }
-
-    private void receiveConverter() {
-        filmSessionConverter = rs -> DaoConverter.convertResultSetToFilmSession(rs);
     }
 
     public void insert(int filmId, int roomId, Date sessionDate) {

@@ -41,21 +41,23 @@ public class WebComponentInitializer {
     private final RoomConverter roomConverter;
     private final RoomPlaceConverter roomPlaceConverter;
     private final FilmSessionConverter filmSessionConverter;
-
+/*
     private final UserDao userDao;
     private final FilmDao filmDao;
     private final RoomDao roomDao;
     private final RoomPlaceDao roomPlaceDao;
-    private final FilmSessionDao filmSessionDao;
+    private final FilmSessionDao filmSessionDao;*/
 
-    public WebComponentInitializer() {
+    private WebComponentInitializer() {
 
-        DataSource dataSource = new DataSource();
-        userDao = new UserDao(dataSource);
-        filmDao = new FilmDao(dataSource);
-        roomDao = new RoomDao(dataSource);
-        roomPlaceDao = new RoomPlaceDao(dataSource);
-        filmSessionDao = new FilmSessionDao(dataSource);
+      /*  DataSource dataSource = new DataSource();*/
+/*        userDao = new UserDao(dataSource, userResultSetConverter);
+        filmDao = new FilmDao(dataSource, filmResultSetConverter);
+        roomDao = new RoomDao(dataSource, roomResultSetConverter);
+        roomPlaceDao = new RoomPlaceDao(dataSource, roomPlaceResultSetConverter);
+        filmSessionDao = new FilmSessionDao(dataSource, filmSessionResultSetConverter);*/
+
+        DataComponentInitializer dataComponentInitializer = DataComponentInitializer.getInstance();
 
         userLoginDtoConverter = new UserLoginDtoConverter();
         filmDtoConverter = new FilmDtoConverter();
@@ -69,11 +71,11 @@ public class WebComponentInitializer {
         roomPlaceConverter = new RoomPlaceConverter(roomConverter);
         filmSessionConverter = new FilmSessionConverter();
 
-        userService = new UserService(userDao);
-        filmService = new FilmService(filmDao, filmConverter, filmDtoConverter);
-        roomService = new RoomService(roomDao, roomConverter, roomDtoConverter);
-        roomPlaceService = new RoomPlaceService(roomPlaceDao, roomPlaceConverter);
-        filmSessionService = new FilmSessionService(filmSessionDao, filmSessionDtoConverter, filmSessionConverter);
+        userService = new UserService(dataComponentInitializer.getUserDao());
+        filmService = new FilmService(dataComponentInitializer.getFilmDao(), filmConverter, filmDtoConverter);
+        roomService = new RoomService(dataComponentInitializer.getRoomDao(), roomConverter, roomDtoConverter);
+        roomPlaceService = new RoomPlaceService(dataComponentInitializer.getRoomPlaceDao(), roomPlaceConverter);
+        filmSessionService = new FilmSessionService(dataComponentInitializer.getFilmSessionDao(), filmSessionDtoConverter, filmSessionConverter);
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController();

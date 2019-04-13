@@ -35,8 +35,8 @@
         <label for="name">Name:</label>
         <input required type="text" class="form-control" id="name" name="name"
                placeholder="Enter room's name">
-        <label for="nameEnglish">Name(en):</label>
-        <input required type="text" class="form-control" id="nameEnglish" name="nameEnglish"
+        <label for="name_english">Name(en):</label>
+        <input required type="text" class="form-control" id="name_english" name="name_english"
                placeholder="Enter room's english name">
     </div>
     <button type="submit" class="btn btn-primary">Add</button>

@@ -1,19 +1,18 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.converter.utility.DaoConverter;
+import com.cinema.model.converter.resultSetConverter.UserResultSetConverter;
 import com.cinema.model.entity.User;
-import com.cinema.model.entity.enums.Role;
 
 import java.util.List;
 
 public class UserDao implements GenericDao<User> {
 
     private final DataSource dataSource;
-    private DataSource.SqlFunction<User> userConverter;
+    private final UserResultSetConverter userResultSetConverter;
 
-    public UserDao(DataSource dataSource) {
+    public UserDao(DataSource dataSource, UserResultSetConverter userResultSetConverter) {
         this.dataSource = dataSource;
-        receiveConverter();
+        this.userResultSetConverter = userResultSetConverter;
     }
 
     @Override
@@ -43,23 +42,12 @@ public class UserDao implements GenericDao<User> {
 
     public User findUserByEmailAndPassword(String email, String password) {
         return dataSource.receiveFirstRecord("select *, users.id as user_id from users where email = ? and password = ?",
-                userConverter,
+                resultSet -> userResultSetConverter.convert(resultSet),
                 preparedStatement ->
                 {
                     preparedStatement.setString(1, email);
                     preparedStatement.setString(2, password);
                 }).orElse(null);
-    }
-
-    public Role findUserRole(String email, String password) {
-        User user = findUserByEmailAndPassword(email, password);
-        return user != null ? user.getRole() : null;
-    }
-
-
-    private void receiveConverter() {
-        userConverter = rs -> DaoConverter.convertResultSetToUser(rs);
-
     }
 
     public void createUser(User user) {

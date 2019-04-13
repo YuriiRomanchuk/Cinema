@@ -1,6 +1,6 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.converter.utility.DaoConverter;
+import com.cinema.model.converter.resultSetConverter.TicketResultSetConverter;
 import com.cinema.model.entity.Ticket;
 
 import java.util.List;
@@ -8,11 +8,11 @@ import java.util.List;
 public class TicketDao implements GenericDao<Ticket> {
 
     private final DataSource dataSource;
-    private DataSource.SqlFunction<Ticket> ticketConverter;
+    private final TicketResultSetConverter ticketResultSetConverter;
 
-    public TicketDao(DataSource dataSource) {
+    public TicketDao(DataSource dataSource, TicketResultSetConverter ticketResultSetConverter) {
         this.dataSource = dataSource;
-        receiveConverter();
+        this.ticketResultSetConverter = ticketResultSetConverter;
     }
 
 
@@ -53,21 +53,10 @@ public class TicketDao implements GenericDao<Ticket> {
                         "left join session on session_id = session.id left join users on user_id = users.id " +
                         "left join places on place_id = places.id) temp2 left join films on temp2.film_id = films.id " +
                         "LEFT JOIN rooms on temp2.room_id = rooms.id",
-                ticketConverter,
+                resultSet -> ticketResultSetConverter.convert(resultSet),
                 preparedStatement ->
                 {
                     preparedStatement.setInt(1, filmSessionId);
                 });
-    }
-
-    private void receiveConverter() {
-        ticketConverter = rs -> {
-            Ticket ticket = new Ticket();
-            ticket.setId(rs.getInt("ticket_id"));
-            ticket.setUser(DaoConverter.convertResultSetToUser(rs));
-            ticket.setRoomPlace(DaoConverter.convertResultSetToRoomPlace(rs));
-            ticket.setFilmSession(DaoConverter.convertResultSetToFilmSession(rs));
-            return ticket;
-        };
     }
 }

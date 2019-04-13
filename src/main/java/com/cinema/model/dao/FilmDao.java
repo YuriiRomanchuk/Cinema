@@ -1,6 +1,6 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.converter.utility.DaoConverter;
+import com.cinema.model.converter.resultSetConverter.FilmResultSetConverter;
 import com.cinema.model.entity.Film;
 
 import java.sql.Timestamp;
@@ -9,11 +9,11 @@ import java.util.List;
 public class FilmDao implements GenericDao<Film> {
 
     private final DataSource dataSource;
-    private DataSource.SqlFunction<Film> filmConverter;
+    private final FilmResultSetConverter filmResultSetConverter;
 
-    public FilmDao(DataSource dataSource) {
+    public FilmDao(DataSource dataSource, FilmResultSetConverter filmResultSetConverter) {
         this.dataSource = dataSource;
-        receiveConverter();
+        this.filmResultSetConverter = filmResultSetConverter;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FilmDao implements GenericDao<Film> {
     public List findAll() {
         return dataSource.receiveRecords("select id as film_id, name, name_english, description," +
                         " release_date, description_english, running_time from films",
-                filmConverter,
+                resultSet -> filmResultSetConverter.convert(resultSet),
                 preparedStatement -> {
                 });
     }
@@ -53,9 +53,5 @@ public class FilmDao implements GenericDao<Film> {
     @Override
     public void delete(int id) {
 
-    }
-
-    private void receiveConverter() {
-        filmConverter = rs -> DaoConverter.convertResultSetToFilm(rs);
     }
 }
