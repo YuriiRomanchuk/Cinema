@@ -1,6 +1,6 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.entity.Room;
+import com.cinema.model.converter.utility.DaoConverter;
 import com.cinema.model.entity.RoomPlace;
 
 import java.util.List;
@@ -42,8 +42,8 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
 
 
     public List<RoomPlace> findAllbyRoomId(int room_id) {
-        return dataSource.receiveRecords("SELECT places_id, row, place, room_id, rooms.name as room_name, " +
-                        "rooms.name_english as rooms_name_english FROM(select id as places_id, row, place, room_id " +
+        return dataSource.receiveRecords("SELECT place_id, place_row, place_place, room_id, rooms.name as room_name, " +
+                        "rooms.name_english as room_name_english FROM(select id as place_id, row as place_row, place as place_place, room_id " +
                         "from places where room_id = ?) temp LEFT JOIN rooms ON temp.room_id = rooms.id",
                 roomPlaceConverter,
                 preparedStatement ->
@@ -68,17 +68,6 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
     }
 
     private void receiveConverter() {
-        roomPlaceConverter = rs -> {
-            RoomPlace roomPlace = new RoomPlace();
-            Room room = new Room();
-            room.setId(rs.getInt("room_id"));
-            room.setName(rs.getString("room_name"));
-            room.setNameEnglish(rs.getString("rooms_name_english"));
-            roomPlace.setId(rs.getInt("places_id"));
-            roomPlace.setRow(rs.getInt("row"));
-            roomPlace.setPlace(rs.getInt("place"));
-            roomPlace.setRoom(room);
-            return roomPlace;
-        };
+        roomPlaceConverter = rs -> DaoConverter.convertResultSetToRoomPlace(rs);
     }
 }

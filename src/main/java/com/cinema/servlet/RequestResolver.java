@@ -1,6 +1,6 @@
 package com.cinema.servlet;
 
-import com.cinema.config.ComponentInitializer;
+import com.cinema.config.WebComponentInitializer;
 import com.cinema.controller.*;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
@@ -23,35 +23,29 @@ public class RequestResolver {
     private Map<String, Function<HttpServletRequest, View>> postControllers = new HashMap<>();
 
 
-    public RequestResolver(WelcomeController welcomeController,
-                           UserController userController,
-                           ChangeLanguageController changeLanguageController,
-                           FilmController filmController,
-                           RoomController roomController,
-                           RoomPlaceController roomPlaceController,
-                           FilmSessionController filmSessionController) {
+    public RequestResolver(WebComponentInitializer webComponentInitializer) {
 
-        getControllers.put("/index", r -> welcomeController.showIndexPage());
-        getControllers.put("/registration-form", r -> userController.showRegistrationPage());
-        getControllers.put("/login", r -> userController.showUserLoginPage());
-        getControllers.put("/admin-personal-area", r -> userController.showAdminPersonalArea());
-        getControllers.put("/user-personal-area", r -> userController.showUserPersonalArea());
-        getControllers.put("/logout", r -> userController.logout());
-        getControllers.put("/admin-add-film", r -> filmController.showAddFilmPage());
-        getControllers.put("/admin-show-all-films", r -> filmController.showAllFilms());
-        getControllers.put("/admin-add-room", r -> roomController.showAddRoomPage());
-        getControllers.put("/admin-add-room-place", r -> roomPlaceController.showRoomPlace());
-        getControllers.put("/admin-session", r -> filmSessionController.showFilmSessionPageFilters(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convert(r)));
+        getControllers.put("/index", r -> webComponentInitializer.getWelcomeController().showIndexPage());
+        getControllers.put("/registration-form", r -> webComponentInitializer.getUserController().showRegistrationPage());
+        getControllers.put("/login", r -> webComponentInitializer.getUserController().showUserLoginPage());
+        getControllers.put("/admin-personal-area", r -> webComponentInitializer.getUserController().showAdminPersonalArea());
+        getControllers.put("/user-personal-area", r -> webComponentInitializer.getUserController().showUserPersonalArea());
+        getControllers.put("/logout", r -> webComponentInitializer.getUserController().logout());
+        getControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().showAddFilmPage());
+        getControllers.put("/admin-show-all-films", r -> webComponentInitializer.getFilmController().showAllFilms());
+        getControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().showAddRoomPage());
+        getControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
+        getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFilters(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
 
-        postControllers.put("/login", r -> userController.loginUser(ComponentInitializer.getInstance().getUserLoginDtoConverter().convert(r)));
-        postControllers.put("/registration-form", r -> userController.createUser(ComponentInitializer.getInstance().getUserConverter().convert(r)));
-        postControllers.put("/change_language", r -> changeLanguageController.changeLanguage());
-        postControllers.put("/admin-add-film", r -> filmController.createFilm(ComponentInitializer.getInstance().getFilmDtoConverter().convert(r)));
-        postControllers.put("/admin-add-room", r -> roomController.createRoom(ComponentInitializer.getInstance().getRoomDtoConverter().convert(r)));
-        postControllers.put("/admin-add-room-place", r -> roomPlaceController.createRoomPlace(ComponentInitializer.getInstance().getRoomPlaceDtoConverter().convert(r)));
-        postControllers.put("/admin-session", r -> filmSessionController.showFilmSessionPageFilters(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convert(r)));
-        postControllers.put("/add-session", r -> filmSessionController.addFilmSession(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convertFilmSessionWithLineAdd(r)));
-        postControllers.put("/delete-session", r -> filmSessionController.deleteFilmSession(ComponentInitializer.getInstance().getFilmSessionDtoConverter().convertFilmSessionWithLineDelete(r)));
+        postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
+        postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserConverter().convert(r)));
+        postControllers.put("/change_language", r -> webComponentInitializer.getChangeLanguageController().changeLanguage());
+        postControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().createFilm(webComponentInitializer.getFilmDtoConverter().convert(r)));
+        postControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().createRoom(webComponentInitializer.getRoomDtoConverter().convert(r)));
+        postControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().createRoomPlace(webComponentInitializer.getRoomPlaceDtoConverter().convert(r)));
+        postControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFilters(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+        postControllers.put("/add-session", r -> webComponentInitializer.getFilmSessionController().addFilmSession(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineAdd(r)));
+        postControllers.put("/delete-session", r -> webComponentInitializer.getFilmSessionController().deleteFilmSession(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineDelete(r)));
     }
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,6 +1,6 @@
 package com.cinema.controller.filter;
 
-import com.cinema.config.ComponentInitializer;
+import com.cinema.config.WebComponentInitializer;
 import com.cinema.config.UserAuthorization;
 import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
 import com.cinema.model.dto.UserDto;
@@ -24,8 +24,8 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
-        userLoginDtoConverter = ComponentInitializer.getInstance().getUserLoginDtoConverter();
-        userService = ComponentInitializer.getInstance().getUserService();
+        userLoginDtoConverter = WebComponentInitializer.getInstance().getUserLoginDtoConverter();
+        userService = WebComponentInitializer.getInstance().getUserService();
 
         Map<String, UserAuthorization> usersAuthorization = new HashMap<>();
         ServletContext context = filterConfig.getServletContext();

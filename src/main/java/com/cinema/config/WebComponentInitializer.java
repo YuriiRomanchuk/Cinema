@@ -11,9 +11,9 @@ import com.cinema.model.dao.*;
 import com.cinema.service.*;
 import com.cinema.servlet.RequestResolver;
 
-public class ComponentInitializer {
+public class WebComponentInitializer {
 
-    private static ComponentInitializer initializer;
+    private static WebComponentInitializer initializer;
     private final RequestResolver requestResolver;
 
     private final WelcomeController welcomeController;
@@ -48,7 +48,7 @@ public class ComponentInitializer {
     private final RoomPlaceDao roomPlaceDao;
     private final FilmSessionDao filmSessionDao;
 
-    public ComponentInitializer() {
+    public WebComponentInitializer() {
 
         DataSource dataSource = new DataSource();
         userDao = new UserDao(dataSource);
@@ -83,21 +83,14 @@ public class ComponentInitializer {
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService);
 
-        requestResolver = new RequestResolver(welcomeController,
-                userController,
-                changeLanguageController,
-                filmController,
-                roomController,
-                roomPlaceController,
-                filmSessionController);
-
+        requestResolver = new RequestResolver(this);
     }
 
-    public static ComponentInitializer getInstance() {
+    public static WebComponentInitializer getInstance() {
         if (initializer == null) {
-            synchronized (ComponentInitializer.class) {
+            synchronized (WebComponentInitializer.class) {
                 if (initializer == null) {
-                    initializer = new ComponentInitializer();
+                    initializer = new WebComponentInitializer();
                 }
             }
         }
@@ -143,5 +136,33 @@ public class ComponentInitializer {
 
     public FilmSessionDtoConverter getFilmSessionDtoConverter() {
         return filmSessionDtoConverter;
+    }
+
+    public WelcomeController getWelcomeController() {
+        return welcomeController;
+    }
+
+    public UserController getUserController() {
+        return userController;
+    }
+
+    public ChangeLanguageController getChangeLanguageController() {
+        return changeLanguageController;
+    }
+
+    public FilmController getFilmController() {
+        return filmController;
+    }
+
+    public RoomController getRoomController() {
+        return roomController;
+    }
+
+    public RoomPlaceController getRoomPlaceController() {
+        return roomPlaceController;
+    }
+
+    public FilmSessionController getFilmSessionController() {
+        return filmSessionController;
     }
 }

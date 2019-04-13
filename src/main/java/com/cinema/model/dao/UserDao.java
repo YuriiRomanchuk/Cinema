@@ -1,5 +1,6 @@
 package com.cinema.model.dao;
 
+import com.cinema.model.converter.utility.DaoConverter;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 
@@ -41,7 +42,7 @@ public class UserDao implements GenericDao<User> {
     }
 
     public User findUserByEmailAndPassword(String email, String password) {
-        return dataSource.receiveFirstRecord("select * from users where email = ? and password = ?",
+        return dataSource.receiveFirstRecord("select *, users.id as user_id from users where email = ? and password = ?",
                 userConverter,
                 preparedStatement ->
                 {
@@ -57,19 +58,7 @@ public class UserDao implements GenericDao<User> {
 
 
     private void receiveConverter() {
-        userConverter = rs -> {
-            User user = new User();
-            user.setFirstName(rs.getString("first_name"));
-            user.setLastName(rs.getString("last_name"));
-            user.setMiddleName(rs.getString("middle_name"));
-            user.setId(rs.getInt("id"));
-            user.setEmail(rs.getString("email"));
-            user.setLogin(rs.getString("login"));
-            user.setPassword(rs.getString("password"));
-            user.setPhone(rs.getInt("phone"));
-            user.setRole(Role.valueOf(rs.getString("role")));
-            return user;
-        };
+        userConverter = rs -> DaoConverter.convertResultSetToUser(rs);
 
     }
 

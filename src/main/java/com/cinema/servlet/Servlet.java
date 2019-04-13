@@ -1,6 +1,6 @@
 package com.cinema.servlet;
 
-import com.cinema.config.ComponentInitializer;
+import com.cinema.config.WebComponentInitializer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +14,7 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        requestResolver = ComponentInitializer.getInstance().getRequestResolver();
+        requestResolver = WebComponentInitializer.getInstance().getRequestResolver();
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.cinema.model.dao;
 
-import com.cinema.model.entity.Film;
+import com.cinema.model.converter.utility.DaoConverter;
 import com.cinema.model.entity.FilmSession;
-import com.cinema.model.entity.Room;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -47,10 +46,8 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
     public List<FilmSession> findByFilters(Date beginOfDay, Date endOfDay, int film_id) {
 
-        String query = "SELECT temp.id as id_session, film_id, room_id, date" +
-                ", films.name as film_name, films.name_english as film_name_english, films.description as film_description," +
-                "films.release_date as film_release_date, films.description_english as film_description_english, films.running_time as film_running_time," +
-                "rooms.name as room_name, rooms.name_english as room_name_english " +
+        String query = "SELECT temp.id as session_id, film_id, room_id, date as session_date" +
+                ", films.*,rooms.name as room_name, rooms.name_english as room_name_english " +
                 "FROM (select id, film_id, room_id, date from session where date >= ? and date <= ? and 1 = 1) " +
                 "temp LEFT JOIN films ON film_id = films.id LEFT JOIN rooms ON room_id = rooms.id order by date";
 
@@ -83,30 +80,7 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
     }
 
     private void receiveConverter() {
-        filmSessionConverter = rs -> {
-            FilmSession filmSession = new FilmSession();
-            Film film = new Film();
-            Room room = new Room();
-
-            film.setName(rs.getString("film_name"));
-            film.setNameEnglish(rs.getString("film_name_english"));
-            film.setId(rs.getInt("film_id"));
-            film.setDescription(rs.getString("film_description"));
-            film.setReleaseDate(rs.getTimestamp("film_release_date"));
-            film.setDescriptionEnglish(rs.getString("film_description_english"));
-            film.setRunningTime(rs.getInt("film_running_time"));
-
-            room.setName(rs.getString("room_name"));
-            room.setNameEnglish(rs.getString("room_name_english"));
-            room.setId(rs.getInt("room_id"));
-
-            filmSession.setId(rs.getInt("id_session"));
-            filmSession.setDate(rs.getTimestamp("date"));
-            filmSession.setFilm(film);
-            filmSession.setRoom(room);
-
-            return filmSession;
-        };
+        filmSessionConverter = rs -> DaoConverter.convertResultSetToFilmSession(rs);
     }
 
     public void insert(int filmId, int roomId, Date sessionDate) {

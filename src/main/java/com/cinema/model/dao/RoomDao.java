@@ -1,5 +1,6 @@
 package com.cinema.model.dao;
 
+import com.cinema.model.converter.utility.DaoConverter;
 import com.cinema.model.entity.Room;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class RoomDao implements GenericDao<Room> {
 
         dataSource.implementWrite(query, ps -> {
             ps.setString(1, entity.getName());
-            ps.setString(1, entity.getNameEnglish());
+            ps.setString(2, entity.getNameEnglish());
         }, r -> entity.setId(r.getInt(1)));
 
     }
@@ -33,7 +34,7 @@ public class RoomDao implements GenericDao<Room> {
 
     @Override
     public List<Room> findAll() {
-        return dataSource.receiveRecords("select id, name, name_english from rooms",
+        return dataSource.receiveRecords("select id as room_id, name as room_name, name_english as room_name_english from rooms",
                 roomConverter,
                 preparedStatement -> {
                 });
@@ -49,14 +50,7 @@ public class RoomDao implements GenericDao<Room> {
 
     }
 
-
     private void receiveConverter() {
-        roomConverter = rs -> {
-            Room room = new Room();
-            room.setName(rs.getString("name"));
-            room.setNameEnglish(rs.getString("name_english"));
-            room.setId(rs.getInt("id"));
-            return room;
-        };
+        roomConverter = rs -> DaoConverter.convertResultSetToRoom(rs);
     }
 }
