@@ -38,7 +38,7 @@ public class RoomPlaceService {
         try {
             List<RoomPlaceDto> roomPlacesDto = new ArrayList<>();
             List<RoomPlace> roomPlaces = roomPlaceDao.findAllByRoomId(roomId);
-            roomPlaces.forEach(roomPlace -> roomPlacesDto.add(roomPlaceDtoConverter.convertFromTicketEntity(roomPlace)));
+            roomPlaces.forEach(roomPlace -> roomPlacesDto.add(roomPlaceDtoConverter.convertFromRoomPlaceEntity(roomPlace)));
             return roomPlacesDto;
         } catch (Exception e) {
             throw new ServiceException("Create room places dto failed", e);

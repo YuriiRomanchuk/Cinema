@@ -45,7 +45,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         return roomPlacesDto;
     }
 
-    public RoomPlaceDto convertFromTicketEntity(RoomPlace roomPlace) {
+    public RoomPlaceDto convertFromRoomPlaceEntity(RoomPlace roomPlace) {
         RoomPlaceDto placeDto = new RoomPlaceDto();
         placeDto.setId(roomPlace.getId());
         placeDto.setRow(roomPlace.getRow());

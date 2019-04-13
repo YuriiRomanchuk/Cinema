@@ -1,7 +1,6 @@
 package com.cinema.model.dao;
 
 import com.cinema.model.converter.resultSetConverter.FilmSessionResultSetConverter;
-import com.cinema.model.converter.utility.DaoConverter;
 import com.cinema.model.entity.FilmSession;
 
 import java.sql.Timestamp;

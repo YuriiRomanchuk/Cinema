@@ -59,4 +59,5 @@ public class TicketDao implements GenericDao<Ticket> {
                     preparedStatement.setInt(1, filmSessionId);
                 });
     }
+
 }

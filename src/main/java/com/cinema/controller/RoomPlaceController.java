@@ -21,11 +21,17 @@ public class RoomPlaceController {
     }
 
     public View showRoomPlace() {
-        View view = new ViewModel("WEB-INF/jsp/admin/admin-add-room-place.jsp");
-        view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
-        return view;
+        View view;
+        try {
+            view = new ViewModel("WEB-INF/jsp/admin/admin-add-room-place.jsp");
+            view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
+            return view;
+        } catch (ServiceException e) {
+            view = new ViewModel("admin-personal-area");
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            return new RedirectViewModel(view);
+        }
     }
-
 
     public View createRoomPlace(List<RoomPlaceDto> roomPlacesDto) {
         View view;
@@ -34,7 +40,7 @@ public class RoomPlaceController {
             view = new ViewModel("admin-personal-area");
             view.addParameter("Error", "Room places added!");
         } catch (ServiceException e) {
-            view = new ViewModel("admin-add-room-place-body");
+            view = new ViewModel("admin-personal-area");
             view.addParameter("roomPlacesDto", roomPlacesDto);
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }

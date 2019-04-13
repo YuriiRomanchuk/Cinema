@@ -11,7 +11,6 @@ public class FilmConverter implements Converter<FilmDto, Film> {
 
     @Override
     public Film convert(FilmDto filmDto) {
-
         Film film = new Film();
         film.setName(filmDto.getName());
         film.setNameEnglish(filmDto.getNameEnglish());
@@ -22,7 +21,6 @@ public class FilmConverter implements Converter<FilmDto, Film> {
         String filmReleaseDate = filmDto.getReleaseDate();
         Date currentDate = TimeConverter.convertStringToDate(filmReleaseDate, "yyyy-mm-dd");
         film.setReleaseDate(currentDate);
-
         return film;
     }
 }

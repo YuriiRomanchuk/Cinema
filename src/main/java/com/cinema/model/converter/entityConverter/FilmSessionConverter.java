@@ -8,10 +8,6 @@ public class FilmSessionConverter implements Converter<FilmSessionDto, FilmSessi
 
     @Override
     public FilmSession convert(FilmSessionDto filmSessionDto) {
-    /*    FilmSession filmSession = new FilmSession();
-        filmSession.setDate(TimeConverter.convertStringToDate(filmSessionDto.getDate(), "E MMM dd HH:mm:ss Z yyyy"));
-        filmSession.setFilm(filmConverter.convert(filmSessionDto.getFilmDto()));
-        filmSession.setRoom(roomConverter.convert(filmSessionDto.getRoomDto()));*/
         return null;
     }
 }

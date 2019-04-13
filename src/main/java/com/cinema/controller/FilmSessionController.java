@@ -76,8 +76,8 @@ public class FilmSessionController {
         try {
             view = new ViewModel("admin-session-room");
             view.addParameter("filmSessionDto", filmSessionDto);
-            view.addParameter("purchasedSessionTickets", ticketService.receivePurchasedSessionTickets(filmSessionDto.getId()));
-            view.addParameter("purchasedSessionTickets", roomPlaceService.receiveRoomPlacesForRoom(filmSessionDto.getRoomDto().getId()));
+            view.addParameter("purchasedSessionTicketsDto", ticketService.receivePurchasedSessionTickets(filmSessionDto.getId()));
+            view.addParameter("roomPlacesDto", roomPlaceService.receiveRoomPlacesForRoom(filmSessionDto.getRoomDto().getId()));
         } catch (ServiceException e) {
             view = new ViewModel("admin-personal-area");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
