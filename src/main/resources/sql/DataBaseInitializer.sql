@@ -64,7 +64,7 @@ create table if not exists tickets
   place_id   int    NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT tickets_user_id_fkey FOREIGN KEY (user_id)
-    REFERENCES films (id),
+    REFERENCES users (id),
   CONSTRAINT tickets_session_id_fkey FOREIGN KEY (session_id)
     REFERENCES session (id),
   CONSTRAINT tickets_place_id_fkey FOREIGN KEY (place_id)

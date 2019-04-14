@@ -45,15 +45,24 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return convertFilmSessionWithLine(request, request.getParameter("show-session"));
     }
 
+    public FilmSessionDto convertFilmSessionWithLineBuy(HttpServletRequest request) {
+        return convertFilmSessionWithLine(request, request.getParameter("show-user-session"));
+    }
+
     private FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request, String numberOfLine) {
+        String session_date = String.valueOf(TimeConverter.convertStringToDate(request.getParameter("session_date_" + numberOfLine), "yyyy-MM-dd kk:mm:ss"));
+        String session_id = request.getParameter("session_id_" + numberOfLine).trim();
+        String session_film_id = request.getParameter("session_film_" + numberOfLine);
+        String session_room_id = request.getParameter("session_room_" + numberOfLine);
+        return convertFilmSessionByIdes(session_id, session_film_id, session_room_id, session_date);
+    }
 
-        String currentDate = String.valueOf(TimeConverter.convertStringToDate(request.getParameter("session_date_" + numberOfLine), "yyyy-MM-dd kk:mm:ss"));
-
+    public FilmSessionDto convertFilmSessionByIdes(String session_id, String session_film_id, String session_room_id, String session_date) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
-        filmSessionDto.setDate(currentDate);
-        filmSessionDto.setId(Integer.valueOf(request.getParameter("session_id_" + numberOfLine).trim()));
-        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("session_film_" + numberOfLine)));
-        filmSessionDto.setRoomDto(roomDtoConverter.convertForRoomId(request.getParameter("session_room_" + numberOfLine)));
+        filmSessionDto.setDate(session_date);
+        filmSessionDto.setId(Integer.valueOf(session_id));
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(session_film_id));
+        filmSessionDto.setRoomDto(roomDtoConverter.convertForRoomId(session_room_id));
 
         return filmSessionDto;
     }

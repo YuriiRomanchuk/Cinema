@@ -46,13 +46,14 @@
     </div>
     <div class="col-sm-5 col-md-5 col-xs-5 no-padding">
         <label for="session_date">date:</label>
-        <input required type="text" class="form-control" id="session_date" name="session_date" size="2"
+        <input required type="text" class="form-control" id="session_date" name="session_date"
                readonly
                value="${sessionDate}">
     </div>
 </div>
 <div class="w-100 d-none d-md-block"></div>
-<form method="post" action="admin-session">
+
+<form method="post" action="user-session">
     <table class="table table-border-collapse">
         <c:set var="countForColumns">1</c:set>
         <thead>
@@ -87,8 +88,16 @@
             <c:set var="firstEntry">false</c:set>
             </c:if>
             <td>
-                <button disabled onclick="form.action='session-place';" type="submit" name="session-place"
-                        value="${roomPlace.getPlace()}"
+                <c:choose>
+                <c:when test="${placeIsBusy}">
+                    <button disabled onclick="form.action='buy-place';" type="submit" name="buy-place"
+                </c:when>
+                <c:otherwise>
+                     <button onclick="form.action='buy-place';" type="submit" name="buy-place"
+                </c:otherwise>
+                </c:choose>
+                    <%--   <button disabled onclick="form.action='buy-place';" type="submit" name="session-place"--%>
+                        value="${roomPlace.getId()}_${roomPlace.getPlace()}_${roomPlace.getRow()}_${filmSessionDto.getId()}_${filmSessionDto.getFilmDto().getId()}_${filmSessionDto.getRoomDto().getId()}_${sessionDate}"
                         <c:choose>
                             <c:when test="${placeIsBusy}">
                                 class= "btn btn-danger">

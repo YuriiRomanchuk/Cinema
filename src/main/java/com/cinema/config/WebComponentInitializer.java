@@ -77,7 +77,7 @@ public class WebComponentInitializer {
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);
-        ticketController = new TicketController(ticketService);
+        ticketController = new TicketController(ticketService, roomPlaceService);
 
         requestResolver = new RequestResolver(this);
     }
@@ -164,5 +164,9 @@ public class WebComponentInitializer {
 
     public TicketController getTicketController() {
         return ticketController;
+    }
+
+    public TicketDtoConverter getTicketDtoConverter() {
+        return ticketDtoConverter;
     }
 }

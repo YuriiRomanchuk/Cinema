@@ -54,4 +54,12 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         return placeDto;
     }
 
+    public RoomPlaceDto convertFromTicketFields(String placeId, String placePlace, String placeRow, String sessionRoomId) {
+        RoomPlaceDto placeDto = new RoomPlaceDto();
+        placeDto.setId(Integer.valueOf(placeId));
+        placeDto.setRow(Integer.valueOf(placeRow));
+        placeDto.setPlace(Integer.valueOf(placePlace));
+        placeDto.setRoomDto(roomDtoConverter.convertForRoomId(sessionRoomId));
+        return placeDto;
+    }
 }

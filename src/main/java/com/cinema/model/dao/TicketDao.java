@@ -55,9 +55,18 @@ public class TicketDao implements GenericDao<Ticket> {
                         "LEFT JOIN rooms on temp2.room_id = rooms.id",
                 resultSet -> ticketResultSetConverter.convert(resultSet),
                 preparedStatement ->
-                {
-                    preparedStatement.setInt(1, filmSessionId);
-                });
+                        preparedStatement.setInt(1, filmSessionId));
     }
 
+    public void insertByIdes(int filmSessionId, int roomPlaceId, int userId) {
+
+        final String query = "insert into tickets (user_id, session_id, place_id) values(?,?,?)";
+
+        dataSource.implementWrite(query, ps -> {
+            ps.setInt(1, userId);
+            ps.setInt(2, filmSessionId);
+            ps.setInt(3, roomPlaceId);
+        }, r -> {
+        });
+    }
 }

@@ -1,7 +1,6 @@
 package com.cinema.servlet;
 
 import com.cinema.config.WebComponentInitializer;
-import com.cinema.controller.*;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 
@@ -35,9 +34,10 @@ public class RequestResolver {
         getControllers.put("/admin-show-all-films", r -> webComponentInitializer.getFilmController().showAllFilms());
         getControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().showAddRoomPage());
         getControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
-        getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFilters(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+        getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersAdmin(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         getControllers.put("/admin-session-room", r -> webComponentInitializer.getTicketController().showSessionRoom());
-
+        getControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+        getControllers.put("/user-session-room", r -> webComponentInitializer.getTicketController().showUserSessionRoom());
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
         postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserConverter().convert(r)));
@@ -45,10 +45,13 @@ public class RequestResolver {
         postControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().createFilm(webComponentInitializer.getFilmDtoConverter().convert(r)));
         postControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().createRoom(webComponentInitializer.getRoomDtoConverter().convert(r)));
         postControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().createRoomPlace(webComponentInitializer.getRoomPlaceDtoConverter().convert(r)));
-        postControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFilters(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+        postControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersAdmin(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         postControllers.put("/add-session", r -> webComponentInitializer.getFilmSessionController().addFilmSession(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineAdd(r)));
         postControllers.put("/delete-session", r -> webComponentInitializer.getFilmSessionController().deleteFilmSession(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineDelete(r)));
-        postControllers.put("/show-session", r -> webComponentInitializer.getFilmSessionController().showSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineShow(r)));
+        postControllers.put("/show-session", r -> webComponentInitializer.getFilmSessionController().showSessionRoomAdmin(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineShow(r)));
+        postControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+        postControllers.put("/show-user-session", r -> webComponentInitializer.getFilmSessionController().showSessionRoomUser(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineBuy(r)));
+        postControllers.put("/buy-place", r -> webComponentInitializer.getTicketController().buyTicket(webComponentInitializer.getTicketDtoConverter().convert(r)));
     }
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

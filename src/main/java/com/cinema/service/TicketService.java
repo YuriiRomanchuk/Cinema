@@ -32,4 +32,14 @@ public class TicketService {
             throw new ServiceException("Receive tickets dto failed", e);
         }
     }
+
+    public void buyTicket(TicketDto ticketDto) throws ServiceException {
+        try {
+            ticketDao.insertByIdes(ticketDto.getFilmSessionDto().getId(),
+                    ticketDto.getRoomPlaceDto().getId(),
+                    ticketDto.getUserDto().getId());
+        } catch (Exception e) {
+            throw new ServiceException("Buy ticket failed", e);
+        }
+    }
 }

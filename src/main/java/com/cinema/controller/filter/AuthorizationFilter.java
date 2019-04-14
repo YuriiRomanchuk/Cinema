@@ -91,11 +91,14 @@ public class AuthorizationFilter implements Filter {
         UserDto userDto = userLoginDtoConverter.convert(httpRequest);
 
         Role role = userService.receiveUserRole(userDto);
+        int userId = userService.receiveUserId(userDto);
         if (!role.equals(Role.UNKNOWN)) {
             UserAuthorization userAuthorization = new UserAuthorization();
             userAuthorization.setEmail(email);
             userAuthorization.setRole(role);
             usersAuthorization.put(httpRequest.getSession().getId(), userAuthorization);
+            httpRequest.getSession().setAttribute("role", role);
+            httpRequest.getSession().setAttribute("user_id", userId);
         }
     }
 

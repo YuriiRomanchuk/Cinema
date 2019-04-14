@@ -34,4 +34,9 @@ public class UserService {
         User user = userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
         return user != null ? user.getRole() : Role.UNKNOWN;
     }
+
+    public int receiveUserId(UserDto userDto) {
+        User user = userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
+        return user.getId();
+    }
 }
