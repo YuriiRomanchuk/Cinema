@@ -33,6 +33,17 @@ public class TicketService {
         }
     }
 
+    public List<TicketDto> receivePurchasedSessionTicketsByUserId(int userId) throws ServiceException {
+        try {
+            List<TicketDto> ticketsDto = new ArrayList<>();
+            List<Ticket> tickets = ticketDao.findTicketByUserId(userId);
+            tickets.forEach(roomPlace -> ticketsDto.add(ticketDtoConverter.convertFromTicketEntity(roomPlace)));
+            return ticketsDto;
+        } catch (Exception e) {
+            throw new ServiceException("Receive tickets dto failed", e);
+        }
+    }
+
     public void buyTicket(TicketDto ticketDto) throws ServiceException {
         try {
             ticketDao.insertByIdes(ticketDto.getFilmSessionDto().getId(),

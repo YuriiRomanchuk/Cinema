@@ -17,11 +17,9 @@
             <jsp:include page="/WEB-INF/jsp/template/user-bar.jsp"/>
 
             <!-- center content -->
-            <div class="col fluid bg-faded py-3">
-                <div class="row my-3 offset-md-3">
-                    <div class="col-sm-4">
-                        <jsp:include page="/WEB-INF/jsp/user/userBody/user-buy-hisory-body.jsp"/>
-                    </div>
+            <div class="col fluid bg-faded py-3 h-100 justify-content-center">
+                <div class="row my-3 justify-content-center">
+                    <jsp:include page="/WEB-INF/jsp/user/userBody/user-buy-hisory-body.jsp"/>
                 </div>
             </div>
         </div>

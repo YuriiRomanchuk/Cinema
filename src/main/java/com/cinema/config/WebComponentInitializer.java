@@ -72,7 +72,7 @@ public class WebComponentInitializer {
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController();
-        userController = new UserController(userService);
+        userController = new UserController(userService, ticketService);
         filmController = new FilmController(filmService);
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
@@ -110,10 +110,6 @@ public class WebComponentInitializer {
         return userConverter;
     }
 
-    public FilmConverter getFilmConverter() {
-        return filmConverter;
-    }
-
     public FilmDtoConverter getFilmDtoConverter() {
         return filmDtoConverter;
     }
@@ -124,10 +120,6 @@ public class WebComponentInitializer {
 
     public RoomPlaceDtoConverter getRoomPlaceDtoConverter() {
         return roomPlaceDtoConverter;
-    }
-
-    public FilmSessionConverter getFilmSessionConverter() {
-        return filmSessionConverter;
     }
 
     public FilmSessionDtoConverter getFilmSessionDtoConverter() {
@@ -168,5 +160,9 @@ public class WebComponentInitializer {
 
     public TicketDtoConverter getTicketDtoConverter() {
         return ticketDtoConverter;
+    }
+
+    public UserDtoConverter getUserDtoConverter() {
+        return userDtoConverter;
     }
 }

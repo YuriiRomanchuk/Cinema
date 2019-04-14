@@ -60,7 +60,8 @@ public class UserPageFilter implements Filter {
         if (!redirect) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");
+           /* ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");*/
+            rediretRules(userAuthorization, servletResponse, httpRequest);
         }
 
     }
@@ -81,6 +82,18 @@ public class UserPageFilter implements Filter {
             }
         }
         return false;
+    }
+
+
+    private void rediretRules(UserAuthorization userAuthorization, ServletResponse servletResponse, HttpServletRequest httpRequest) throws IOException {
+
+        if(userAuthorization == null) {
+            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");
+        } else if (userAuthorization.getRole().equals(Role.USER)){
+            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/user-personal-area");
+        } else {
+            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/admin-personal-area");
+        }
     }
 
     @Override

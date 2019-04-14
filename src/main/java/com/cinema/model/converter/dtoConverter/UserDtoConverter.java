@@ -35,6 +35,11 @@ public class UserDtoConverter implements Converter<HttpServletRequest, UserDto> 
         return userDto;
     }
 
+    public UserDto convertFromRequestForUserId(HttpServletRequest request) {
+        int userId = (Integer) request.getSession().getAttribute("user_id");
+        return convertForUserId(userId);
+    }
+
     public UserDto convertForUserId(int userId) {
         UserDto userDto = new UserDto();
         userDto.setId(userId);

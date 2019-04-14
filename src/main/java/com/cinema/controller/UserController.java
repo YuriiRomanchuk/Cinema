@@ -1,20 +1,26 @@
 package com.cinema.controller;
 
 import com.cinema.exception.ServiceException;
+import com.cinema.model.dto.TicketDto;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
+import com.cinema.service.TicketService;
 import com.cinema.service.UserService;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
 
+import java.util.List;
+
 public class UserController {
 
     private final UserService userService;
+    private final TicketService ticketService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TicketService ticketService) {
         this.userService = userService;
+        this.ticketService = ticketService;
     }
 
     public View showRegistrationPage() {
@@ -29,8 +35,17 @@ public class UserController {
         return new ViewModel("WEB-INF/jsp/admin/admin-personal-area.jsp");
     }
 
-    public View showUserPersonalArea() {
-        return new ViewModel("WEB-INF/jsp/user/user-personal-area.jsp");
+    public View showUserPersonalArea(UserDto userDto) {
+        View view;
+        try {
+            view = new ViewModel("WEB-INF/jsp/user/user-personal-area.jsp");
+            view.addParameter("userTicketsHistory", showUserHistory(userDto.getId()));
+            return view;
+        } catch (ServiceException e) {
+            view = new ViewModel("index");
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+        }
+        return new RedirectViewModel(view);
     }
 
     public View logout() {
@@ -63,4 +78,7 @@ public class UserController {
 
     }
 
+    private List<TicketDto> showUserHistory(int userId) throws ServiceException {
+        return ticketService.receivePurchasedSessionTicketsByUserId(userId);
+    }
 }
