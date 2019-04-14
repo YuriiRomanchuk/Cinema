@@ -76,6 +76,7 @@ public class FilmSessionController {
         try {
             view = new ViewModel("admin-session-room");
             view.addParameter("filmSessionDto", filmSessionDto);
+            view.addParameter("sessionDate", TimeConverter.changeStingDataToStingFormat(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd"));
             view.addParameter("purchasedSessionTicketsDto", ticketService.receivePurchasedSessionTickets(filmSessionDto.getId()));
             view.addParameter("roomPlacesDto", roomPlaceService.receiveRoomPlacesForRoom(filmSessionDto.getRoomDto().getId()));
         } catch (ServiceException e) {

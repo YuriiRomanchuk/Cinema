@@ -132,7 +132,7 @@
                             <c:if test="${!isLastDay}">
                                 <button onclick="form.action='delete-session';" type="submit" name="delete-session"
                                         value="${counter}"
-                                        class="btn btn-primary">
+                                        class="btn btn-danger">
                                     delete
                                 </button>
                             </c:if>
@@ -141,7 +141,7 @@
                         <c:if test="${filmSessionDto.getId() <=0 and !isLastDay}">
                             <button onclick="form.action='add-session';" type="submit" name="add-session"
                                     value="${counter}"
-                                    class="btn btn-primary ml-2">
+                                    class="btn btn-success ml-2">
                                 add
                             </button>
                         </c:if>

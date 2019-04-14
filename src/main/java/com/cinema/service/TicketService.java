@@ -3,6 +3,7 @@ package com.cinema.service;
 import com.cinema.exception.ServiceException;
 import com.cinema.model.converter.dtoConverter.TicketDtoConverter;
 import com.cinema.model.dao.TicketDao;
+import com.cinema.model.dto.RoomPlaceDto;
 import com.cinema.model.dto.TicketDto;
 import com.cinema.model.entity.Ticket;
 
@@ -19,12 +20,14 @@ public class TicketService {
         this.ticketDtoConverter = ticketDtoConverter;
     }
 
-    public List<TicketDto> receivePurchasedSessionTickets(int sessionId) throws ServiceException {
+    public List<RoomPlaceDto> receivePurchasedSessionTickets(int sessionId) throws ServiceException {
         try {
+            List<RoomPlaceDto> roomPlacesDto = new ArrayList<>();
             List<TicketDto> ticketsDto = new ArrayList<>();
             List<Ticket> tickets = ticketDao.findTicketBySessionId(sessionId);
             tickets.forEach(roomPlace -> ticketsDto.add(ticketDtoConverter.convertFromTicketEntity(roomPlace)));
-            return ticketsDto;
+            ticketsDto.forEach(ticketDto -> roomPlacesDto.add(ticketDto.getRoomPlaceDto()));
+            return roomPlacesDto;
         } catch (Exception e) {
             throw new ServiceException("Receive tickets dto failed", e);
         }

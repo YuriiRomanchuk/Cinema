@@ -18,25 +18,62 @@
 </head>
 
 <body>
-<div class="w-100 justify-content-center">
-    <h1>Session room</h1>
+<div class="col-6 col-sm-4">
+    <div class="w-100 justify-content-center">
+        <h1>Session room</h1>
+    </div>
+</div>
+<div class="w-100 d-none d-md-block"></div>
+
+<div class="form-group field-middle_name row">
+    <div class="col-sm-2 col-md-2 col-xs-2 no-padding">
+        <label for="session_id">id:</label>
+        <input required type="text" class="form-control" id="session_id" name="session_id" size="1"
+               readonly
+               value=${filmSessionDto.getId()}>
+    </div>
+    <div class="col-sm-2 col-md-2 col-xs-2 no-padding">
+        <label for="session_film">film id:</label>
+        <input required type="text" class="form-control" id="session_film" name="session_film" size="1"
+               readonly
+               value=${filmSessionDto.getFilmDto().getId()}>
+    </div>
+    <div class="col-sm-3 col-md-3 col-xs-3 no-padding">
+        <label for="session_room">room id:</label>
+        <input required type="text" class="form-control" id="session_room" name="session_room" size="1"
+               readonly
+               value=${filmSessionDto.getRoomDto().getId()}>
+    </div>
+    <div class="col-sm-5 col-md-5 col-xs-5 no-padding">
+        <label for="session_date">date:</label>
+        <input required type="date" class="form-control" id="session_date" name="session_date" size="2"
+               readonly
+               value=${sessionDate}>
+    </div>
 </div>
 
 <form method="post" action="admin-session">
-<table class="table table-border-collapse">
-     <c:set var="countForColumns">1</c:set>
-    <thead>
-    <tr>
-        <th>Row</th>
-        <c:forEach var="roomPlace" items="${roomPlacesDto}">
-        <c:if test="${roomPlace.getRow() == countForColumns}">
-        <th> </th>
-        </c:if>
-        </c:forEach>
-    </thead>
+    <table class="table table-border-collapse">
+        <c:set var="countForColumns">1</c:set>
+        <thead>
+        <tr>
+            <th>Row</th>
+            <c:forEach var="roomPlace" items="${roomPlacesDto}">
+            <c:if test="${roomPlace.getRow() == countForColumns}">
+            <th></th>
+            </c:if>
+            </c:forEach>
+        </thead>
 
-    <c:set var="firstEntry">true</c:set>
-    <c:forEach var="roomPlace" items="${roomPlacesDto}">
+        <c:set var="firstEntry">true</c:set>
+        <c:set var="placeIsBusy">false</c:set>
+        <c:forEach var="roomPlace" items="${roomPlacesDto}">
+
+        <c:forEach var="purchasedPlace" items="${purchasedSessionTicketsDto}">
+            <c:if test="${roomPlace.getPlace()==purchasedPlace.getPlace()}">
+                <c:set var="placeIsBusy">true</c:set>
+            </c:if>
+        </c:forEach>
 
         <c:if test="${roomPlace.getRow() != countForColumns}">
             </tr>
@@ -45,24 +82,35 @@
         </c:if>
 
         <c:if test="${firstEntry == true}">
-             <tr>
-             <td>${countForColumns}</td>
+        <tr>
+            <td>${countForColumns}</td>
             <c:set var="firstEntry">false</c:set>
-        </c:if>
-            <td> <button onclick="form.action='session-place';" type="submit" name="session-place"
-                value="${roomPlace.getPlace()}"
-                class="btn btn-primary">
-                <c:choose>
-                    <c:when test="${roomPlace.getPlace()< 10}">
-                        0${roomPlace.getPlace()}
-                    </c:when>
-                    <c:otherwise>
-                        ${roomPlace.getPlace()}
-                    </c:otherwise>
-                </c:choose>
-        </button></td>
-    </c:forEach>
-</table>
+            </c:if>
+            <td>
+                <button disabled onclick="form.action='session-place';" type="submit" name="session-place"
+                        value="${roomPlace.getPlace()}"
+                        <c:choose>
+                            <c:when test="${placeIsBusy}">
+                                class= "btn btn-danger">
+                                <c:set var="placeIsBusy">false</c:set>
+                            </c:when>
+                            <c:otherwise>
+                                class= "btn btn-primary">
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:choose>
+                            <c:when test="${roomPlace.getPlace()< 10}">
+                                0${roomPlace.getPlace()}
+                            </c:when>
+                            <c:otherwise>
+                                ${roomPlace.getPlace()}
+                            </c:otherwise>
+                        </c:choose>
+                </button>
+            </td>
+            </c:forEach>
+    </table>
 </form>
 </body>
 </html>
