@@ -29,4 +29,14 @@ public class RoomDto {
     public void setNameEnglish(String nameEnglish) {
         this.nameEnglish = nameEnglish;
     }
+
+
+    @Override
+    public String toString() {
+        return "RoomDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", nameEnglish='" + nameEnglish + '\'' +
+                '}';
+    }
 }

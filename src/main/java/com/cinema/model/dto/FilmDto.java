@@ -66,4 +66,18 @@ public class FilmDto {
     public void setRunningTime(int runningTime) {
         this.runningTime = runningTime;
     }
+
+
+    @Override
+    public String toString() {
+        return "FilmDto{" +
+                "id=" + id +
+                ", runningTime=" + runningTime +
+                ", name='" + name + '\'' +
+                ", nameEnglish='" + nameEnglish + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", description='" + description + '\'' +
+                ", descriptionEnglish='" + descriptionEnglish + '\'' +
+                '}';
+    }
 }

@@ -39,4 +39,14 @@ public class TicketDto {
     public void setFilmSessionDto(FilmSessionDto filmSessionDto) {
         this.filmSessionDto = filmSessionDto;
     }
+
+    @Override
+    public String toString() {
+        return "TicketDto{" +
+                "id=" + id +
+                ", userDto=" + userDto +
+                ", roomPlaceDto=" + roomPlaceDto +
+                ", filmSessionDto=" + filmSessionDto +
+                '}';
+    }
 }

@@ -20,7 +20,7 @@
             <div class="col fluid bg-faded py-3">
                 <div class="row my-3 offset-md-3">
                     <div class="col-sm-4">
-                        <jsp:include page="/WEB-INF/jsp/user/userBody/user-buy-hisory-body.jsp"/>
+                        <jsp:include page="/WEB-INF/jsp/user/userBody/user-buy-history-body.jsp"/>
                     </div>
                 </div>
             </div>

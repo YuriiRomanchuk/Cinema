@@ -19,7 +19,7 @@
             <!-- center content -->
             <div class="col fluid bg-faded py-3 h-100 justify-content-center">
                 <div class="row my-3 justify-content-center">
-                    <jsp:include page="/WEB-INF/jsp/user/userBody/user-buy-hisory-body.jsp"/>
+                    <jsp:include page="/WEB-INF/jsp/user/userBody/user-buy-history-body.jsp"/>
                 </div>
             </div>
         </div>

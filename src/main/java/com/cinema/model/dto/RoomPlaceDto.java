@@ -38,4 +38,14 @@ public class RoomPlaceDto {
     public void setRoomDto(RoomDto roomDto) {
         this.roomDto = roomDto;
     }
+
+    @Override
+    public String toString() {
+        return "RoomPlaceDto{" +
+                "id=" + id +
+                ", row=" + row +
+                ", place=" + place +
+                ", roomDto=" + roomDto +
+                '}';
+    }
 }

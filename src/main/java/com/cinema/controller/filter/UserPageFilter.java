@@ -8,32 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 public class UserPageFilter implements Filter {
 
-    private List<String> forbiddenPagesUser = new ArrayList<>();
-    private List<String> forbiddenPagesAdmin = new ArrayList<>();
-    private List<String> forbiddenPagesUnknown = new ArrayList<>();
-
+    private List<String> forbiddenPagesUser;
+    private List<String> forbiddenPagesAdmin;
+    private List<String> forbiddenPagesUnknown;
+    private List<String> allPages;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        forbiddenPagesUser.add("admin-personal-area");
-        forbiddenPagesUser.add("login");
-        forbiddenPagesUser.add("registration-form");
-        forbiddenPagesUser.add("error");
-        forbiddenPagesUser.add("admin-add-film");
-
-        forbiddenPagesUnknown.add("admin-personal-area");
-        forbiddenPagesUnknown.add("user-personal-area");
-        forbiddenPagesUnknown.add("error");
-        forbiddenPagesUnknown.add("admin-add-film");
-
-        forbiddenPagesAdmin.add("user-personal-area");
-        forbiddenPagesAdmin.add("error");
+    public void init(FilterConfig filterConfig) {
+        forbiddenPagesUser = Arrays.asList(filterConfig.getInitParameter("forbiddenPagesUser").split(","));
+        forbiddenPagesUnknown = Arrays.asList(filterConfig.getInitParameter("forbiddenPagesUnknown").split(","));
+        forbiddenPagesAdmin = Arrays.asList(filterConfig.getInitParameter("forbiddenPagesAdmin").split(","));
+        allPages = Arrays.asList(filterConfig.getInitParameter("allPages").split(","));
     }
 
     @Override
@@ -57,39 +49,34 @@ public class UserPageFilter implements Filter {
             }
         }
 
+       /* redirect = (!redirect) && !pageIsLocked(httpRequest, allPages);*/
+
         if (!redirect) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-           /* ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");*/
-            rediretRules(userAuthorization, servletResponse, httpRequest);
+            redireсtRules(userAuthorization, servletResponse, httpRequest);
         }
 
     }
 
     private List<Function<HttpServletRequest, Boolean>> receiveRulesByPage(UserAuthorization userAuthorization) {
         List<Function<HttpServletRequest, Boolean>> rules = new ArrayList<>();
-        rules.add(request -> (userAuthorization == null) && pageIsLockedByRole(request, forbiddenPagesUnknown));
-        rules.add(request -> (userAuthorization.getRole().equals(Role.USER)) && pageIsLockedByRole(request, forbiddenPagesUser));
-        rules.add(request -> (userAuthorization.getRole().equals(Role.ADMIN)) && pageIsLockedByRole(request, forbiddenPagesAdmin));
+        rules.add(request -> (userAuthorization == null) && pageIsLocked(request, forbiddenPagesUnknown));
+        rules.add(request -> (userAuthorization.getRole().equals(Role.USER)) && pageIsLocked(request, forbiddenPagesUser));
+        rules.add(request -> (userAuthorization.getRole().equals(Role.ADMIN)) && pageIsLocked(request, forbiddenPagesAdmin));
 
         return rules;
     }
 
-    private boolean pageIsLockedByRole(HttpServletRequest httpRequest, List<String> forbiddenPages) {
-        for (String page : forbiddenPages) {
-            if (httpRequest.getRequestURI().contains(page)) {
-                return true;
-            }
-        }
-        return false;
+    private boolean pageIsLocked(HttpServletRequest httpRequest, List<String> forbiddenPages) {
+        return forbiddenPages.stream().anyMatch(charSequence -> httpRequest.getRequestURI().contains(charSequence.trim()));
     }
 
+    private void redireсtRules(UserAuthorization userAuthorization, ServletResponse servletResponse, HttpServletRequest httpRequest) throws IOException {
 
-    private void rediretRules(UserAuthorization userAuthorization, ServletResponse servletResponse, HttpServletRequest httpRequest) throws IOException {
-
-        if(userAuthorization == null) {
+        if (userAuthorization == null) {
             ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");
-        } else if (userAuthorization.getRole().equals(Role.USER)){
+        } else if (userAuthorization.getRole().equals(Role.USER)) {
             ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/user-personal-area");
         } else {
             ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/admin-personal-area");

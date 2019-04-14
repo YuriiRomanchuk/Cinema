@@ -43,14 +43,14 @@
 
     <c:forEach var="ticket" items="${userTicketsHistory}">
         <tr>
-            <td>"${ticket.getId()}"</td>
-    <%--          <td>${ticket.getId()}</td>
+            <td>${ticket.getId()}</td>
             <td>${ticket.getFilmSessionDto().getFilmDto().getName()}</td>
             <td>${ticket.getFilmSessionDto().getDate()}</td>
-            <td>${ticket.roomPlaceDto().getPlace()}</td>--%>
+            <td>${ticket.getRoomPlaceDto().getPlace()}</td>
         </tr>
     </c:forEach>
-</table>
+</table
+
 
 </body>
 </html>

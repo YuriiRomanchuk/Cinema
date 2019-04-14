@@ -38,4 +38,14 @@ public class FilmSessionDto {
     public void setDate(String date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "FilmSessionDto{" +
+                "id=" + id +
+                ", filmDto=" + filmDto +
+                ", roomDto=" + roomDto +
+                ", date='" + date + '\'' +
+                '}';
+    }
 }
