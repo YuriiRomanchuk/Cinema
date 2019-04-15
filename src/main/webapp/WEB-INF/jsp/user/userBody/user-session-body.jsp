@@ -72,24 +72,25 @@
             <th>Film</th>
             <th>Action</th>
         </thead>
-        <c:set var="counter">1</c:set>
+      <%--  <c:set var="counter">1</c:set>--%>
+        <% int counter = 1;%>
         <c:forEach var="filmSessionDto" items="${filmsSessionDto}">
             <tr>
                 <td>
-                    <input type="text" class="form-control" id="session_id_${counter}"
-                           name="session_id_${counter}" size="1"
+                    <input type="text" class="form-control" id="session_id_<%=counter%>"
+                           name="session_id_<%=counter%>" size="1"
                            readonly
                            value=" ${filmSessionDto.getId()}">
                 </td>
                 <td>
-                    <input type="text" class="form-control" id="session_date_${counter}"
-                           name="session_date_${counter}"
+                    <input type="text" class="form-control" id="session_date_<%=counter%>""
+                           name="session_date_<%=counter%>""
                            placeholder="Enter film's name" readonly
                            value="${filmSessionDto.getDate()}">
                 </td>
                 <td>
-                    <select class="custom-select mr-sm-2" id="session_room_${counter}"
-                            name="session_room_${counter}">
+                    <select class="custom-select mr-sm-2" id="session_room_<%=counter%>""
+                            name="session_room_<%=counter%>"">
                         <c:forEach var="room" items="${roomsDto}">
                             <option selected="selected" value=${room.getId()}>${room.getName()}
                             </option>
@@ -97,8 +98,8 @@
                     </select
                 </td>
                 <td>
-                    <select class="custom-select mr-sm-2" id="session_film_${counter}"
-                            name="session_film_${counter}">
+                    <select class="custom-select mr-sm-2" id="session_film_<%=counter%>""
+                            name="session_film_<%=counter%>"">
                         <c:if test="${filmSessionDto.getFilmDto() !=null}">
                             <option selected="selected"
                                     value=${filmSessionDto.getFilmDto().getId()}>${filmSessionDto.getFilmDto().getName()}
@@ -111,7 +112,7 @@
                     <div class="form-group field-middle_name row mr-2">
                         <c:if test="${filmSessionDto.getId() > 0 and !isLastDay}">
                             <button onclick="form.action='show-user-session';" type="submit" name="show-user-session"
-                                    value="${counter}"
+                                    value="<%=counter%>"
                                     class="btn btn-success ml-3">
                                 buy
                             </button>
@@ -119,7 +120,8 @@
                     </div>
                 </td>
             </tr>
-            <c:set var="counter">"${counter}++"</c:set>
+            <%--<c:set var="counter">"${counter}++"</c:set>--%>
+            <%counter++;%>
         </c:forEach>
     </table>
 </form>
