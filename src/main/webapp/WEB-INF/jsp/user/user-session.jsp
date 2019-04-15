@@ -3,7 +3,7 @@
 
 <t:genericpage>
     <jsp:attribute name="title">
-      Template Page
+      User session
     </jsp:attribute>
     <jsp:attribute name="header">
         <jsp:include page="/WEB-INF/jsp/template/header.jsp"/>

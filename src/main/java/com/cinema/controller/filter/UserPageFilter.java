@@ -49,7 +49,7 @@ public class UserPageFilter implements Filter {
             }
         }
 
-       /* redirect = (!redirect) && !pageIsLocked(httpRequest, allPages);*/
+      /*  redirect = (!redirect) && !pageIsLocked(httpRequest, allPages);*/
 
         if (!redirect) {
             filterChain.doFilter(servletRequest, servletResponse);
@@ -75,7 +75,7 @@ public class UserPageFilter implements Filter {
     private void redireсtRules(UserAuthorization userAuthorization, ServletResponse servletResponse, HttpServletRequest httpRequest) throws IOException {
 
         if (userAuthorization == null) {
-            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/index");
+            ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/login");
         } else if (userAuthorization.getRole().equals(Role.USER)) {
             ((HttpServletResponse) servletResponse).sendRedirect(httpRequest.getContextPath() + "/main/user-personal-area");
         } else {

@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class LocalizationFilter implements Filter {
 
-    private final String defaultLanguage = "uk";
+    private final String defaultLanguage = "en";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

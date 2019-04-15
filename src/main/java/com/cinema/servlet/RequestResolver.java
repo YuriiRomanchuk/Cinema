@@ -24,7 +24,7 @@ public class RequestResolver {
 
     public RequestResolver(WebComponentInitializer webComponentInitializer) {
 
-        getControllers.put("/index", r -> webComponentInitializer.getWelcomeController().showIndexPage());
+        getControllers.put("/index", r -> webComponentInitializer.getWelcomeController().showIndexPage(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         getControllers.put("/registration-form", r -> webComponentInitializer.getUserController().showRegistrationPage());
         getControllers.put("/login", r -> webComponentInitializer.getUserController().showUserLoginPage());
         getControllers.put("/admin-personal-area", r -> webComponentInitializer.getUserController().showAdminPersonalArea());

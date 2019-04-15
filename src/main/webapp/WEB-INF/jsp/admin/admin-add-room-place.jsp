@@ -5,7 +5,7 @@
 <t:genericpage>
 
     <jsp:attribute name="title">
-      Template Page
+      Admin add room place
     </jsp:attribute>
     <jsp:attribute name="header">
         <jsp:include page="/WEB-INF/jsp/template/header.jsp"/>

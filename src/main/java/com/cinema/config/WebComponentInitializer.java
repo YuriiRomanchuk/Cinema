@@ -71,7 +71,7 @@ public class WebComponentInitializer {
         ticketService = new TicketService(dataComponentInitializer.getTicketDao(), ticketDtoConverter);
 
         changeLanguageController = new ChangeLanguageController();
-        welcomeController = new WelcomeController();
+        welcomeController = new WelcomeController(filmService, roomService, filmSessionService);
         userController = new UserController(userService, ticketService);
         filmController = new FilmController(filmService);
         roomController = new RoomController(roomService);
