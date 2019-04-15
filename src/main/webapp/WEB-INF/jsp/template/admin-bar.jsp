@@ -35,7 +35,8 @@
                         <line x1="12" y1="20" x2="12" y2="4"></line>
                         <line x1="6" y1="20" x2="6" y2="14"></line>
                     </svg>
-                    Sales statistic
+                    <fmt:message
+                            key="local.admin.bar.salesStatistic"/>
                 </a>
             </li>
             <li class="nav-item">
@@ -49,7 +50,8 @@
                         <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
                         <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                     </svg>
-                    Users
+                    <fmt:message
+                            key="local.admin.bar.users"/>
                 </a>
             </li>
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -64,7 +66,8 @@
                         <polyline points="2 17 12 22 22 17"></polyline>
                         <polyline points="2 12 12 17 22 12"></polyline>
                     </svg>
-                    Films catalog
+                    <fmt:message
+                            key="local.admin.bar.filmsCatalog"/>
                 </a>
             </li>
             <li class="nav-item">
@@ -79,12 +82,13 @@
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
                     <fmt:message
-                            key="local.add.film"/>
+                            key="local.admin.bar.add.film"/>
                 </a>
             </li>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                <span>Room</span>
+                <span>     <fmt:message
+                        key="local.admin.bar.room"/></span>
             </h6>
 
             <li class="nav-item">
@@ -98,7 +102,7 @@
                         <line x1="16" y1="17" x2="8" y2="17"></line>
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                    <fmt:message key="local.add.room"/>
+                    <fmt:message key="local.admin.bar.add.room"/>
                 </a>
             </li>
             <li class="nav-item">
@@ -112,7 +116,7 @@
                         <line x1="16" y1="17" x2="8" y2="17"></line>
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                    <fmt:message key="local.add.room.places"/>
+                    <fmt:message key="local.admin.bar.add.room.places"/>
                 </a>
             </li>
 
@@ -132,7 +136,7 @@
             </li>
 
             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                <span>Session</span>
+                <span> <fmt:message key="local.admin.bar.sessions"/></span>
             </h6>
 
             <li class="nav-item">
@@ -146,7 +150,7 @@
                         <line x1="16" y1="17" x2="8" y2="17"></line>
                         <polyline points="10 9 9 9 8 9"></polyline>
                     </svg>
-                    Sessions
+                    <fmt:message key="local.admin.bar.session"/>
                 </a>
             </li>
         </ul>

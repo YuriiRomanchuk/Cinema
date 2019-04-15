@@ -54,7 +54,6 @@ public class DataComponentInitializer {
         return initializer;
     }
 
-
     public DataSource getDataSource() {
         return dataSource;
     }

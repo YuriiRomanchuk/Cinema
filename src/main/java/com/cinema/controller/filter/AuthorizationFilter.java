@@ -1,7 +1,7 @@
 package com.cinema.controller.filter;
 
-import com.cinema.config.WebComponentInitializer;
 import com.cinema.config.UserAuthorization;
+import com.cinema.config.WebComponentInitializer;
 import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.enums.Role;
@@ -38,6 +38,13 @@ public class AuthorizationFilter implements Filter {
         final HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         final HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
+        if (httpRequest.getSession().getAttribute("role") == null) {
+            httpRequest.getSession().setAttribute("role", Role.UNKNOWN);
+            httpRequest.getSession().setAttribute("roleADMIN", Role.ADMIN);
+            httpRequest.getSession().setAttribute("roleUSER", Role.USER);
+            httpRequest.getSession().setAttribute("roleUNKNOWN", Role.UNKNOWN);
+        }
+
         String sessionId = httpRequest.getSession().getId();
         Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) httpRequest.getServletContext().getAttribute("usersAuthorization");
 
@@ -67,6 +74,7 @@ public class AuthorizationFilter implements Filter {
     private void logout(HttpServletRequest httpRequest, Map<String, UserAuthorization> usersAuthorization, String sessionId) {
         if (httpRequest.getRequestURI().contains(logoutPageName)) {
             removeUserAuthorization(usersAuthorization, sessionId);
+            httpRequest.getSession().setAttribute("role", Role.UNKNOWN);
         }
     }
 

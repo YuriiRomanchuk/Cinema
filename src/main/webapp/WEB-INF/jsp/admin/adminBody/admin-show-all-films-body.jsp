@@ -13,6 +13,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <title>Title</title>
 </head>
 
@@ -31,7 +34,7 @@
         </div>
     </div>
 </div>
-<table class="table table-bordered">
+<table id = "filmsTable" class="table table-sm table-striped">
     <thead>
     <tr>
         <th>Id</th>
@@ -51,6 +54,12 @@
         </tr>
     </c:forEach>
 </table>
+
+<script>
+    $(document).ready(function () {
+        $('#filmsTable').DataTable();
+    });
+</script>
 
 </body>
 </html>

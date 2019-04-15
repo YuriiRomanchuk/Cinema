@@ -12,17 +12,10 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
-<%
-    HttpSession currentSession = request.getSession();
-    Map<String, UserAuthorization> usersAuthorization = (Map<String, UserAuthorization>) currentSession.getServletContext().getAttribute("usersAuthorization");
-    UserAuthorization userAuthorization = usersAuthorization.get(currentSession.getId());
-
-    Role role = Role.UNKNOWN;
-    if (userAuthorization != null) {
-        role = userAuthorization.getRole();
-    }
-%>
-
+<c:set var='role' value="${sessionScope['role']}"/>
+<c:set var='roleAdmin' value="${sessionScope['roleADMIN']}"/>
+<c:set var='roleUser' value="${sessionScope['roleUSER']}"/>
+<c:set var='roleUNKNOWN' value="${sessionScope['roleUNKNOWN']}"/>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -39,7 +32,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark sticky-top">
-    <a class="navbar-brand" href="#">Cinema</a>
+    <a class="navbar-brand" href="#"><fmt:message key="local.cinema"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -47,13 +40,18 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <c:if test="${role.equals(roleUNKNOWN)}">
+                    <a class="nav-link" href="index" role="button"> <fmt:message
+                            key="local.home"/> <span class="sr-only">(current)</span></a>
+                </c:if>
+                <c:if test="${role.equals(roleAdmin)}">
+                    <a class="nav-link" href="admin-personal-area" role="button"> <fmt:message
+                            key="local.home"/> <span class="sr-only">(current)</span></a>
+                </c:if>
+                <c:if test="${role.equals(roleUser)}">
+                    <a class="nav-link" href="user-personal-area" role="button"> <fmt:message
+                            key="local.home"/> <span class="sr-only">(current)</span></a>
+                </c:if>
             </li>
         </ul>
 
@@ -74,21 +72,20 @@
 
         <form class="form-inline mt-2 mt-md-0" style="
                 margin-bottom: 0px;">
-            <%
-                if (role == null || role.equals(Role.UNKNOWN)) {
-            %>
-            <a href="registration-form" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
-                    key="local.registration"/></a>
-            <a href="login" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
-                    key="local.log.in"/></a>
-            <%
-            } else {
-            %>
-            <a href="logout" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
-                    key="local.logout"/></a>
-            <%
-                }
-            %>
+
+            <c:choose>
+                <c:when test="${role.equals(roleUNKNOWN)}">
+                    <a href="registration-form" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
+                            key="local.registration"/></a>
+                    <a href="login" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
+                            key="local.log.in"/></a>
+                </c:when>
+                <c:otherwise>
+                    <a href="logout" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
+                            key="local.logout"/></a>
+                </c:otherwise>
+            </c:choose>
+
         </form>
     </div>
 </nav>

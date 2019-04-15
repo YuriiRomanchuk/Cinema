@@ -69,7 +69,7 @@ public class UserController {
         View view;
         try {
             userService.createUser(user);
-            view = new ViewModel("WEB-INF/jsp/login");
+            view = new ViewModel("login");
         } catch (ServiceException e) {
             view = new ViewModel("registration-form");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());

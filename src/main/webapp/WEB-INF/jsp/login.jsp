@@ -14,7 +14,7 @@
     <jsp:body>
         <div class="row h-100">
             <div class="col fluid bg-faded py-3">
-                <div class="row my-3 offset-md-3">
+                <div class="row w-100 justify-content-center">
                     <div class="col-sm-4">
                         <jsp:include page="/WEB-INF/jsp/bodyPages/login-body.jsp"/>
                     </div>

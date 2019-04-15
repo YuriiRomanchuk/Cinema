@@ -1,6 +1,7 @@
 package com.cinema.controller.listener;
 
 import com.cinema.config.UserAuthorization;
+import com.cinema.model.entity.enums.Role;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
@@ -20,5 +21,6 @@ public class SessionListener implements HttpSessionListener {
         ServletContext servletContext = httpSessionEvent.getSession().getServletContext();
         Map<String, UserAuthorization> usersAuthorization = (HashMap<String, UserAuthorization>) servletContext.getAttribute("usersAuthorization");
         usersAuthorization.remove(httpSessionEvent.getSession().getId());
+        httpSessionEvent.getSession().setAttribute("role", Role.UNKNOWN);
     }
 }

@@ -6,6 +6,7 @@
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 
@@ -13,6 +14,9 @@
 
 <html lang="${sessionScope.lang}">
 <head>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <title>Title</title>
 </head>
 
@@ -42,7 +46,7 @@
     </div>
 </div>
 
-<table class="table table-bordered">
+<table id="ticketTable" class="table table-sm table-striped">
     <thead>
     <tr>
         <th>Id</th>
@@ -59,9 +63,16 @@
             <td>${ticket.getRoomPlaceDto().getPlace()}</td>
         </tr>
     </c:forEach>
-</table
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#ticketTable').DataTable();
+    });
+</script>
 
 
 </body>
 </html>
+
 
