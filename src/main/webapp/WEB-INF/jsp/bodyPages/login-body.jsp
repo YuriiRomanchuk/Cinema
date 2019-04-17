@@ -8,6 +8,7 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
+<fmt:setBundle basename="regexpValidator"/>
 
 <!DOCTYPE html>
 
@@ -24,18 +25,36 @@
     }
 %>
 <h1>Authorization</h1>
-<form method="post" action="login">
+<form id = "form" method="post" action="login" class="needs-validation" novalidate>
     <div class="form-group">
         <label for="email">Name:</label>
-        <input type="text" class="form-control" id="email" name="email"
+        <input required ="email" pattern="<fmt:message key="regexEmail"/>" class="form-control" id="email" name="email"
                placeholder="Enter your email">
         <label for="password">Password:</label>
-        <input type="text" class="form-control" id="password" name="password"
+        <input required type="password" pattern="<fmt:message key="regexStringNumber"/>" class="form-control" id="password" name="password"
                placeholder="Enter your password">
     </div>
     <button type="submit" class="btn btn-primary">Log in</button>
     <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
 </form>
+
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 </body>
 </html>

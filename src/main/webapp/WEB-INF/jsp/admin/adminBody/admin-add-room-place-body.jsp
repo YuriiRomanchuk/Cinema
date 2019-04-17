@@ -8,6 +8,7 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
+<fmt:setBundle basename="regexpValidator"/>
 
 <!DOCTYPE html>
 
@@ -24,14 +25,13 @@
     </c:if>
     <div class="w-100 d-none d-md-block"></div>
 
-  <%--  <div class="w-100 justify-content-center">
-        <h1>Add room places</h1>
-    </div>--%>
+    <%--  <div class="w-100 justify-content-center">
+          <h1>Add room places</h1>
+      </div>--%>
 </div>
 
 <h1>Add room places</h1>
-<form method="post" action="admin-add-room-place">
-
+<form id="form" method="post" action="admin-add-room-place" class="needs-validation" novalidate>
     <label for="row">Room:</label>
     <select class="custom-select mr-sm-2" id="room" name="room">
         <option selected>Choose...</option>
@@ -42,21 +42,38 @@
     </select>
 
     <div class="form-group">
-        <label for="row"><fmt:message
-                key="local.room.places.rows"/></label>
+        <label for="row"><fmt:message key="local.room.places.rows"/></label>
         <input type="number" class="form-control" id="row" name="row"
-               placeholder="Enter count of row">
+               placeholder="Enter count of row" pattern="<fmt:message key="regexNumber"/>">
         <label for="place">Places:</label>
         <input type="number" class="form-control" id="place" name="place"
-               placeholder="Enter count of places">
+               placeholder="Enter count of places" pattern="<fmt:message key="regexNumber"/>">
         <label for="placesInRow">Places in row:</label>
         <input type="number" class="form-control" id="placesInRow" name="placesInRow"
                placeholder="Enter count of places in row"
-               value=10>
+               value=10 pattern="<fmt:message key="regexNumber"/>">
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
     <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
 </form>
+
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 </body>
 </html>

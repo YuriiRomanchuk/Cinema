@@ -5,9 +5,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="validator.min.js"></script>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
+<fmt:setBundle basename="regexpValidator"/>
 
 <!DOCTYPE html>
 
@@ -26,26 +28,31 @@
 </div>
 
 <h1>Add film</h1>
-<form method="post" action="admin-add-film">
+<form id="form" method="post" action="admin-add-film" class="needs-validation" novalidate>
     <div class="form-group">
         <label for="name">Name:</label>
-        <input required type="text" class="form-control" id="name" name="name"
+        <input required type="text" pattern="<fmt:message key="regexString"/>" class="form-control" id="name"
+               name="name"
                placeholder="Enter film's name">
         <label for="name_english">Name(en):</label>
-        <input required type="text" class="form-control" id="name_english" name="name_english"
+        <input required type="text" pattern="<fmt:message key="regexStringEnglish"/>" class="form-control"
+               id="name_english" name="name_english"
                placeholder="Enter film's english name">
         <label for="release_date">Year:</label>
-        <input required type="date" class="form-control" id="release_date" name="release_date"
+        <input required type="date" pattern="<fmt:message key="regexNumber"/>" class="form-control" id="release_date"
+               name="release_date"
                placeholder="Enter release date">
         <label for="description">Description:</label>
-        <input required type="text" class="form-control" id="description" name="description"
+        <input required type="text" pattern="<fmt:message key="regexString"/>" class="form-control" id="description"
+               name="description"
                placeholder="Enter description">
         <label for="description_english">Description(en):</label>
-        <input required type="text" class="form-control" id="description_english"
+        <input required type="text" pattern="<fmt:message key="regexStringEnglish"/>" class="form-control"
+               id="description_english"
                name="description_english"
                placeholder="Enter english description">
         <label for="running_time">Running time:</label>
-        <input required type="text" class="form-control" id="running_time"
+        <input required type="number" pattern="<fmt:message key="regexNumber"/>" class="form-control" id="running_time"
                name="running_time"
                placeholder="Enter running time"
                value=2 readonly>
@@ -53,6 +60,23 @@
     <button type="submit" class="btn btn-primary">Add</button>
     <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
 </form>
+<script>
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 
 </body>
 </html>
