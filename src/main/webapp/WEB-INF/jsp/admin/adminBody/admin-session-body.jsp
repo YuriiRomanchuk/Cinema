@@ -20,7 +20,7 @@
 <c:set var='filmSessionDto' value="${filmSessionDto}"/>
 <c:set var='currentFilm_id' value="${filterFilmId}"/>
 
-<div class="col-6 col-sm-4">
+<div class="col w-100">
     <c:set var='error' value="${Error}"/>
     <c:if test="${error !=null}">
         <h1>${error}"</h1>
@@ -73,8 +73,6 @@
             <th>Film</th>
             <th>Action</th>
         </thead>
-        <% int counter = 1;%>
-       <%-- <c:set var="counter">1</c:set>--%>
         <c:forEach var="filmSessionDto" items="${filmsSessionDto}" varStatus="loop">
             <tr>
                 <td>
@@ -149,8 +147,6 @@
                     </div>
                 </td>
             </tr>
-           <%-- <c:set var="counter">"${counter}++"</c:set>--%>
-            <%counter++;%>
         </c:forEach>
     </table>
 </form>

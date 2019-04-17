@@ -10,7 +10,6 @@ import java.util.function.Function;
 
 public class DataSource {
 
-
     private final String url;
     private final String userName;
     private final String password;
@@ -26,13 +25,13 @@ public class DataSource {
         InitializeDataBase();
     }
 
-    public Connection receiveConnection() throws SQLException {
+    private Connection receiveConnection() throws SQLException {
         return DriverManager.getConnection(url, userName, password);
     }
 
     private void InitializeDataBase() {
 
-        String initBdScript = new Scanner(getClass().getClassLoader().getResourceAsStream("sql/DataBaseInitializer.sql")).useDelimiter("\\A").next();
+        String initBdScript = new Scanner(getClass().getClassLoader().getResourceAsStream("sql/dataBaseInitializer.sql")).useDelimiter("\\A").next();
         implementWrite(initBdScript, ps -> {
         }, rs -> {
         });

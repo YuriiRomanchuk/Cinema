@@ -35,9 +35,10 @@ public class RequestResolver {
         getControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().showAddRoomPage());
         getControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
         getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersAdmin(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
-        getControllers.put("/admin-session-room", r -> webComponentInitializer.getTicketController().showSessionRoom());
+        getControllers.put("/admin-session-room", r -> webComponentInitializer.getTicketController().showAdminSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDtoFromSession(r)));
         getControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
-        getControllers.put("/user-session-room", r -> webComponentInitializer.getTicketController().showUserSessionRoom());
+        getControllers.put("/user-session-room", r -> webComponentInitializer.getTicketController().showUserSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDtoFromSession(r)));
+        getControllers.put("/error", r -> webComponentInitializer.getErrorController().getErrorPage((Exception) r.getAttribute("error")));
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
         postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserConverter().convert(r)));
@@ -55,11 +56,21 @@ public class RequestResolver {
     }
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        reference(getView(request, getControllers), request, response);
+        reference(request, response, getControllers);
     }
 
     public void resolvePostRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        reference(getView(request, postControllers), request, response);
+        reference(request, response, postControllers);
+    }
+
+    private void reference(HttpServletRequest request, HttpServletResponse response, Map<String, Function<HttpServletRequest, View>> controller) throws IOException, ServletException {
+        try {
+            reference(getView(request, controller), request, response);
+        } catch (Exception e) {
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/error.jsp");
+            request.setAttribute("error", e);
+            requestDispatcher.forward(request, response);
+        }
     }
 
     private void reference(View view, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

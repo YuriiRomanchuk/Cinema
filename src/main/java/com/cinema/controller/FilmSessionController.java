@@ -37,7 +37,7 @@ public class FilmSessionController {
             filmSessionService.addFilmSession(filmSessionDto);
             showAdminFilmSessionPage(filmSessionDto, view);
         } catch (ServiceException e) {
-            view = new ViewModel("admin-personal-area");
+            view = new ViewModel("admin-session");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
@@ -45,7 +45,7 @@ public class FilmSessionController {
 
 
     public View showFilmSessionPageFiltersAdmin(FilmSessionDto filmSessionDto) {
-        return showFilmSessionPageFilters(filmSessionDto, "WEB-INF/jsp/admin/admin-session.jsp", "admin-personal-area");
+        return showFilmSessionPageFilters(filmSessionDto, "WEB-INF/jsp/admin/admin-session.jsp", "admin-session");
     }
 
     public View showFilmSessionPageFiltersUser(FilmSessionDto filmSessionDto) {
@@ -80,25 +80,17 @@ public class FilmSessionController {
     }
 
     public View showSessionRoomAdmin(FilmSessionDto filmSessionDto) {
-        return showSessionRoom(filmSessionDto, "admin-session-room", "admin-personal-area");
+        return showSessionRoom(filmSessionDto, "admin-session-room");
     }
 
     public View showSessionRoomUser(FilmSessionDto filmSessionDto) {
-        return showSessionRoom(filmSessionDto, "user-session-room", "user-personal-area");
+        return showSessionRoom(filmSessionDto, "user-session-room");
     }
 
-    public View showSessionRoom(FilmSessionDto filmSessionDto, String path, String pathException) {
+    private View showSessionRoom(FilmSessionDto filmSessionDto, String path) {
         View view;
-        try {
-            view = new ViewModel(path);
-            view.addParameter("filmSessionDto", filmSessionDto);
-            view.addParameter("sessionDate", TimeConverter.changeStingDataToStingFormat(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd kk:mm:ss"));
-            view.addParameter("purchasedSessionTicketsDto", ticketService.receivePurchasedSessionTickets(filmSessionDto.getId()));
-            view.addParameter("roomPlacesDto", roomPlaceService.receiveRoomPlacesForRoom(filmSessionDto.getRoomDto().getId()));
-        } catch (ServiceException e) {
-            view = new ViewModel(pathException);
-            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
-        }
+        view = new ViewModel(path);
+        view.addParameter("filmSessionDto", filmSessionDto);
         return new RedirectViewModel(view);
     }
 

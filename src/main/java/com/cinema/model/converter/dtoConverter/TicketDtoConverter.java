@@ -39,6 +39,8 @@ public class TicketDtoConverter implements Converter<HttpServletRequest, TicketD
         ticketDto.setFilmSessionDto(filmSessionDtoConverter.convertFilmSessionByIdes(sessionId,sessionFilm, sessionRoom, sessionDate));
         ticketDto.setRoomPlaceDto(roomPlaceDtoConverter.convertFromTicketFields(placeId, placePlace, placeRow, sessionRoom));
         ticketDto.setUserDto(userDtoConverter.convertForUserId((Integer) request.getSession().getAttribute("user_id")));
+
+        request.getSession().setAttribute("filmSessionDto", ticketDto.getFilmSessionDto());
         return ticketDto;
     }
 

@@ -22,6 +22,7 @@ public class WebComponentInitializer {
     private final RoomController roomController;
     private final RoomPlaceController roomPlaceController;
     private final FilmSessionController filmSessionController;
+    private final ErrorController errorController;
 
     private final FilmService filmService;
     private final UserService userService;
@@ -78,6 +79,7 @@ public class WebComponentInitializer {
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);
         ticketController = new TicketController(ticketService, roomPlaceService);
+        errorController = new ErrorController();
 
         requestResolver = new RequestResolver(this);
     }
@@ -164,5 +166,9 @@ public class WebComponentInitializer {
 
     public UserDtoConverter getUserDtoConverter() {
         return userDtoConverter;
+    }
+
+    public ErrorController getErrorController() {
+        return errorController;
     }
 }

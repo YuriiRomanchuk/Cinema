@@ -42,11 +42,15 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
     }
 
     public FilmSessionDto convertFilmSessionWithLineShow(HttpServletRequest request) {
-        return convertFilmSessionWithLine(request, request.getParameter("show-session"));
+        FilmSessionDto filmSessionDto = convertFilmSessionWithLine(request, request.getParameter("show-session"));
+        request.getSession().setAttribute("filmSessionDto", filmSessionDto);
+        return filmSessionDto;
     }
 
     public FilmSessionDto convertFilmSessionWithLineBuy(HttpServletRequest request) {
-        return convertFilmSessionWithLine(request, request.getParameter("show-user-session"));
+        FilmSessionDto filmSessionDto = convertFilmSessionWithLine(request, request.getParameter("show-user-session"));
+        request.getSession().setAttribute("filmSessionDto", filmSessionDto);
+        return filmSessionDto;
     }
 
     private FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request, String numberOfLine) {
@@ -74,5 +78,9 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         filmSessionDto.setId(filmSession.getId());
         filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(filmSession.getDate(), "yyyy-MM-dd kk:mm:ss"));
         return filmSessionDto;
+    }
+
+    public FilmSessionDto receiveFilmSessionDtoFromSession(HttpServletRequest request) {
+        return (FilmSessionDto) request.getSession().getAttribute("filmSessionDto");
     }
 }

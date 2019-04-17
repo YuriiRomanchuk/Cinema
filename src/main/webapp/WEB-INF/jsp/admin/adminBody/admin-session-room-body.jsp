@@ -18,11 +18,23 @@
 </head>
 
 <body>
-<div class="col-6 col-sm-4">
+
+<div class="col w-100">
+    <c:set var='error' value="${Error}"/>
+    <c:if test="${error !=null}">
+        <h1>${error}"</h1>
+    </c:if>
+    <div class="w-100 d-none d-md-block"></div>
+
     <div class="w-100 justify-content-center">
         <h1>Session room</h1>
     </div>
 </div>
+<%--<div class="col-6 col-sm-4">
+    <div class="w-100 justify-content-center">
+        <h1>Session room</h1>
+    </div>
+</div>--%>
 <div class="w-100 d-none d-md-block"></div>
 
 <div class="form-group field-middle_name row w-100">

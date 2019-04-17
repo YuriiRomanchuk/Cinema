@@ -2,6 +2,7 @@ package com.cinema.controller;
 
 import com.cinema.exception.ServiceException;
 import com.cinema.model.converter.utility.TimeConverter;
+import com.cinema.model.dto.FilmSessionDto;
 import com.cinema.model.dto.TicketDto;
 import com.cinema.service.RoomPlaceService;
 import com.cinema.service.TicketService;
@@ -22,12 +23,8 @@ public class TicketController {
     public View buyTicket(TicketDto ticketDto) {
         View view;
         try {
-            ticketService.buyTicket(ticketDto);
             view = new ViewModel("user-session-room");
-            view.addParameter("filmSessionDto", ticketDto.getFilmSessionDto());
-            view.addParameter("sessionDate", TimeConverter.changeStingDataToStingFormat(ticketDto.getFilmSessionDto().getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd kk:mm:ss"));
-            view.addParameter("purchasedSessionTicketsDto", ticketService.receivePurchasedSessionTickets(ticketDto.getFilmSessionDto().getId()));
-            view.addParameter("roomPlacesDto", roomPlaceService.receiveRoomPlacesForRoom(ticketDto.getFilmSessionDto().getRoomDto().getId()));
+            ticketService.buyTicket(ticketDto);
         } catch (ServiceException e) {
             view = new ViewModel("user-personal-area");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
@@ -35,12 +32,27 @@ public class TicketController {
         return new RedirectViewModel(view);
     }
 
-    public View showSessionRoom() {
-        return new ViewModel("WEB-INF/jsp/admin/admin-session-room.jsp");
+    public View showAdminSessionRoom(FilmSessionDto filmSessionDto) {
+        return showSessionRoom(filmSessionDto, "WEB-INF/jsp/admin/admin-session-room.jsp", "admin-session-room");
     }
 
-    public View showUserSessionRoom() {
-        return new ViewModel("WEB-INF/jsp/user/user-session-room.jsp");
+    public View showUserSessionRoom(FilmSessionDto filmSessionDto) {
+        return showSessionRoom(filmSessionDto, "WEB-INF/jsp/user/user-session-room.jsp", "user-personal-area");
     }
 
+    private View showSessionRoom(FilmSessionDto filmSessionDto, String path, String pathException) {
+        View view;
+        try {
+            view = new ViewModel(path);
+            view.addParameter("filmSessionDto", filmSessionDto);
+            view.addParameter("sessionDate", TimeConverter.changeStingDataToStingFormat(filmSessionDto.getDate(), "E MMM dd kk:mm:ss Z yyyy", "yyyy-MM-dd kk:mm:ss"));
+            view.addParameter("purchasedSessionTicketsDto", ticketService.receivePurchasedSessionTickets(filmSessionDto.getId()));
+            view.addParameter("roomPlacesDto", roomPlaceService.receiveRoomPlacesForRoom(filmSessionDto.getRoomDto().getId()));
+            return view;
+        } catch (ServiceException e) {
+            view = new ViewModel(pathException);
+            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+        }
+        return new RedirectViewModel(view);
+    }
 }
