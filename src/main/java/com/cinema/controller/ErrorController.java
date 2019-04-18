@@ -10,8 +10,4 @@ public class ErrorController {
         view.addParameter("error", e);
         return view;
     }
-
-    public View getViewWithSomeTestException() {
-        throw new RuntimeException("Exception thrown somewhere in code");
-    }
 }

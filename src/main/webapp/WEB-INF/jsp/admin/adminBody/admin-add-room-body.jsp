@@ -7,9 +7,8 @@
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="messages"/>
-<fmt:setBundle basename="regexpValidator"/>
-
+<fmt:setBundle basename="regexpValidator" var="regexpValidator"/>
+<fmt:setBundle basename="messages" var="messages"/>
 <!DOCTYPE html>
 
 <html lang="${sessionScope.lang}">
@@ -30,18 +29,20 @@
         </div>--%>
 </div>
 
-<h1>Add room</h1>
+<h1><fmt:message key="local.admin.add.room" bundle="${messages}"/></h1>
 <form id="form" method="post" action="admin-add-room" class="needs-validation" novalidate>
     <div class="form-group">
-        <label for="name">Name:</label>
+        <label for="name"><fmt:message key="local.admin.add.room.name" bundle="${messages}"/></label>
         <input required type="text" class="form-control" id="name" name="name"
-               placeholder="Enter room's name" pattern="<fmt:message key="regexString"/>">
-        <label for="name_english">Name(en):</label>
+               placeholder="<fmt:message key="local.admin.add.room.name.placeholder" bundle="${messages}"/>"
+               pattern="<fmt:message key="regexString" bundle="${regexpValidator}"/>">
+        <label for="name_english"><fmt:message key="local.admin.add.room.name.english" bundle="${messages}"/></label>
         <input required type="text" class="form-control" id="name_english" name="name_english"
-               placeholder="Enter room's english name" pattern="<fmt:message key="regexStringEnglish"/>">
+               placeholder="<fmt:message key="local.admin.add.room.name.english.placeholder" bundle="${messages}"/>"
+               pattern="<fmt:message key="regexStringEnglish" bundle="${regexpValidator}"/>">
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-  <%--  <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
+    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.button.add" bundle="${messages}"/></button>
+    <%--  <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 
 <script>
