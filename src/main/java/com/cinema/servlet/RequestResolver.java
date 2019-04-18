@@ -33,7 +33,7 @@ public class RequestResolver {
         getControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().showAddFilmPage());
         getControllers.put("/admin-show-all-films", r -> webComponentInitializer.getFilmController().showAllFilms());
         getControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().showAddRoomPage());
-        getControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
+        getControllers.put("/admin-add-room-place/{id}", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
         getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersAdmin(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         getControllers.put("/admin-session-room", r -> webComponentInitializer.getTicketController().showAdminSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDtoFromSession(r)));
         getControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));

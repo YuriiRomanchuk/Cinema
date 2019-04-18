@@ -78,7 +78,7 @@ public class TicketDao implements GenericDao<Ticket> {
 
         final String query = "insert into tickets (user_id, session_id, place_id) values(?,?,?)";
 
-        dataSource.implementWrite(query, ps -> {
+        dataSource.update(query, ps -> {
             ps.setInt(1, userId);
             ps.setInt(2, filmSessionId);
             ps.setInt(3, roomPlaceId);

@@ -1,6 +1,3 @@
-<%@ page import="com.cinema.config.UserAuthorization" %>
-<%@ page import="com.cinema.model.entity.enums.Role" %>
-<%@ page import="java.util.Map" %>
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ page session="true" isELIgnored="false" contentType="text/html; charset=UTF-8" language="java"
          pageEncoding="UTF-8" %>
@@ -40,15 +37,15 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <c:if test="${role.equals(roleUNKNOWN)}">
+                <c:if test="${role eq 'UNKNOWN'}">
                     <a class="nav-link" href="index" role="button"> <fmt:message
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>
-                <c:if test="${role.equals(roleAdmin)}">
+                <c:if test="${role eq 'ADMIN'}">
                     <a class="nav-link" href="admin-personal-area" role="button"> <fmt:message
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>
-                <c:if test="${role.equals(roleUser)}">
+                <c:if test="${role eq 'USER'}">
                     <a class="nav-link" href="user-personal-area" role="button"> <fmt:message
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>

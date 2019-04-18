@@ -4,6 +4,7 @@ import com.cinema.model.converter.resultSetConverter.FilmSessionResultSetConvert
 import com.cinema.model.entity.FilmSession;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
         final String query = "insert into session (film_id, room_id, date) values(?, ?, ?)";
 
-        dataSource.implementWrite(query, ps -> {
+        dataSource.update(query, ps -> {
             ps.setInt(1, entity.getFilm().getId());
             ps.setInt(2, entity.getRoom().getId());
             ps.setTimestamp(3, new Timestamp(entity.getDate().getTime()));
@@ -70,20 +71,27 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
 
     @Override
-    public void delete(int filmId) {
-        final String query = "delete from session where session.id = ?";
+    public void delete(int filmSessionId) {
 
-        dataSource.implementWrite(query, ps -> {
-            ps.setInt(1, filmId);
+        QueryData[] queriesData = new QueryData[2];
+        queriesData[0] = (new QueryData("delete from tickets where session_id = ?", ps -> {ps.setInt(1, filmSessionId);}));
+        queriesData[1] = (new QueryData("delete from session where session.id = ?", ps -> {ps.setInt(1, filmSessionId);}));
+
+        dataSource.transactionUpdate(queriesData);
+       /* final String query = "delete f
+       rom session where session.id = ?";
+
+        dataSource.update(query, ps -> {
+            ps.setInt(1, filmSessionId);
         }, r -> {
-        });
+        });*/
     }
 
     public void insert(int filmId, int roomId, Date sessionDate) {
 
         final String query = "insert into session (film_id, room_id, date) values(?, ?, ?)";
 
-        dataSource.implementWrite(query, ps -> {
+        dataSource.update(query, ps -> {
             ps.setInt(1, filmId);
             ps.setInt(2, roomId);
             ps.setTimestamp(3, new Timestamp(sessionDate.getTime()));

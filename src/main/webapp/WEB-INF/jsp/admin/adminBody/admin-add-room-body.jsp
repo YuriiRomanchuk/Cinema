@@ -41,7 +41,7 @@
                placeholder="Enter room's english name" pattern="<fmt:message key="regexStringEnglish"/>">
     </div>
     <button type="submit" class="btn btn-primary">Add</button>
-    <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
+  <%--  <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 
 <script>

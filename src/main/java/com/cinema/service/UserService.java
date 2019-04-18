@@ -16,7 +16,7 @@ public class UserService {
 
     public User loginUser(UserDto userDto) throws ServiceException {
         try {
-            return userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
+            return userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword()).orElseThrow(IllegalArgumentException::new);
         } catch (Exception e) {
             throw new ServiceException("Login or password is not correct", e);
         }
@@ -31,12 +31,10 @@ public class UserService {
     }
 
     public Role receiveUserRole(UserDto userDto) {
-        User user = userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
-        return user != null ? user.getRole() : Role.UNKNOWN;
+        return userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword()).map(User::getRole).orElse(Role.UNKNOWN);
     }
 
     public int receiveUserId(UserDto userDto) {
-        User user = userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword());
-        return user.getId();
+        return userDao.findUserByEmailAndPassword(userDto.getEmail(), userDto.getPassword()).map(User::getId).orElse(-1);
     }
 }

@@ -5,11 +5,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="validator.min.js"></script>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="messages"/>
-<fmt:setBundle basename="regexpValidator"/>
+
+<fmt:setBundle basename="regexpValidator" var="regexpValidator"/>
+<fmt:setBundle basename="messages" var="messages"/>
+
 
 <!DOCTYPE html>
 
@@ -18,47 +19,50 @@
     <title>Title</title>
 </head>
 
-<div class="col-6 col-sm-4">
+<div class="col w-100">
     <c:set var='error' value="${Error}"/>
     <c:if test="${error !=null}">
         <h1>${error}"</h1>
     </c:if>
     <div class="w-100 d-none d-md-block"></div>
 
+    <div class="w-100 justify-content-center">
+        <h1><fmt:message key="local.admin.add.film" bundle="${messages}"/></h1>
+    </div>
 </div>
 
-<h1>Add film</h1>
+
 <form id="form" method="post" action="admin-add-film" class="needs-validation" novalidate>
     <div class="form-group">
-        <label for="name">Name:</label>
-        <input required type="text" pattern="<fmt:message key="regexString"/>" class="form-control" id="name"
+        <label for="name"><fmt:message key="local.admin.add.film.name" bundle="${messages}"/></label>
+        <input required type="text" pattern="<fmt:message key="regexString" bundle="${regexpValidator}"/>" class="form-control" id="name"
                name="name"
-               placeholder="Enter film's name">
-        <label for="name_english">Name(en):</label>
-        <input required type="text" pattern="<fmt:message key="regexStringEnglish"/>" class="form-control"
+               placeholder="<fmt:message key="local.admin.add.film.name.placeholder" bundle="${messages}"/>">
+        <label for="name_english"><fmt:message key="local.admin.add.film.name.english" bundle="${messages}"/></label>
+        <input required type="text" pattern="<fmt:message key="regexStringEnglish" bundle="${regexpValidator}"/>" class="form-control"
                id="name_english" name="name_english"
-               placeholder="Enter film's english name">
-        <label for="release_date">Year:</label>
-        <input required type="date" pattern="<fmt:message key="regexNumber"/>" class="form-control" id="release_date"
+               placeholder="<fmt:message key="local.admin.add.film.name.english.placeholder" bundle="${messages}"/>">
+        <label for="release_date"><fmt:message key="local.admin.add.film.year" bundle="${messages}"/></label>
+        <input required type="date" pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>" class="form-control" id="release_date"
                name="release_date"
-               placeholder="Enter release date">
-        <label for="description">Description:</label>
-        <input required type="text" pattern="<fmt:message key="regexString"/>" class="form-control" id="description"
+               placeholder="<fmt:message key="local.admin.add.film.year.placeholder" bundle="${messages}"/>">
+        <label for="description"><fmt:message key="local.admin.add.film.description" bundle="${messages}"/></label>
+        <input required type="text" pattern="<fmt:message key="regexString" bundle="${regexpValidator}"/>" class="form-control" id="description"
                name="description"
-               placeholder="Enter description">
-        <label for="description_english">Description(en):</label>
-        <input required type="text" pattern="<fmt:message key="regexStringEnglish"/>" class="form-control"
+               placeholder="<fmt:message key="local.admin.add.film.description.placeholder" bundle="${messages}"/>">
+        <label for="description_english"><fmt:message key="local.admin.add.film.description.english" bundle="${messages}"/></label>
+        <input required type="text" pattern="<fmt:message key="regexStringEnglish" bundle="${regexpValidator}"/>" class="form-control"
                id="description_english"
                name="description_english"
-               placeholder="Enter english description">
-        <label for="running_time">Running time:</label>
-        <input required type="number" pattern="<fmt:message key="regexNumber"/>" class="form-control" id="running_time"
+               placeholder="<fmt:message key="local.admin.add.film.description.english.placeholder" bundle="${messages}"/>">
+        <label for="running_time"><fmt:message key="local.admin.add.film.running.time" bundle="${messages}"/></label>
+        <input required type="number" pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>" class="form-control" id="running_time"
                name="running_time"
-               placeholder="Enter running time"
-               value=2 readonly>
+               placeholder= "<fmt:message key="local.admin.add.film.running.time.placeholder" bundle="${messages}"/>"
+                       value=2 readonly>
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-    <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
+    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.film.button.add" bundle="${messages}"/></button>
+    <%--<a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 <script>
     (function () {

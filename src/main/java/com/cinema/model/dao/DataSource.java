@@ -32,7 +32,7 @@ public class DataSource {
     private void InitializeDataBase() {
 
         String initBdScript = new Scanner(getClass().getClassLoader().getResourceAsStream("sql/dataBaseInitializer.sql")).useDelimiter("\\A").next();
-        implementWrite(initBdScript, ps -> {
+        update(initBdScript, ps -> {
         }, rs -> {
         });
 
@@ -46,7 +46,26 @@ public class DataSource {
         }
     }
 
-    public void implementWrite(String query, SqlConsumer<PreparedStatement> parameters, SqlConsumer<ResultSet> resultProcessor) {
+    public void transactionUpdate(QueryData... queriesData) {
+
+        try (Connection connection = receiveConnection()) {
+            connection.setAutoCommit(false);
+            for (QueryData queryData : queriesData) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement(queryData.getQuery(), Statement.RETURN_GENERATED_KEYS)) {
+                    queryData.getParameters().accept(preparedStatement);
+                    preparedStatement.executeUpdate();
+                } catch (SQLException e) {
+                    connection.rollback();
+                    throw new RuntimeException(e);
+                }
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void update(String query, SqlConsumer<PreparedStatement> parameters, SqlConsumer<ResultSet> resultProcessor) {
 
         try (
                 Connection connection = receiveConnection();
@@ -64,7 +83,7 @@ public class DataSource {
         }
     }
 
-    public void implementWriteBatch(String query, SqlConsumer<PreparedStatement> parameters, SqlConsumer<ResultSet> resultProcessor) {
+    public void updateBatch(String query, SqlConsumer<PreparedStatement> parameters, SqlConsumer<ResultSet> resultProcessor) {
 
         try (
                 Connection connection = receiveConnection();

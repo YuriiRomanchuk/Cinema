@@ -21,7 +21,7 @@ public class FilmDao implements GenericDao<Film> {
 
         final String query = "insert into films (name, name_english, release_date, description, description_english, running_time) values(?, ?, ?, ?, ?, ?)";
 
-        dataSource.implementWrite(query, ps -> {
+        dataSource.update(query, ps -> {
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getNameEnglish());
             ps.setTimestamp(3, new Timestamp(entity.getReleaseDate().getTime()));

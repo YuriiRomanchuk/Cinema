@@ -23,7 +23,6 @@ public class RoomService {
     }
 
     public void createRoom(RoomDto roomDto) throws ServiceException {
-
         try {
             Room room = roomConverter.convert(roomDto);
             roomDao.insert(room);

@@ -4,6 +4,7 @@ import com.cinema.model.converter.resultSetConverter.UserResultSetConverter;
 import com.cinema.model.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserDao implements GenericDao<User> {
 
@@ -40,21 +41,21 @@ public class UserDao implements GenericDao<User> {
 
     }
 
-    public User findUserByEmailAndPassword(String email, String password) {
+    public Optional<User> findUserByEmailAndPassword(String email, String password) {
         return dataSource.receiveFirstRecord("select *, users.id as user_id from users where email = ? and password = ?",
                 resultSet -> userResultSetConverter.convert(resultSet),
                 preparedStatement ->
                 {
                     preparedStatement.setString(1, email);
                     preparedStatement.setString(2, password);
-                }).orElse(null);
+                });
     }
 
     public void createUser(User user) {
 
         final String query = "insert into users (first_name, last_name, middle_name, login, password, email, phone, role) values(?, ?, ?, ?, ?, ?, ?, ?)";
 
-        dataSource.implementWrite(query, ps -> {
+        dataSource.update(query, ps -> {
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getMiddleName());

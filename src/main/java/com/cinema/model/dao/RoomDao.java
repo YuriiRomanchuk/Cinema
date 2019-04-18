@@ -20,7 +20,7 @@ public class RoomDao implements GenericDao<Room> {
 
         final String query = "insert into rooms (name, name_english) values(?,?)";
 
-        dataSource.implementWrite(query, ps -> {
+        dataSource.update(query, ps -> {
             ps.setString(1, entity.getName());
             ps.setString(2, entity.getNameEnglish());
         }, r -> entity.setId(r.getInt(1)));

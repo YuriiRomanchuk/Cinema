@@ -40,9 +40,6 @@ public class AuthorizationFilter implements Filter {
 
         if (httpRequest.getSession().getAttribute("role") == null) {
             httpRequest.getSession().setAttribute("role", Role.UNKNOWN);
-            httpRequest.getSession().setAttribute("roleADMIN", Role.ADMIN);
-            httpRequest.getSession().setAttribute("roleUSER", Role.USER);
-            httpRequest.getSession().setAttribute("roleUNKNOWN", Role.UNKNOWN);
         }
 
         String sessionId = httpRequest.getSession().getId();
@@ -99,8 +96,9 @@ public class AuthorizationFilter implements Filter {
         UserDto userDto = userLoginDtoConverter.convert(httpRequest);
 
         Role role = userService.receiveUserRole(userDto);
-        int userId = userService.receiveUserId(userDto);
         if (!role.equals(Role.UNKNOWN)) {
+            int userId = userService.receiveUserId(userDto);
+
             UserAuthorization userAuthorization = new UserAuthorization();
             userAuthorization.setEmail(email);
             userAuthorization.setRole(role);

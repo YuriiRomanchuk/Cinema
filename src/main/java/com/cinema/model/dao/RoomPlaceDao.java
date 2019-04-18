@@ -24,7 +24,7 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
 
         final String query = "insert into places (row, place, room_id) values(?, ?, ?)";
 
-        dataSource.implementWriteBatch(query, ps -> {
+        dataSource.updateBatch(query, ps -> {
             for (RoomPlace roomPlace : roomPlaces) {
                 ps.setInt(1, roomPlace.getRow());
                 ps.setInt(2, roomPlace.getPlace());
