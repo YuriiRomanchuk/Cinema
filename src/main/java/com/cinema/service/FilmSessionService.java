@@ -92,5 +92,13 @@ public class FilmSessionService {
             throw new ServiceException("Delete film session failed", e);
         }
     }
+
+    public FilmSessionDto receiveFilmSessionById(int filmSessionId)  throws ServiceException {
+        try {
+            return filmSessionDtoConverter.convertFromFilmEntity(filmSessionDao.findById(filmSessionId));
+        } catch (Exception e) {
+            throw new ServiceException("Film session receive failed", e);
+        }
+    }
 }
 

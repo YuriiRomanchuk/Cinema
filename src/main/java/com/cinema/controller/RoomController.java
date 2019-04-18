@@ -33,4 +33,5 @@ public class RoomController {
     public View showAddRoomPage() {
         return new ViewModel("WEB-INF/jsp/admin/admin-add-room.jsp");
     }
+
 }

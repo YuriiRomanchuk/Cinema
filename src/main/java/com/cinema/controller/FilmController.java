@@ -29,7 +29,6 @@ public class FilmController {
         return new RedirectViewModel(view);
     }
 
-
     public View showAddFilmPage() {
         return new ViewModel("WEB-INF/jsp/admin/admin-add-film.jsp");
     }

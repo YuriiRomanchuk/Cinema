@@ -43,7 +43,6 @@ public class FilmSessionController {
         return new RedirectViewModel(view);
     }
 
-
     public View showFilmSessionPageFiltersAdmin(FilmSessionDto filmSessionDto) {
         return showFilmSessionPageFilters(filmSessionDto, "WEB-INF/jsp/admin/admin-session.jsp", "admin-session");
     }
@@ -79,19 +78,12 @@ public class FilmSessionController {
         return new RedirectViewModel(view);
     }
 
-    public View showSessionRoomAdmin(FilmSessionDto filmSessionDto) {
-        return showSessionRoom(filmSessionDto, "admin-session-room");
+    public View showSessionRoomAdmin(int filmSessionId) {
+        return new RedirectViewModel(new ViewModel("admin-session-room/" + filmSessionId));
     }
 
-    public View showSessionRoomUser(FilmSessionDto filmSessionDto) {
-        return showSessionRoom(filmSessionDto, "user-session-room");
-    }
-
-    private View showSessionRoom(FilmSessionDto filmSessionDto, String path) {
-        View view;
-        view = new ViewModel(path);
-        view.addParameter("filmSessionDto", filmSessionDto);
-        return new RedirectViewModel(view);
+    public View showSessionRoomUser(int filmSessionId) {
+        return new RedirectViewModel(new ViewModel("user-session-room/" + filmSessionId));
     }
 
     private void showAdminFilmSessionPage(FilmSessionDto filmSessionDto, View view) throws ServiceException {

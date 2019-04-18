@@ -41,16 +41,14 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return convertFilmSessionWithLine(request, request.getParameter("delete-session"));
     }
 
-    public FilmSessionDto convertFilmSessionWithLineShow(HttpServletRequest request) {
-        FilmSessionDto filmSessionDto = convertFilmSessionWithLine(request, request.getParameter("show-session"));
-        request.getSession().setAttribute("filmSessionDto", filmSessionDto);
-        return filmSessionDto;
+    public int convertFilmSessionWithLineShow(HttpServletRequest request) {
+        String numberOfLine = request.getParameter("show-session");
+        return Integer.valueOf(request.getParameter("session_id_" + numberOfLine).trim());
     }
 
-    public FilmSessionDto convertFilmSessionWithLineBuy(HttpServletRequest request) {
-        FilmSessionDto filmSessionDto = convertFilmSessionWithLine(request, request.getParameter("show-user-session"));
-        request.getSession().setAttribute("filmSessionDto", filmSessionDto);
-        return filmSessionDto;
+    public int convertFilmSessionWithLineBuy(HttpServletRequest request) {
+        String numberOfLine = request.getParameter("show-user-session");
+        return Integer.valueOf(request.getParameter("session_id_" + numberOfLine).trim());
     }
 
     private FilmSessionDto convertFilmSessionWithLine(HttpServletRequest request, String numberOfLine) {
@@ -80,7 +78,10 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return filmSessionDto;
     }
 
-    public FilmSessionDto receiveFilmSessionDtoFromSession(HttpServletRequest request) {
-        return (FilmSessionDto) request.getSession().getAttribute("filmSessionDto");
+    public int receiveFilmSessionId(HttpServletRequest request) {
+        String requestURI = request.getRequestURI().replace(request.getContextPath() + "/main", "");
+        String[] splitURI = requestURI.split("/");
+        return Integer.valueOf(splitURI[splitURI.length - 1]);
     }
+
 }

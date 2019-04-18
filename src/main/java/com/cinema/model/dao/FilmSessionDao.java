@@ -4,7 +4,6 @@ import com.cinema.model.converter.resultSetConverter.FilmSessionResultSetConvert
 import com.cinema.model.entity.FilmSession;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +31,17 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
     @Override
     public FilmSession findById(int id) {
-        return null;
+
+        String query = "SELECT temp.id as session_id, film_id, room_id, date as session_date" +
+                ", films.*,rooms.name as room_name, rooms.name_english as room_name_english " +
+                "FROM (select id, film_id, room_id, date from session where id = ?) " +
+                "temp LEFT JOIN films ON film_id = films.id LEFT JOIN rooms ON room_id = rooms.id order by date";
+
+        return dataSource.receiveFirstRecord(query,
+                resultSet -> filmSessionResultSetConverter.convert(resultSet),
+                preparedStatement -> {
+                    preparedStatement.setInt(1, id);
+                }).get();
     }
 
     @Override
@@ -74,17 +83,14 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
     public void delete(int filmSessionId) {
 
         QueryData[] queriesData = new QueryData[2];
-        queriesData[0] = (new QueryData("delete from tickets where session_id = ?", ps -> {ps.setInt(1, filmSessionId);}));
-        queriesData[1] = (new QueryData("delete from session where session.id = ?", ps -> {ps.setInt(1, filmSessionId);}));
+        queriesData[0] = (new QueryData("delete from tickets where session_id = ?", ps -> {
+            ps.setInt(1, filmSessionId);
+        }));
+        queriesData[1] = (new QueryData("delete from session where session.id = ?", ps -> {
+            ps.setInt(1, filmSessionId);
+        }));
 
         dataSource.transactionUpdate(queriesData);
-       /* final String query = "delete f
-       rom session where session.id = ?";
-
-        dataSource.update(query, ps -> {
-            ps.setInt(1, filmSessionId);
-        }, r -> {
-        });*/
     }
 
     public void insert(int filmId, int roomId, Date sessionDate) {

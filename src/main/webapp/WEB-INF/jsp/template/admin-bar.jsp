@@ -58,7 +58,7 @@
                 <span>Film</span>
             </h6>
             <li class="nav-item">
-                <a class="nav-link" href="admin-show-all-films">
+                <a class="nav-link" href="${pageContext.request.contextPath}/main/admin-show-all-films">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="feather feather-layers">
@@ -71,7 +71,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="admin-add-film" role="button">
+                <a class="nav-link" href="${pageContext.request.contextPath}/main/admin-add-film" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="feather feather-file-text">
@@ -92,7 +92,7 @@
             </h6>
 
             <li class="nav-item">
-                <a class="nav-link" href="admin-add-room" role="button">
+                <a class="nav-link" href="${pageContext.request.contextPath}/main/admin-add-room" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="feather feather-file-text">
@@ -106,7 +106,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="admin-add-room-place" role="button">
+                <a class="nav-link" href="${pageContext.request.contextPath}/main/admin-add-room-place" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="feather feather-file-text">
@@ -140,7 +140,7 @@
             </h6>
 
             <li class="nav-item">
-                <a class="nav-link" href="admin-session" role="button">
+                <a class="nav-link" href="${pageContext.request.contextPath}/main/admin-session" role="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                          class="feather feather-file-text">

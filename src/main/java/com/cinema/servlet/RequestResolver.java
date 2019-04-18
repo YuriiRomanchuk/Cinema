@@ -21,7 +21,6 @@ public class RequestResolver {
     private Map<String, Function<HttpServletRequest, View>> getControllers = new HashMap<>();
     private Map<String, Function<HttpServletRequest, View>> postControllers = new HashMap<>();
 
-
     public RequestResolver(WebComponentInitializer webComponentInitializer) {
 
         getControllers.put("/index", r -> webComponentInitializer.getWelcomeController().showIndexPage(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
@@ -33,11 +32,11 @@ public class RequestResolver {
         getControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().showAddFilmPage());
         getControllers.put("/admin-show-all-films", r -> webComponentInitializer.getFilmController().showAllFilms());
         getControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().showAddRoomPage());
-        getControllers.put("/admin-add-room-place/{id}", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
+        getControllers.put("/admin-add-room-place", r -> webComponentInitializer.getRoomPlaceController().showRoomPlace());
         getControllers.put("/admin-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersAdmin(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
-        getControllers.put("/admin-session-room", r -> webComponentInitializer.getTicketController().showAdminSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDtoFromSession(r)));
+        getControllers.put("/admin-session-room/{id}", r -> webComponentInitializer.getTicketController().showAdminSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
         getControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
-        getControllers.put("/user-session-room", r -> webComponentInitializer.getTicketController().showUserSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDtoFromSession(r)));
+        getControllers.put("/user-session-room/{id}", r -> webComponentInitializer.getTicketController().showUserSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
         getControllers.put("/error", r -> webComponentInitializer.getErrorController().getErrorPage((Exception) r.getAttribute("error")));
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
@@ -76,6 +75,7 @@ public class RequestResolver {
     private void reference(View view, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (view instanceof RedirectViewModel) {
             request.getSession().setAttribute(VIEW_ATTRIBUTE, view.getView());
+           /* response.sendRedirect(request.getContextPath()+"/main/"+ view.getPageUrl());*/
             response.sendRedirect(view.getPageUrl());
         } else if (view != null) {
             view.getParameters().forEach(request::setAttribute);
@@ -85,8 +85,8 @@ public class RequestResolver {
     }
 
     private View getView(HttpServletRequest request, Map<String, Function<HttpServletRequest, View>> sourceController) {
-        String requestURI = request.getRequestURI().replace(request.getContextPath() + "/main", "");
 
+        String requestURI = receiveRequestURI(request);
         View originView = (View) request.getSession().getAttribute(VIEW_ATTRIBUTE);
         request.getSession().removeAttribute(VIEW_ATTRIBUTE);
 
@@ -95,6 +95,14 @@ public class RequestResolver {
             originView.getParameters().forEach(destinationView::addParameter);
         }
         return destinationView;
+    }
+
+
+    private String receiveRequestURI(HttpServletRequest request) {
+        String requestURI = request.getRequestURI().replace(request.getContextPath() + "/main", "");
+        String[] splitURI = requestURI.split("/");
+        String lastElement = splitURI[splitURI.length - 1];
+        return lastElement.matches("\\d+") ? requestURI.replace(lastElement, "{id}") : "/" + lastElement;
     }
 
 }

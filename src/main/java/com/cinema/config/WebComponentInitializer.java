@@ -78,7 +78,7 @@ public class WebComponentInitializer {
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);
-        ticketController = new TicketController(ticketService, roomPlaceService);
+        ticketController = new TicketController(ticketService, roomPlaceService, filmSessionService);
         errorController = new ErrorController();
 
         requestResolver = new RequestResolver(this);

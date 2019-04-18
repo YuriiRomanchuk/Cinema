@@ -10,9 +10,7 @@
 <fmt:setBundle basename="messages"/>
 
 <c:set var='role' value="${sessionScope['role']}"/>
-<c:set var='roleAdmin' value="${sessionScope['roleADMIN']}"/>
-<c:set var='roleUser' value="${sessionScope['roleUSER']}"/>
-<c:set var='roleUNKNOWN' value="${sessionScope['roleUNKNOWN']}"/>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -42,11 +40,11 @@
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>
                 <c:if test="${role eq 'ADMIN'}">
-                    <a class="nav-link" href="admin-personal-area" role="button"> <fmt:message
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main/admin-personal-area" role="button"> <fmt:message
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>
                 <c:if test="${role eq 'USER'}">
-                    <a class="nav-link" href="user-personal-area" role="button"> <fmt:message
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main/user-personal-area" role="button"> <fmt:message
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>
             </li>
@@ -71,7 +69,7 @@
                 margin-bottom: 0px;">
 
             <c:choose>
-                <c:when test="${role.equals(roleUNKNOWN)}">
+                <c:when test="${role eq 'UNKNOWN'}">
                     <a href="registration-form" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
                             key="local.registration"/></a>
                     <a href="login" class="btn btn-outline-success my-2 my-sm-0" role="button"><fmt:message
