@@ -37,7 +37,7 @@ public class FilmDao implements GenericDao<Film> {
     }
 
     @Override
-    public List findAll() {
+    public List<Film> findAll() {
         return dataSource.receiveRecords("select id as film_id, name, name_english, description," +
                         " release_date, description_english, running_time from films",
                 resultSet -> filmResultSetConverter.convert(resultSet),

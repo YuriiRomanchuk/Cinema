@@ -53,23 +53,23 @@ public class UserController {
     }
 
     public View loginUser(UserDto userDto) {
-
         View view;
         try {
             User user = userService.loginUser(userDto);
             view = new ViewModel(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area");
         } catch (ServiceException e) {
             view = new ViewModel("login");
-            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            view.addParameter("Error", e.getMessage());
         }
         return new RedirectViewModel(view);
     }
 
-    public View createUser(User user) {
+    public View createUser(UserDto userDto) {
         View view;
         try {
-            userService.createUser(user);
+            userService.createUser(userDto);
             view = new ViewModel("login");
+            view.addParameter("Error", "User created!");
         } catch (ServiceException e) {
             view = new ViewModel("registration-form");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());

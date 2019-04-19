@@ -1,4 +1,4 @@
-package com.cinema.model.converter.dtoConverter;
+package com.cinema.model.converter.dtoConverter.user;
 
 import com.cinema.model.converter.Converter;
 import com.cinema.model.dto.UserDto;

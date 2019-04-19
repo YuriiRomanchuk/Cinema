@@ -17,14 +17,19 @@
     <title>Title</title>
 </head>
 
-<%
-    String error = (String) request.getAttribute("Error");
-    if (error != null) {
-%> <h1><%=error%>
-</h1> <%
-    }
-%>
-<h1>Authorization</h1>
+
+<div class="col w-100">
+    <c:set var='error' value="${Error}"/>
+    <c:if test="${error !=null}">
+        <h1>${error}</h1>
+    </c:if>
+    <div class="w-100 d-none d-md-block"></div>
+
+    <div class="w-100 justify-content-center">
+        <h1>Authorization</h1>
+    </div>
+</div>
+
 <form id = "form" method="post" action="login" class="needs-validation" novalidate>
     <div class="form-group">
         <label for="email">Name:</label>

@@ -20,7 +20,7 @@
 <div class="col-6 col-sm-4">
     <c:set var='error' value="${Error}"/>
     <c:if test="${error !=null}">
-        <h1>${error}"</h1>
+        <h1>${error}</h1>
     </c:if>
     <div class="w-100 d-none d-md-block"></div>
     <%--
@@ -35,11 +35,11 @@
         <label for="name"><fmt:message key="local.admin.add.room.name" bundle="${messages}"/></label>
         <input required type="text" class="form-control" id="name" name="name"
                placeholder="<fmt:message key="local.admin.add.room.name.placeholder" bundle="${messages}"/>"
-               pattern="<fmt:message key="regexString" bundle="${regexpValidator}"/>">
+               pattern="<fmt:message key="regexStringNumber" bundle="${regexpValidator}"/>">
         <label for="name_english"><fmt:message key="local.admin.add.room.name.english" bundle="${messages}"/></label>
         <input required type="text" class="form-control" id="name_english" name="name_english"
                placeholder="<fmt:message key="local.admin.add.room.name.english.placeholder" bundle="${messages}"/>"
-               pattern="<fmt:message key="regexStringEnglish" bundle="${regexpValidator}"/>">
+               pattern="<fmt:message key="regexStringNumberEnglish" bundle="${regexpValidator}"/>">
     </div>
     <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.button.add" bundle="${messages}"/></button>
     <%--  <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>

@@ -4,6 +4,7 @@ import com.cinema.model.converter.resultSetConverter.RoomPlaceResultSetConverter
 import com.cinema.model.entity.RoomPlace;
 
 import java.util.List;
+import java.util.Optional;
 
 public class RoomPlaceDao implements GenericDao<RoomPlace> {
 
@@ -65,5 +66,16 @@ public class RoomPlaceDao implements GenericDao<RoomPlace> {
     @Override
     public void delete(int id) {
 
+    }
+
+    public Optional<RoomPlace> findByRoomId(int roomId) {
+        return dataSource.receiveFirstRecord("SELECT place_id, place_row, place_place, room_id, rooms.name as room_name, " +
+                        "rooms.name_english as room_name_english FROM(select id as place_id, row as place_row, place as place_place, room_id " +
+                        "from places where room_id = ?) temp LEFT JOIN rooms ON temp.room_id = rooms.id order by place_row, place_place",
+                resultSet -> roomPlaceResultSetConverter.convert(resultSet),
+                preparedStatement ->
+                {
+                    preparedStatement.setInt(1, roomId);
+                });
     }
 }

@@ -1,6 +1,7 @@
 package com.cinema.model.converter.dtoConverter;
 
 import com.cinema.model.converter.Converter;
+import com.cinema.model.converter.dtoConverter.user.UserDtoConverter;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.TicketDto;
 import com.cinema.model.entity.Ticket;

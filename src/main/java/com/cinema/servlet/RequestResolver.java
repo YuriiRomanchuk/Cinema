@@ -40,7 +40,7 @@ public class RequestResolver {
         getControllers.put("/error", r -> webComponentInitializer.getErrorController().getErrorPage((Exception) r.getAttribute("error")));
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
-        postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserConverter().convert(r)));
+        postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserDtoConverter().convert(r)));
         postControllers.put("/change_language", r -> webComponentInitializer.getChangeLanguageController().changeLanguage());
         postControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().createFilm(webComponentInitializer.getFilmDtoConverter().convert(r)));
         postControllers.put("/admin-add-room", r -> webComponentInitializer.getRoomController().createRoom(webComponentInitializer.getRoomDtoConverter().convert(r)));
@@ -75,8 +75,8 @@ public class RequestResolver {
     private void reference(View view, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (view instanceof RedirectViewModel) {
             request.getSession().setAttribute(VIEW_ATTRIBUTE, view.getView());
-           /* response.sendRedirect(request.getContextPath()+"/main/"+ view.getPageUrl());*/
-            response.sendRedirect(view.getPageUrl());
+            response.sendRedirect(request.getContextPath()+"/main/"+ view.getPageUrl());
+            /*response.sendRedirect(view.getPageUrl());*/
         } else if (view != null) {
             view.getParameters().forEach(request::setAttribute);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("/" + view.getPageUrl());

@@ -28,7 +28,10 @@ public class UserDao implements GenericDao<User> {
 
     @Override
     public List<User> findAll() {
-        return null;
+        return dataSource.receiveRecords("select *, users.id as user_id  from users",
+                resultSet -> userResultSetConverter.convert(resultSet),
+                preparedStatement -> {
+                });
     }
 
     @Override

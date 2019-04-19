@@ -1,4 +1,4 @@
-package com.cinema.model.converter.dtoConverter;
+package com.cinema.model.converter.dtoConverter.user;
 
 import com.cinema.model.converter.Converter;
 import com.cinema.model.dto.UserDto;
@@ -18,7 +18,6 @@ public class UserDtoConverter implements Converter<HttpServletRequest, UserDto> 
         userDto.setMiddleName(request.getParameter("middleName"));
         userDto.setEmail(request.getParameter("email"));
         userDto.setPhone(Integer.valueOf(request.getParameter("phone")));
-        userDto.setRole(Role.USER);
         return userDto;
     }
 

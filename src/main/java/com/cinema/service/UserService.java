@@ -1,17 +1,22 @@
 package com.cinema.service;
 
 import com.cinema.exception.ServiceException;
+import com.cinema.model.converter.entityConverter.UserConverter;
 import com.cinema.model.dao.UserDao;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 
+import java.util.List;
+
 public class UserService {
 
     private final UserDao userDao;
+    private final UserConverter userConverter;
 
-    public UserService(UserDao userDao) {
+    public UserService(UserDao userDao, UserConverter userConverter) {
         this.userDao = userDao;
+        this.userConverter = userConverter;
     }
 
     public User loginUser(UserDto userDto) throws ServiceException {
@@ -22,12 +27,19 @@ public class UserService {
         }
     }
 
-    public void createUser(User user) throws ServiceException {
+    public void createUser(UserDto userDto) throws ServiceException {
         try {
+            User user = userConverter.convert(userDto);
+            user.setRole(receiveRoleForUser());
             userDao.createUser(user);
         } catch (Exception e) {
             throw new ServiceException("Registration failed", e);
         }
+    }
+
+    private Role receiveRoleForUser() {
+        List<User> allUsers = userDao.findAll();
+        return allUsers.size() > 0 ? Role.USER : Role.ADMIN;
     }
 
     public Role receiveUserRole(UserDto userDto) {

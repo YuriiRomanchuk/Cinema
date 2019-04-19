@@ -40,7 +40,7 @@ public class RoomPlaceController {
             view = new ViewModel("admin-personal-area");
             view.addParameter("Error", "Room places added!");
         } catch (ServiceException e) {
-            view = new ViewModel("admin-personal-area");
+            view = new ViewModel("admin-add-room-place");
             view.addParameter("roomPlacesDto", roomPlacesDto);
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }

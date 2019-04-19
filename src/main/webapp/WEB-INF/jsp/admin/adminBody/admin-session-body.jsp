@@ -74,88 +74,104 @@
             <th>Action</th>
         </thead>
         <c:forEach var="filmSessionDto" items="${filmsSessionDto}" varStatus="loop">
-        <tr>
-            <td>
-                <input type="text" class="form-control" id="session_id_${loop.index}"
-                       name="session_id_${loop.index}" size="1"
-                       readonly
-                       value=" ${filmSessionDto.getId()}">
-            </td>
-            <td>
-                <input type="text" class="form-control" id="session_date_${loop.index}"
-                       name="session_date_${loop.index}"
-                       placeholder="Enter film's name" readonly
-                       value="${filmSessionDto.getDate()}">
-            </td>
-            <td>
-                <select
-                    <%--<c:if test="${filmSessionDto.getId() !=0}">disabled </c:if>--%>
-                        class="custom-select mr-sm-2" id="session_room_${loop.index}"
-                        name="session_room_${loop.index}">
-                    <option selected>Choose...</option>
-                    <c:forEach var="room" items="${roomsDto}">
-                        <option selected="selected" value=${room.getId()}>${room.getName()}
-                        </option>
-                    </c:forEach>
-                </select>
-            </td>
-            <td>
-                <c:choose>
-                    <c:when test="${filmSessionDto.getId() !=0}">
-                    <select class="custom-select mr-sm-2" id="session_film_${loop.index}"
-                            name="session_film_${loop.index}">
-                        <c:if test="${filmSessionDto.getFilmDto() !=null}">
-                            <option selected="selected"
-                                    value=${filmSessionDto.getFilmDto().getId()}>${filmSessionDto.getFilmDto().getName()}
-                            </option>
-                        </c:if>
-                    </select>
-                </c:when>
-                <c:otherwise>
+            <tr>
+                <td>
+                    <input type="text" class="form-control" id="session_id_${loop.index}"
+                           name="session_id_${loop.index}" size="1"
+                           readonly
+                           value=" ${filmSessionDto.getId()}">
+                </td>
+                <td>
+                    <input type="text" class="form-control" id="session_date_${loop.index}"
+                           name="session_date_${loop.index}"
+                           placeholder="Enter film's name" readonly
+                           value="${filmSessionDto.getDate()}">
+                </td>
+                <td>
                     <select
-                            class="custom-select mr-sm-2" id="session_film_${loop.index}"
-                            name="session_film_${loop.index}">
-                        <option selected>Choose...</option>
-                        <c:forEach var="film" items="${filmsDto}">
-                            <option value=${film.getId()}>${film.getName()}
-                            </option>
-                        </c:forEach>
+                    <c:choose>
+                        <c:when test="${filmSessionDto.getId() !=0}">
+                            <select class="custom-select mr-sm-2" id="session_film_${loop.index}"
+                                    name="session_film_${loop.index}">
+                                <c:if test="${filmSessionDto.getFilmDto() !=null}">
+                                    <option selected="selected"
+                                            value=${filmSessionDto.getRoomDto().getId()}>${filmSessionDto.getRoomDto().getName()}
+                                    </option>
+                                </c:if>
+                            </select>
+                        </c:when>
+                        <c:otherwise>
+                            <select
+                                    class="custom-select mr-sm-2" id="session_room_${loop.index}"
+                                    name="session_room_${loop.index}">
+                                <option selected>Choose...</option>
+                                <c:forEach var="room" items="${roomsDto}">
+                                    <option selected="selected" value=${room.getId()}>${room.getName()}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </c:otherwise>
+                    </c:choose>
+
                     </select>
-                </c:otherwise>
-                </c:choose>
+                </td>
+                <td>
+                    <c:choose>
+                        <c:when test="${filmSessionDto.getId() !=0}">
+                            <select class="custom-select mr-sm-2" id="session_film_${loop.index}"
+                                    name="session_film_${loop.index}">
+                                <c:if test="${filmSessionDto.getFilmDto() !=null}">
+                                    <option selected="selected"
+                                            value=${filmSessionDto.getFilmDto().getId()}>${filmSessionDto.getFilmDto().getName()}
+                                    </option>
+                                </c:if>
+                            </select>
+                        </c:when>
+                        <c:otherwise>
+                            <select
+                                    class="custom-select mr-sm-2" id="session_film_${loop.index}"
+                                    name="session_film_${loop.index}">
+                                <option selected>Choose...</option>
+                                <c:forEach var="film" items="${filmsDto}">
+                                    <option value=${film.getId()}>${film.getName()}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </c:otherwise>
+                    </c:choose>
 
-            </td>
+                </td>
 
-            <td>
-                <div class="form-group field-middle_name row mr-2">
+                <td>
+                    <div class="form-group field-middle_name row mr-2">
 
-                    <c:if test="${filmSessionDto.getId() !=0}">
-                        <button onclick="form.action='show-session';" type="submit" name="show-session"
-                                value="${loop.index}"
-                                class="btn btn-primary ml-2 mr-1">
-                            show
-                        </button>
-
-                        <c:if test="${!isLastDay}">
-                            <button onclick="form.action='delete-session';" type="submit" name="delete-session"
+                        <c:if test="${filmSessionDto.getId() !=0}">
+                            <button onclick="form.action='show-session';" type="submit" name="show-session"
                                     value="${loop.index}"
-                                    class="btn btn-danger">
-                                delete
+                                    class="btn btn-primary ml-2 mr-1">
+                                show
+                            </button>
+
+                            <c:if test="${!isLastDay}">
+                                <button onclick="form.action='delete-session';" type="submit" name="delete-session"
+                                        value="${loop.index}"
+                                        class="btn btn-danger">
+                                    delete
+                                </button>
+                            </c:if>
+                        </c:if>
+
+                        <c:if test="${filmSessionDto.getId() <=0 and !isLastDay}">
+                            <button onclick="form.action='add-session';" type="submit" name="add-session"
+                                    value="${loop.index}"
+                                    class="btn btn-success ml-2">
+                                add
                             </button>
                         </c:if>
-                    </c:if>
 
-                    <c:if test="${filmSessionDto.getId() <=0 and !isLastDay}">
-                        <button onclick="form.action='add-session';" type="submit" name="add-session"
-                                value="${loop.index}"
-                                class="btn btn-success ml-2">
-                            add
-                        </button>
-                    </c:if>
-
-                </div>
-            </td>
-        </tr>
+                    </div>
+                </td>
+            </tr>
         </c:forEach>
     </table>
 </form>

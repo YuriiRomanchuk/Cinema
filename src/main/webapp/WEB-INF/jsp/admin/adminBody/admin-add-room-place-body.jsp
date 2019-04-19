@@ -21,7 +21,7 @@
 <div class="col-6 col-sm-4">
     <c:set var='error' value="${Error}"/>
     <c:if test="${error !=null}">
-        <h1>${error}"</h1>
+        <h1>${error}</h1>
     </c:if>
     <div class="w-100 d-none d-md-block"></div>
 

@@ -1,8 +1,10 @@
 package com.cinema.config;
 
 import com.cinema.controller.*;
-import com.cinema.model.converter.UserConverter;
+import com.cinema.model.converter.entityConverter.UserConverter;
 import com.cinema.model.converter.dtoConverter.*;
+import com.cinema.model.converter.dtoConverter.user.UserDtoConverter;
+import com.cinema.model.converter.dtoConverter.user.UserLoginDtoConverter;
 import com.cinema.model.converter.entityConverter.FilmConverter;
 import com.cinema.model.converter.entityConverter.FilmSessionConverter;
 import com.cinema.model.converter.entityConverter.RoomConverter;
@@ -64,7 +66,7 @@ public class WebComponentInitializer {
         roomPlaceConverter = new RoomPlaceConverter(roomConverter);
         filmSessionConverter = new FilmSessionConverter();
 
-        userService = new UserService(dataComponentInitializer.getUserDao());
+        userService = new UserService(dataComponentInitializer.getUserDao(), userConverter);
         filmService = new FilmService(dataComponentInitializer.getFilmDao(), filmConverter, filmDtoConverter);
         roomService = new RoomService(dataComponentInitializer.getRoomDao(), roomConverter, roomDtoConverter);
         roomPlaceService = new RoomPlaceService(dataComponentInitializer.getRoomPlaceDao(), roomPlaceConverter, roomPlaceDtoConverter);

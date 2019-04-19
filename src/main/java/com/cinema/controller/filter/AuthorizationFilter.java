@@ -2,7 +2,7 @@ package com.cinema.controller.filter;
 
 import com.cinema.config.UserAuthorization;
 import com.cinema.config.WebComponentInitializer;
-import com.cinema.model.converter.dtoConverter.UserLoginDtoConverter;
+import com.cinema.model.converter.dtoConverter.user.UserLoginDtoConverter;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.enums.Role;
 import com.cinema.service.UserService;

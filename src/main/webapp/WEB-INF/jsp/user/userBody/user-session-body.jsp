@@ -89,10 +89,11 @@
                 <td>
                     <select class="custom-select mr-sm-2" id="session_room_${loop.index}"
                             name="session_room_${loop.index}">
-                        <c:forEach var="room" items="${roomsDto}">
-                            <option selected="selected" value=${room.getId()}>${room.getName()}
+                        <c:if test="${filmSessionDto.getRoomDto() !=null}">
+                            <option selected="selected"
+                                    value=${filmSessionDto.getRoomDto().getId()}>${filmSessionDto.getRoomDto().getName()}
                             </option>
-                        </c:forEach>
+                        </c:if>
                     </select
                 </td>
                 <td>
