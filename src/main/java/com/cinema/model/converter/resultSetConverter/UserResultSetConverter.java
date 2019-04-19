@@ -19,7 +19,7 @@ public class UserResultSetConverter implements Converter<ResultSet, User> {
         user.setEmail(resultSet.getString("email"));
         user.setLogin(resultSet.getString("login"));
         user.setPassword(resultSet.getString("password"));
-        user.setPhone(resultSet.getInt("phone"));
+        user.setPhone(resultSet.getString("phone"));
         user.setRole(Role.valueOf(resultSet.getString("role")));
         return user;
     }

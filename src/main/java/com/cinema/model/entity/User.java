@@ -11,7 +11,7 @@ public class User {
     private String lastName;
     private String middleName;
     private String email;
-    private int phone;
+    private String phone;
     private Role role;
 
 
@@ -43,7 +43,7 @@ public class User {
         return email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -80,7 +80,7 @@ public class User {
         this.email = email;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

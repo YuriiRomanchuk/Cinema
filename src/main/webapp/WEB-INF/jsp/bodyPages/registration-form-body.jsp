@@ -18,12 +18,18 @@
     <title>Title</title>
 </head>
 
+<c:set var='error' value="${Error}"/>
 <div class="col w-100">
-    <c:set var='error' value="${Error}"/>
+
     <c:if test="${error !=null}">
-        <h1>${error}</h1>
+        <div id="my-alert" class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+                ${error}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="w-100 d-none d-md-block"></div>
     </c:if>
-    <div class="w-100 d-none d-md-block"></div>
 
     <div class="w-100 justify-content-center">
         <h1>Registration</h1>
@@ -58,8 +64,7 @@
                name="email"
                placeholder="example@mail.com">
         <label for="phone">Phone:</label>
-        <input required type="tel" pattern="<fmt:message
-                            key="regexPhoneNumber"/>" class="form-control" id="phone" name="phone"
+        <input required type="tel" pattern="<fmt:message key="regexPhoneNumber"/>" class="form-control" id="phone" name="phone"
                placeholder="Enter your phone">
     </div>
     <button type="submit" class="btn btn-primary">Apply</button>
@@ -82,6 +87,12 @@
             });
         }, false);
     })();
+
+    $(function () {
+        window.setTimeout(function () {
+            $('#my-alert').alert('close');
+        }, 20000);
+    });
 </script>
 </body>
 </html>

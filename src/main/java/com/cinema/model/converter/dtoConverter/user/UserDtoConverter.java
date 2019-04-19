@@ -17,7 +17,7 @@ public class UserDtoConverter implements Converter<HttpServletRequest, UserDto> 
         userDto.setFirstName(request.getParameter("firstName"));
         userDto.setMiddleName(request.getParameter("middleName"));
         userDto.setEmail(request.getParameter("email"));
-        userDto.setPhone(Integer.valueOf(request.getParameter("phone")));
+        userDto.setPhone(request.getParameter("phone"));
         return userDto;
     }
 

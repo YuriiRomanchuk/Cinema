@@ -18,11 +18,24 @@
 </head>
 
 <body>
-<div class="col-6 col-sm-4">
+<c:set var='error' value="${Error}"/>
+<div class="col w-100">
+
+    <c:if test="${error !=null}">
+        <div id="my-alert" class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+                ${error}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="w-100 d-none d-md-block"></div>
+    </c:if>
+
     <div class="w-100 justify-content-center">
         <h1>Session room</h1>
     </div>
 </div>
+
 <div class="w-100 d-none d-md-block"></div>
 
 <div class="form-group field-middle_name row w-100">
@@ -121,6 +134,14 @@
             </c:forEach>
     </table>
 </form>
+
+<script>
+    $(function () {
+        window.setTimeout(function () {
+            $('#my-alert').alert('close');
+        }, 20000);
+    });
+</script>
 </body>
 </html>
 

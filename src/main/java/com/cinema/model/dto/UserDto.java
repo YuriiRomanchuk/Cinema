@@ -11,7 +11,7 @@ public class UserDto {
     private String lastName;
     private String middleName;
     private String email;
-    private int phone;
+    private String phone;
     private Role role;
 
     public int getId() {
@@ -42,7 +42,7 @@ public class UserDto {
         return email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -78,7 +78,7 @@ public class UserDto {
         this.email = email;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

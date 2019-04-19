@@ -7,7 +7,7 @@ create table if not exists users
   login       varchar(250) NOT NULL,
   password    varchar(250) NOT NULL,
   email       varchar(250) NOT NULL UNIQUE,
-  phone       int          NOT NULL,
+  phone       varchar(20)  NOT NULL,
   role        varchar(45)  NOT NULL,
   PRIMARY KEY (id)
 );

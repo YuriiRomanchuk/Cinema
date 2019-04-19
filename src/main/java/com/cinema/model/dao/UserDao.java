@@ -65,7 +65,7 @@ public class UserDao implements GenericDao<User> {
             ps.setString(4, user.getLogin());
             ps.setString(5, user.getPassword());
             ps.setString(6, user.getEmail());
-            ps.setInt(7, user.getPhone());
+            ps.setString(7, user.getPhone());
             ps.setString(8, String.valueOf(user.getRole()));
         }, r -> user.setId(r.getInt(1)));
     }

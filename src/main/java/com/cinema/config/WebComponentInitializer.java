@@ -11,6 +11,7 @@ import com.cinema.model.converter.entityConverter.RoomConverter;
 import com.cinema.model.converter.entityConverter.RoomPlaceConverter;
 import com.cinema.service.*;
 import com.cinema.servlet.RequestResolver;
+import com.cinema.validator.UserRegistrationDataValidator;
 
 public class WebComponentInitializer {
 
@@ -41,6 +42,8 @@ public class WebComponentInitializer {
     private final FilmSessionDtoConverter filmSessionDtoConverter;
     private final TicketDtoConverter ticketDtoConverter;
 
+    private final UserRegistrationDataValidator userRegistrationValidator;
+
     private final UserConverter userConverter;
     private final FilmConverter filmConverter;
     private final RoomConverter roomConverter;
@@ -51,6 +54,9 @@ public class WebComponentInitializer {
     private WebComponentInitializer() {
 
         DataComponentInitializer dataComponentInitializer = DataComponentInitializer.getInstance();
+
+
+        userRegistrationValidator = new UserRegistrationDataValidator();
 
         userLoginDtoConverter = new UserLoginDtoConverter();
         userDtoConverter = new UserDtoConverter();
@@ -75,7 +81,7 @@ public class WebComponentInitializer {
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController(filmService, roomService, filmSessionService);
-        userController = new UserController(userService, ticketService);
+        userController = new UserController(userService, ticketService, userRegistrationValidator);
         filmController = new FilmController(filmService);
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);

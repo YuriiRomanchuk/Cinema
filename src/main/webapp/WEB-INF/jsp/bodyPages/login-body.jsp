@@ -18,25 +18,32 @@
 </head>
 
 
+<c:set var='error' value="${Error}"/>
 <div class="col w-100">
-    <c:set var='error' value="${Error}"/>
+
     <c:if test="${error !=null}">
-        <h1>${error}</h1>
+        <div id="my-alert" class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+                ${error}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="w-100 d-none d-md-block"></div>
     </c:if>
-    <div class="w-100 d-none d-md-block"></div>
 
     <div class="w-100 justify-content-center">
         <h1>Authorization</h1>
     </div>
 </div>
 
-<form id = "form" method="post" action="login" class="needs-validation" novalidate>
+<form id="form" method="post" action="login" class="needs-validation" novalidate>
     <div class="form-group">
         <label for="email">Name:</label>
-        <input required ="email" pattern="<fmt:message key="regexEmail"/>" class="form-control" id="email" name="email"
+        <input required="email" pattern="<fmt:message key="regexEmail"/>" class="form-control" id="email" name="email"
                placeholder="Enter your email">
         <label for="password">Password:</label>
-        <input required type="password" pattern="<fmt:message key="regexStringNumber"/>" class="form-control" id="password" name="password"
+        <input required type="password" pattern="<fmt:message key="regexStringNumber"/>" class="form-control"
+               id="password" name="password"
                placeholder="Enter your password">
     </div>
     <button type="submit" class="btn btn-primary">Log in</button>
@@ -59,6 +66,12 @@
             });
         }, false);
     })();
+
+    $(function () {
+        window.setTimeout(function () {
+            $('#my-alert').alert('close');
+        }, 20000);
+    });
 </script>
 
 </body>

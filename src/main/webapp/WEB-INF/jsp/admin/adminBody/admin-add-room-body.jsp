@@ -17,16 +17,18 @@
 </head>
 <body>
 
-<div class="col-6 col-sm-4">
-    <c:set var='error' value="${Error}"/>
+<c:set var='error' value="${Error}"/>
+<div class="col w-100">
+
     <c:if test="${error !=null}">
-        <h1>${error}</h1>
+        <div id="my-alert" class="alert alert-danger alert-dismissible fade show w-100" role="alert">
+                ${error}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="w-100 d-none d-md-block"></div>
     </c:if>
-    <div class="w-100 d-none d-md-block"></div>
-    <%--
-        <div class="w-100 justify-content-center">
-            <h1>Add room</h1>
-        </div>--%>
 </div>
 
 <h1><fmt:message key="local.admin.add.room" bundle="${messages}"/></h1>
@@ -41,7 +43,8 @@
                placeholder="<fmt:message key="local.admin.add.room.name.english.placeholder" bundle="${messages}"/>"
                pattern="<fmt:message key="regexStringNumberEnglish" bundle="${regexpValidator}"/>">
     </div>
-    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.button.add" bundle="${messages}"/></button>
+    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.button.add"
+                                                               bundle="${messages}"/></button>
     <%--  <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 
@@ -61,6 +64,12 @@
             });
         }, false);
     })();
+
+    $(function () {
+        window.setTimeout(function () {
+            $('#my-alert').alert('close');
+        }, 20000);
+    });
 </script>
 
 </body>
