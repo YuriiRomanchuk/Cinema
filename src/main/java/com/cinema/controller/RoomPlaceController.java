@@ -4,6 +4,7 @@ import com.cinema.exception.ServiceException;
 import com.cinema.model.dto.RoomPlaceDto;
 import com.cinema.service.RoomPlaceService;
 import com.cinema.service.RoomService;
+import com.cinema.validator.AddRoomPlaceValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
@@ -14,10 +15,14 @@ public class RoomPlaceController {
 
     private final RoomPlaceService roomPlaceService;
     private final RoomService roomService;
+    private final AddRoomPlaceValidator addRoomPlaceValidator;
 
-    public RoomPlaceController(RoomPlaceService roomPlaceService, RoomService roomService) {
+    public RoomPlaceController(RoomPlaceService roomPlaceService,
+                               RoomService roomService,
+                               AddRoomPlaceValidator addRoomPlaceValidator) {
         this.roomPlaceService = roomPlaceService;
         this.roomService = roomService;
+        this.addRoomPlaceValidator = addRoomPlaceValidator;
     }
 
     public View showRoomPlace() {
@@ -27,8 +32,7 @@ public class RoomPlaceController {
             view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
             return view;
         } catch (ServiceException e) {
-            view = new ViewModel("admin-personal-area");
-            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            view = receiveViewModel("admin-personal-area", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
             return new RedirectViewModel(view);
         }
     }
@@ -37,13 +41,18 @@ public class RoomPlaceController {
         View view;
         try {
             roomPlaceService.createRoomPlaceService(roomPlacesDto);
-            view = new ViewModel("admin-personal-area");
-            view.addParameter("Error", "Room places added!");
+            view = receiveViewModel("admin-personal-area", "Room places added!");
         } catch (ServiceException e) {
-            view = new ViewModel("admin-add-room-place");
+            view = receiveViewModel("admin-add-room-place", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
             view.addParameter("roomPlacesDto", roomPlacesDto);
-            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
+    }
+
+    private View receiveViewModel(String path, String error) {
+        View view;
+        view = new ViewModel(path);
+        view.addParameter("Error", error);
+        return view;
     }
 }

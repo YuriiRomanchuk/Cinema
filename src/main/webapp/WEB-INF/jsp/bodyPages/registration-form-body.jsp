@@ -8,7 +8,7 @@
 <script src="validator.min.js"></script>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="messages"/>
+<%--<fmt:setBundle basename="messages"/>--%>
 <fmt:setBundle basename="regexpValidator"/>
 
 <!DOCTYPE html>
@@ -35,7 +35,6 @@
         <h1>Registration</h1>
     </div>
 </div>
-
 
 <form id="form" method="post" action="registration-form" class="needs-validation" novalidate>
     <div class="form-group">

@@ -86,8 +86,8 @@ public class WebComponentInitializer {
         welcomeController = new WelcomeController(filmService, roomService, filmSessionService);
         userController = new UserController(userService, ticketService, userRegistrationValidator, userLoginValidator);
         filmController = new FilmController(filmService, addFilmValidator);
-        roomController = new RoomController(roomService);
-        roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
+        roomController = new RoomController(roomService, addRoomValidator);
+        roomPlaceController = new RoomPlaceController(roomPlaceService, roomService, addRoomPlaceValidator);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);
         ticketController = new TicketController(ticketService, roomPlaceService, filmSessionService);
         errorController = new ErrorController();

@@ -15,7 +15,7 @@ public class AddFilmValidator extends ModelValidator<FilmDto> {
         StringValidator descriptionEnglishValidator = new StringValidator(resourceBundle.getString("regexStringEnglish"), "Wrong english description");
         StringValidator nameValidator = new StringValidator(resourceBundle.getString("regexString"), "Wrong name ");
         StringValidator nameEnglishValidator = new StringValidator(resourceBundle.getString("regexStringEnglish"), "Wrong english name");
-        StringValidator releaseDateValidator = new StringValidator(resourceBundle.getString("regexNumber"), "Wrong release date");
+        StringValidator releaseDateValidator = new StringValidator(resourceBundle.getString("regexStringNumber"), "Wrong release date");
         NumberValidator runningTimeValidator = new NumberValidator(resourceBundle.getString("regexNumber"), "Wrong running time");
 
         validators.put(descriptionValidator, FilmDto::getDescription);

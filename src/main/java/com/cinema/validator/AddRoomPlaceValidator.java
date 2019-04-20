@@ -11,7 +11,7 @@ public class AddRoomPlaceValidator extends ModelValidator<RoomPlaceDto> {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("regexpValidator");
         NumberValidator placeValidator = new NumberValidator(resourceBundle.getString("regexNumber"), "Wrong place");
         NumberValidator rowValidator = new NumberValidator(resourceBundle.getString("regexNumber"), "Wrong row");
-        validators.put(placeValidator, roomPlaceDto -> String.valueOf(roomPlaceDto.getPlace()));
-        validators.put(rowValidator, roomPlaceDto -> String.valueOf(roomPlaceDto.getRow()));
+        validators.put(placeValidator, RoomPlaceDto::getPlace);
+        validators.put(rowValidator, RoomPlaceDto::getRow);
     }
 }

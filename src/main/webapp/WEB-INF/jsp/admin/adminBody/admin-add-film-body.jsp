@@ -7,10 +7,8 @@
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-
 <fmt:setBundle basename="regexpValidator" var="regexpValidator"/>
 <fmt:setBundle basename="messages" var="messages"/>
-
 
 <!DOCTYPE html>
 

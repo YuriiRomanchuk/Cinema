@@ -51,7 +51,7 @@ public class UserController {
             view.addParameter("userTicketsHistory", showUserHistory(userDto.getId()));
             return view;
         } catch (ServiceException e) {
-            view = receiveModelWithMessage("index", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            view = receiveViewModel("index", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }
@@ -65,7 +65,7 @@ public class UserController {
         try {
             view = validateLoginUser(userDto);
         } catch (ServiceException e) {
-            view = receiveModelWithMessage("login", e.getMessage());
+            view = receiveViewModel("login", e.getMessage());
         }
         return new RedirectViewModel(view);
     }
@@ -75,7 +75,7 @@ public class UserController {
         try {
             view = validateRegistrationUser(userDto);
         } catch (ServiceException e) {
-            view = receiveModelWithMessage("registration-form", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            view = receiveViewModel("registration-form", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }
@@ -84,10 +84,10 @@ public class UserController {
         View view;
         String invalidateFields = userLoginValidator.validate(userDto);
         if (!invalidateFields.isEmpty()) {
-            view = receiveModelWithMessage("login", invalidateFields);
+            view = receiveViewModel("login", invalidateFields);
         } else {
             User user = userService.loginUser(userDto);
-            view = receiveModelWithMessage(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area", "");
+            view = receiveViewModel(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area", "");
         }
         return view;
     }
@@ -96,16 +96,16 @@ public class UserController {
         View view;
         String invalidateFields = userRegistrationDataValidator.validate(userDto);
         if (!invalidateFields.isEmpty()) {
-            view = receiveModelWithMessage("registration-form", invalidateFields);
+            view = receiveViewModel("registration-form", invalidateFields);
             view.addParameter("userDto", userDto);
         } else {
             userService.createUser(userDto);
-            view = receiveModelWithMessage("login", "User created!");
+            view = receiveViewModel("login", "User created!");
         }
         return view;
     }
 
-    private View receiveModelWithMessage(String path, String error) {
+    private View receiveViewModel(String path, String error) {
         View view;
         view = new ViewModel(path);
         view.addParameter("Error", error);

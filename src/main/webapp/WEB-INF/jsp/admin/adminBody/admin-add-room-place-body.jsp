@@ -7,8 +7,8 @@
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="messages"/>
-<fmt:setBundle basename="regexpValidator"/>
+<fmt:setBundle basename="regexpValidator" var="regexpValidator"/>
+<fmt:setBundle basename="messages" var="messages"/>
 
 <!DOCTYPE html>
 
@@ -32,11 +32,11 @@
     </c:if>
 </div>
 
-<h1>Add room places</h1>
+<h1><fmt:message key="local.admin.add.room.places" bundle="${messages}"/></h1>
 <form id="form" method="post" action="admin-add-room-place" class="needs-validation" novalidate>
-    <label for="row">Room:</label>
+    <label for="row"><fmt:message key="local.admin.add.room.places.room" bundle="${messages}"/></label>
     <select required class="custom-select mr-sm-2" id="room" name="room">
-        <option selected>Choose...</option>
+        <option selected><fmt:message key="local.admin.add.room.places.room.placeholder" bundle="${messages}"/></option>
         <c:forEach var="room" items="${roomsDto}">
             <option value=${room.getId()}>${room.getName() }
             </option>
@@ -44,19 +44,19 @@
     </select>
 
     <div class="form-group">
-        <label for="row"><fmt:message key="local.room.places.rows"/></label>
+        <label for="row"><fmt:message key="local.admin.add.room.places.row" bundle="${messages}"/></label>
         <input required type="number" class="form-control" id="row" name="row"
-               placeholder="Enter count of row" pattern="<fmt:message key="regexNumber"/>">
-        <label for="place">Places:</label>
+               placeholder="<fmt:message key="local.admin.add.room.places.row.placeholder" bundle="${messages}"/>" pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
+        <label for="place"><fmt:message key="local.admin.add.room.places.place" bundle="${messages}"/></label>
         <input required type="number" class="form-control" id="place" name="place"
-               placeholder="Enter count of places" pattern="<fmt:message key="regexNumber"/>">
-        <label for="placesInRow">Places in row:</label>
+               placeholder="<fmt:message key="local.admin.add.room.places.place.placeholder" bundle="${messages}"/>" pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
+        <label for="placesInRow"><fmt:message key="local.admin.add.room.places.place.im.row" bundle="${messages}"/></label>
         <input required type="number" class="form-control" id="placesInRow" name="placesInRow"
-               placeholder="Enter count of places in row"
-               value=10 pattern="<fmt:message key="regexNumber"/>">
+               placeholder="<fmt:message key="local.admin.add.room.places.place.im.row.placeholder" bundle="${messages}"/>"
+               value=10 pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-    <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>
+    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.places.button.add" bundle="${messages}"/></button>
+ <%--   <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 
 <script>
