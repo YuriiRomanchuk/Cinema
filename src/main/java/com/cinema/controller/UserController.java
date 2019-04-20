@@ -7,6 +7,7 @@ import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
 import com.cinema.service.TicketService;
 import com.cinema.service.UserService;
+import com.cinema.validator.UserLoginValidator;
 import com.cinema.validator.UserRegistrationDataValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
@@ -19,11 +20,16 @@ public class UserController {
     private final UserService userService;
     private final TicketService ticketService;
     private final UserRegistrationDataValidator userRegistrationDataValidator;
+    private final UserLoginValidator userLoginValidator;
 
-    public UserController(UserService userService, TicketService ticketService, UserRegistrationDataValidator userRegistrationDataValidator) {
+    public UserController(UserService userService,
+                          TicketService ticketService,
+                          UserRegistrationDataValidator userRegistrationDataValidator,
+                          UserLoginValidator userLoginValidator) {
         this.userService = userService;
         this.ticketService = ticketService;
         this.userRegistrationDataValidator = userRegistrationDataValidator;
+        this.userLoginValidator = userLoginValidator;
     }
 
     public View showRegistrationPage() {
@@ -57,8 +63,7 @@ public class UserController {
     public View loginUser(UserDto userDto) {
         View view;
         try {
-            User user = userService.loginUser(userDto);
-            view = new ViewModel(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area");
+            view = validateLoginUser(userDto);
         } catch (ServiceException e) {
             view = receiveModelWithMessage("login", e.getMessage());
         }
@@ -73,6 +78,18 @@ public class UserController {
             view = receiveModelWithMessage("registration-form", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
+    }
+
+    private View validateLoginUser(UserDto userDto) throws ServiceException {
+        View view;
+        String invalidateFields = userLoginValidator.validate(userDto);
+        if (!invalidateFields.isEmpty()) {
+            view = receiveModelWithMessage("login", invalidateFields);
+        } else {
+            User user = userService.loginUser(userDto);
+            view = receiveModelWithMessage(user.getRole().equals(Role.ADMIN) ? "admin-personal-area" : "user-personal-area", "");
+        }
+        return view;
     }
 
     private View validateRegistrationUser(UserDto userDto) throws ServiceException {

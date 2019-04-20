@@ -3,6 +3,8 @@ package com.cinema.config;
 import com.cinema.model.converter.resultSetConverter.*;
 import com.cinema.model.dao.*;
 
+import java.util.Properties;
+
 public class DataComponentInitializer {
 
     private static DataComponentInitializer initializer;

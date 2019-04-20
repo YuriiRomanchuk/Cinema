@@ -1,18 +1,18 @@
 package com.cinema.validator.typeValidator;
 
-public class StringValidator implements Validator<String> {
+public class NumberValidator implements Validator<Integer> {
 
     private String regex;
     private String message;
 
-    public StringValidator(String regex, String message) {
+    public NumberValidator(String regex, String message) {
         this.regex = regex;
         this.message = message;
     }
 
     @Override
-    public boolean validateValue(String value) {
-        return value.matches(regex);
+    public boolean validateValue(Integer value) {
+        return String.valueOf(value).matches(regex);
     }
 
     @Override

@@ -1,17 +1,13 @@
 package com.cinema.config;
 
 import com.cinema.controller.*;
-import com.cinema.model.converter.entityConverter.UserConverter;
 import com.cinema.model.converter.dtoConverter.*;
 import com.cinema.model.converter.dtoConverter.user.UserDtoConverter;
 import com.cinema.model.converter.dtoConverter.user.UserLoginDtoConverter;
-import com.cinema.model.converter.entityConverter.FilmConverter;
-import com.cinema.model.converter.entityConverter.FilmSessionConverter;
-import com.cinema.model.converter.entityConverter.RoomConverter;
-import com.cinema.model.converter.entityConverter.RoomPlaceConverter;
+import com.cinema.model.converter.entityConverter.*;
 import com.cinema.service.*;
 import com.cinema.servlet.RequestResolver;
-import com.cinema.validator.UserRegistrationDataValidator;
+import com.cinema.validator.*;
 
 public class WebComponentInitializer {
 
@@ -43,6 +39,10 @@ public class WebComponentInitializer {
     private final TicketDtoConverter ticketDtoConverter;
 
     private final UserRegistrationDataValidator userRegistrationValidator;
+    private final UserLoginValidator userLoginValidator;
+    private final AddFilmValidator addFilmValidator;
+    private final AddRoomValidator addRoomValidator;
+    private final AddRoomPlaceValidator addRoomPlaceValidator;
 
     private final UserConverter userConverter;
     private final FilmConverter filmConverter;
@@ -55,8 +55,11 @@ public class WebComponentInitializer {
 
         DataComponentInitializer dataComponentInitializer = DataComponentInitializer.getInstance();
 
-
         userRegistrationValidator = new UserRegistrationDataValidator();
+        userLoginValidator = new UserLoginValidator();
+        addFilmValidator = new AddFilmValidator();
+        addRoomValidator = new AddRoomValidator();
+        addRoomPlaceValidator = new AddRoomPlaceValidator();
 
         userLoginDtoConverter = new UserLoginDtoConverter();
         userDtoConverter = new UserDtoConverter();
@@ -81,8 +84,8 @@ public class WebComponentInitializer {
 
         changeLanguageController = new ChangeLanguageController();
         welcomeController = new WelcomeController(filmService, roomService, filmSessionService);
-        userController = new UserController(userService, ticketService, userRegistrationValidator);
-        filmController = new FilmController(filmService);
+        userController = new UserController(userService, ticketService, userRegistrationValidator, userLoginValidator);
+        filmController = new FilmController(filmService, addFilmValidator);
         roomController = new RoomController(roomService);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService);
         filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);

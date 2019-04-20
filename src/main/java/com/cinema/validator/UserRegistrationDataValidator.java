@@ -2,52 +2,27 @@ package com.cinema.validator;
 
 import com.cinema.model.dto.UserDto;
 import com.cinema.validator.typeValidator.StringValidator;
-import com.cinema.validator.verifier.StringVerifier;
-import com.cinema.validator.verifier.Verifier;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
-public class UserRegistrationDataValidator implements ModelValidator<UserDto, String> {
+public class UserRegistrationDataValidator extends ModelValidator<UserDto> {
 
-    private final ResourceBundle resourceBundle = ResourceBundle.getBundle("regexpValidator");
+    public UserRegistrationDataValidator() {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("regexpValidator");
+        StringValidator emailValidator = new StringValidator(resourceBundle.getString("regexEmail"), "Wrong email");
+        StringValidator firstNameValidator = new StringValidator(resourceBundle.getString("regexString"), "Wrong first name");
+        StringValidator lastNameValidator = new StringValidator(resourceBundle.getString("regexString"), "Wrong last name ");
+        StringValidator middleNameValidator = new StringValidator(resourceBundle.getString("regexString"), "Wrong middle name");
+        StringValidator nicknameValidator = new StringValidator(resourceBundle.getString("regexStringNumber"), "Wrong nickname ");
+        StringValidator passwordValidator = new StringValidator(resourceBundle.getString("regexStringNumber"), "Wrong Password");
+        StringValidator phoneValidator = new StringValidator(resourceBundle.getString("regexPhoneNumber"), "Wrong phone");
 
-    @Override
-    public String validate(UserDto userDto) {
-
-        StringBuilder stringBuilder = new StringBuilder();
-        List<Verifier<StringBuilder>> verifiers = receiveValidateRule(userDto);
-
-        for (Verifier<StringBuilder> verifier : verifiers) {
-            verifier.check(stringBuilder);
-        }
-
-        stringBuilder.setLength(stringBuilder.length() - 1);
-        if (stringBuilder.length() > 0) {
-            stringBuilder.append(" is't valid!");
-        }
-
-        return stringBuilder.toString().trim();
+        validators.put(passwordValidator, UserDto::getPassword);
+        validators.put(emailValidator, UserDto::getEmail);
+        validators.put(firstNameValidator, UserDto::getFirstName);
+        validators.put(lastNameValidator, UserDto::getLastName);
+        validators.put(middleNameValidator, UserDto::getMiddleName);
+        validators.put(nicknameValidator, UserDto::getLogin);
+        validators.put(phoneValidator, UserDto::getPhone);
     }
-
-    private List<Verifier<StringBuilder>> receiveValidateRule(UserDto userDto) {
-
-        List<Verifier<StringBuilder>> verifiers = new ArrayList<>();
-        StringValidator stringValidator = new StringValidator(resourceBundle.getString("regexString"));
-        StringValidator phoneValidator = new StringValidator(resourceBundle.getString("regexPhoneNumber"));
-        StringValidator stringNumberValidator = new StringValidator(resourceBundle.getString("regexStringNumber"));
-        StringValidator emailValidator = new StringValidator(resourceBundle.getString("regexEmail"));
-
-        verifiers.add(new StringVerifier(stringValidator, userDto.getFirstName(), "First name"));
-        verifiers.add(new StringVerifier(stringValidator, userDto.getLastName(), "Last name"));
-        verifiers.add(new StringVerifier(stringValidator, userDto.getMiddleName(), "Middle name"));
-        verifiers.add(new StringVerifier(stringNumberValidator, userDto.getLogin(), "Nickname"));
-        verifiers.add(new StringVerifier(stringNumberValidator, userDto.getPassword(), "Password"));
-        verifiers.add(new StringVerifier(emailValidator, userDto.getEmail(), "Email"));
-        verifiers.add(new StringVerifier(phoneValidator, userDto.getPhone(), "Phone"));
-
-        return verifiers;
-    }
-
 }

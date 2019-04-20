@@ -3,6 +3,7 @@ package com.cinema.controller;
 import com.cinema.exception.ServiceException;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.service.FilmService;
+import com.cinema.validator.AddFilmValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
@@ -10,21 +11,20 @@ import com.cinema.view.ViewModel;
 public class FilmController {
 
     private final FilmService filmService;
+    private final AddFilmValidator addFilmValidator;
 
-    public FilmController(FilmService filmService) {
+    public FilmController(FilmService filmService, AddFilmValidator addFilmValidator) {
         this.filmService = filmService;
+        this.addFilmValidator = addFilmValidator;
     }
 
     public View createFilm(FilmDto filmDto) {
         View view;
         try {
-            filmService.createFilm(filmDto);
-            view = new ViewModel("admin-personal-area");
-            view.addParameter("Error", "Film added!");
+            view = validateAddFilm(filmDto);
         } catch (ServiceException e) {
-            view = new ViewModel("admin-add-film");
+            view = receiveModelWithMessage("admin-add-film", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
             view.addParameter("filmDto", filmDto);
-            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }
@@ -40,10 +40,28 @@ public class FilmController {
             view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
             return view;
         } catch (ServiceException e) {
-            view = new ViewModel("admin-personal-area");
-            view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            view = receiveModelWithMessage("admin-personal-area", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
             return new RedirectViewModel(view);
         }
+    }
 
+    private View validateAddFilm(FilmDto filmDto) throws ServiceException {
+        View view;
+        String invalidateFields = addFilmValidator.validate(filmDto);
+        if (!invalidateFields.isEmpty()) {
+            view = receiveModelWithMessage("admin-add-film", invalidateFields);
+            view.addParameter("filmDto", filmDto);
+        } else {
+            filmService.createFilm(filmDto);
+            view = receiveModelWithMessage("admin-personal-area", "Film added!");
+        }
+        return view;
+    }
+
+    private View receiveModelWithMessage(String path, String error) {
+        View view;
+        view = new ViewModel(path);
+        view.addParameter("Error", error);
+        return view;
     }
 }

@@ -35,7 +35,7 @@
 <h1>Add room places</h1>
 <form id="form" method="post" action="admin-add-room-place" class="needs-validation" novalidate>
     <label for="row">Room:</label>
-    <select class="custom-select mr-sm-2" id="room" name="room">
+    <select required class="custom-select mr-sm-2" id="room" name="room">
         <option selected>Choose...</option>
         <c:forEach var="room" items="${roomsDto}">
             <option value=${room.getId()}>${room.getName() }
@@ -45,13 +45,13 @@
 
     <div class="form-group">
         <label for="row"><fmt:message key="local.room.places.rows"/></label>
-        <input type="number" class="form-control" id="row" name="row"
+        <input required type="number" class="form-control" id="row" name="row"
                placeholder="Enter count of row" pattern="<fmt:message key="regexNumber"/>">
         <label for="place">Places:</label>
-        <input type="number" class="form-control" id="place" name="place"
+        <input required type="number" class="form-control" id="place" name="place"
                placeholder="Enter count of places" pattern="<fmt:message key="regexNumber"/>">
         <label for="placesInRow">Places in row:</label>
-        <input type="number" class="form-control" id="placesInRow" name="placesInRow"
+        <input required type="number" class="form-control" id="placesInRow" name="placesInRow"
                placeholder="Enter count of places in row"
                value=10 pattern="<fmt:message key="regexNumber"/>">
     </div>
