@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-<display-name>Archetype Created Web Application</display-name>
+    <display-name>Archetype Created Web Application</display-name>
     <servlet>
         <servlet-name>BaseServlet</servlet-name>
         <servlet-class>com.cinema.servlet.Servlet</servlet-class>
@@ -35,23 +35,31 @@
         <init-param>
             <param-name>forbiddenPagesUser</param-name>
             <param-value>admin-personal-area,login,registration-form,admin-add-film,admin-add-room,
-                admin-add-room-place,admin-personal-area,admin-session,admin-session-room,admin-show-all-films</param-value>
+                admin-add-room-place,admin-personal-area,admin-session,admin-session-room,admin-show-all-films,
+                session-room,index
+            </param-value>
         </init-param>
         <init-param>
             <param-name>forbiddenPagesUnknown</param-name>
             <param-value>admin-personal-area,user-personal-area,admin-add-film,admin-add-room,admin-add-room-place,
                 admin-personal-area, admin-session, admin-session-room, admin-show-all-films, user-session-room,
-                user-session, user-personal-area, user-buy-history</param-value>
+                user-session, user-personal-area, user-buy-history
+            </param-value>
         </init-param>
         <init-param>
             <param-name>forbiddenPagesAdmin</param-name>
-            <param-value>"user-personal-area,login,registration-form,user-session-room,user-session,user-personal-area,user-buy-history"</param-value>
+            <param-value>
+                "user-personal-area,login,registration-form,user-session-room,user-session,user-personal-area,user-buy-history,
+                session-room,index
+            </param-value>
         </init-param>
         <init-param>
             <param-name>allPages</param-name>
-            <param-value>index,login,registration-form,admin-personal-area,user-personal-area,admin-add-film,admin-add-room,admin-add-room-place,
+            <param-value>
+                index,login,registration-form,admin-personal-area,user-personal-area,admin-add-film,admin-add-room,admin-add-room-place,
                 admin-personal-area,admin-session,admin-session-room,admin-show-all-films,user-session-room,
-                user-session,user-personal-area,user-buy-history</param-value>
+                user-session,user-personal-area,user-buy-history, session-room
+            </param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -83,9 +91,9 @@
         </listener-class>
     </listener>
 
-  <!--  <welcome-file-list>
-        <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
-    </welcome-file-list>-->
+    <!--  <welcome-file-list>
+          <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
+      </welcome-file-list>-->
 
     <error-page>
         <exception-type>java.lang.Exception</exception-type>

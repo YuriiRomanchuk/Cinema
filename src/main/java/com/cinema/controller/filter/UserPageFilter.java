@@ -49,7 +49,8 @@ public class UserPageFilter implements Filter {
             }
         }
 
-      /*  redirect = (!redirect) && !pageIsLocked(httpRequest, allPages);*/
+        //TODO: finish checking for non-existent pages
+        /*  redirect = (!redirect) && !pageIsLocked(httpRequest, allPages);*/
 
         if (!redirect) {
             filterChain.doFilter(servletRequest, servletResponse);

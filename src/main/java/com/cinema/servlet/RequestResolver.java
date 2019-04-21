@@ -57,6 +57,7 @@ public class RequestResolver {
         postControllers.put("/index", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUnknown(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
     }
 
+
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         reference(request, response, getControllers);
     }
