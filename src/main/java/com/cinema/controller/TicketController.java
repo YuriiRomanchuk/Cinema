@@ -44,6 +44,10 @@ public class TicketController {
         return showSessionRoom(filmSessionId, "WEB-INF/jsp/user/user-session-room.jsp", "user-personal-area");
     }
 
+    public View showUnknownSessionRoom(int filmSessionId) {
+        return showSessionRoom(filmSessionId, "WEB-INF/jsp/unknown/session-room.jsp", "index");
+    }
+
     private View showSessionRoom(int filmSessionId, String path, String pathException) {
         View view;
         try {

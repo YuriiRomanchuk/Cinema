@@ -36,7 +36,7 @@
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
                 <c:if test="${role eq 'UNKNOWN'}">
-                    <a class="nav-link" href="index" role="button"> <fmt:message
+                    <a class="nav-link" href="${pageContext.request.contextPath}/main/index" role="button"> <fmt:message
                             key="local.home"/> <span class="sr-only">(current)</span></a>
                 </c:if>
                 <c:if test="${role eq 'ADMIN'}">

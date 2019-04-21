@@ -51,6 +51,10 @@ public class FilmSessionController {
         return showFilmSessionPageFilters(filmSessionDto, "WEB-INF/jsp/user/user-session.jsp", "user-personal-area");
     }
 
+    public View showFilmSessionPageFiltersUnknown(FilmSessionDto filmSessionDto) {
+        return showFilmSessionPageFilters(filmSessionDto, "WEB-INF/jsp/index.jsp", "index");
+    }
+
     public View showFilmSessionPageFilters(FilmSessionDto filmSessionDto, String path, String pathException) {
         View view;
         try {

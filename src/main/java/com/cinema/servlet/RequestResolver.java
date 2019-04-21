@@ -38,6 +38,7 @@ public class RequestResolver {
         getControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         getControllers.put("/user-session-room/{id}", r -> webComponentInitializer.getTicketController().showUserSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
         getControllers.put("/error", r -> webComponentInitializer.getErrorController().getErrorPage((Exception) r.getAttribute("error")));
+        getControllers.put("/session-room/{id}", r -> webComponentInitializer.getTicketController().showUnknownSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
         postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserDtoConverter().convert(r)));
@@ -52,6 +53,8 @@ public class RequestResolver {
         postControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         postControllers.put("/show-user-session", r -> webComponentInitializer.getFilmSessionController().showSessionRoomUser(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineBuy(r)));
         postControllers.put("/buy-place", r -> webComponentInitializer.getTicketController().buyTicket(webComponentInitializer.getTicketDtoConverter().convert(r)));
+        postControllers.put("/show-unknown-session-room", r -> webComponentInitializer.getWelcomeController().showSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineShow(r)));
+        postControllers.put("/index", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUnknown(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
     }
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

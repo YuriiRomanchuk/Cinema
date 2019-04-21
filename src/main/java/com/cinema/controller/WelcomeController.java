@@ -43,4 +43,8 @@ public class WelcomeController {
     public View showIndexPageRedirect() {
         return new RedirectViewModel(new ViewModel("index"));
     }
+
+    public View showSessionRoom(int filmSessionId) {
+        return new RedirectViewModel(new ViewModel("session-room/" + filmSessionId));
+    }
 }

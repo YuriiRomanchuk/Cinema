@@ -18,6 +18,7 @@ public class DataSource {
 
         testConnection();
 
+        //TODO: bring to properties
         url = "jdbc:postgresql://localhost/cinema";
         userName = "decorator";
         password = "p3214567";
