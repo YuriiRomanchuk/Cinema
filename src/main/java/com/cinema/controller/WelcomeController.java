@@ -45,6 +45,6 @@ public class WelcomeController {
     }
 
     public View showSessionRoom(int filmSessionId) {
-        return new RedirectViewModel(new ViewModel("session-room/" + filmSessionId));
+        return new RedirectViewModel(new ViewModel("unknown-session-room/" + filmSessionId));
     }
 }

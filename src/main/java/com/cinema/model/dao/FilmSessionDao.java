@@ -1,7 +1,9 @@
 package com.cinema.model.dao;
 
+import com.cinema.model.converter.resultSetConverter.FilmSaleResultSetConverter;
 import com.cinema.model.converter.resultSetConverter.FilmSessionResultSetConverter;
 import com.cinema.model.entity.FilmSession;
+import com.cinema.model.statistics.FilmSale;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -11,10 +13,14 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
 
     private final DataSource dataSource;
     private final FilmSessionResultSetConverter filmSessionResultSetConverter;
+    private final FilmSaleResultSetConverter filmSaleResultSetConverter;
 
-    public FilmSessionDao(DataSource dataSource, FilmSessionResultSetConverter filmSessionResultSetConverter) {
+    public FilmSessionDao(DataSource dataSource,
+                          FilmSessionResultSetConverter filmSessionResultSetConverter,
+                          FilmSaleResultSetConverter filmSaleResultSetConverter) {
         this.dataSource = dataSource;
         this.filmSessionResultSetConverter = filmSessionResultSetConverter;
+        this.filmSaleResultSetConverter = filmSaleResultSetConverter;
     }
 
     @Override
@@ -65,7 +71,7 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
             query = query.replaceAll("1 = 1", "film_id = ?");
         }
 
-        List<FilmSession> filmsSession = dataSource.receiveRecords(query,
+        return dataSource.receiveRecords(query,
                 resultSet -> filmSessionResultSetConverter.convert(resultSet),
                 preparedStatement -> {
                     preparedStatement.setTimestamp(1, new Timestamp(beginOfDay.getTime()));
@@ -74,8 +80,6 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
                         preparedStatement.setInt(3, film_id);
                     }
                 });
-
-        return filmsSession;
     }
 
 
@@ -103,5 +107,19 @@ public class FilmSessionDao implements GenericDao<FilmSession> {
             ps.setTimestamp(3, new Timestamp(sessionDate.getTime()));
         }, r -> {
         });
+    }
+
+    public List<FilmSale> findFilmSalesByDate(Date beginOfDay, Date endOfDay) {
+
+        final String query = "SELECT temp2.*, films.* FROM (SELECT film_id, SUM(1) as number_of_tickets FROM " +
+                "  (SELECT * FROM session where date >= ? and date <= ?) temp LEFT JOIN tickets ON temp.id = tickets.session_id GROUP BY temp.film_id) temp2 " +
+                " LEFT JOIN films ON temp2.film_id = films.id";
+
+        return dataSource.receiveRecords(query,
+                resultSet -> filmSaleResultSetConverter.convert(resultSet),
+                preparedStatement -> {
+                    preparedStatement.setTimestamp(1, new Timestamp(beginOfDay.getTime()));
+                    preparedStatement.setTimestamp(2, new Timestamp(endOfDay.getTime()));
+                });
     }
 }

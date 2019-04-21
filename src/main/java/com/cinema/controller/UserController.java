@@ -5,6 +5,7 @@ import com.cinema.model.dto.TicketDto;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
+import com.cinema.service.FilmSessionService;
 import com.cinema.service.TicketService;
 import com.cinema.service.UserService;
 import com.cinema.validator.UserLoginValidator;
@@ -13,21 +14,25 @@ import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserController {
 
     private final UserService userService;
     private final TicketService ticketService;
+    private final FilmSessionService filmSessionService;
     private final UserRegistrationDataValidator userRegistrationDataValidator;
     private final UserLoginValidator userLoginValidator;
 
     public UserController(UserService userService,
                           TicketService ticketService,
+                          FilmSessionService filmSessionService,
                           UserRegistrationDataValidator userRegistrationDataValidator,
                           UserLoginValidator userLoginValidator) {
         this.userService = userService;
         this.ticketService = ticketService;
+        this.filmSessionService = filmSessionService;
         this.userRegistrationDataValidator = userRegistrationDataValidator;
         this.userLoginValidator = userLoginValidator;
     }
@@ -40,8 +45,15 @@ public class UserController {
         return new ViewModel("WEB-INF/jsp/login.jsp");
     }
 
-    public View showAdminPersonalArea() {
-        return new ViewModel("WEB-INF/jsp/admin/admin-personal-area.jsp");
+    public View showAdminPersonalArea(Date currentDate) {
+        View view;
+        try {
+            view = new ViewModel("WEB-INF/jsp/admin/admin-personal-area.jsp");
+            view.addParameter("filmSaleDto", filmSessionService.receiveFilmSalesByDate(currentDate));
+        } catch (ServiceException e) {
+            view = receiveViewModel("index", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+        }
+        return view;
     }
 
     public View showUserPersonalArea(UserDto userDto) {

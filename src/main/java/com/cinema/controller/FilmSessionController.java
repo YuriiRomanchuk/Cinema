@@ -101,4 +101,9 @@ public class FilmSessionController {
         view.addParameter("isLastDay", sessionDate.before(endOfTodayDate));
     }
 
+    public View showAdminFilmsSale(Date filterDate) {
+        View view = new ViewModel("admin-personal-area");
+        view.addParameter("filterDate", filterDate);
+        return new RedirectViewModel(view);
+    }
 }

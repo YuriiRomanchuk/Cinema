@@ -1,12 +1,14 @@
 package com.cinema.service;
 
 import com.cinema.exception.ServiceException;
+import com.cinema.model.converter.dtoConverter.FilmSaleDtoConverter;
 import com.cinema.model.converter.dtoConverter.FilmSessionDtoConverter;
-import com.cinema.model.converter.entityConverter.FilmSessionConverter;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dao.FilmSessionDao;
+import com.cinema.model.dto.FilmSaleDto;
 import com.cinema.model.dto.FilmSessionDto;
 import com.cinema.model.entity.FilmSession;
+import com.cinema.model.statistics.FilmSale;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,12 +18,14 @@ public class FilmSessionService {
 
     private final FilmSessionDao filmSessionDao;
     private final FilmSessionDtoConverter filmSessionDtoConverter;
-    private final FilmSessionConverter filmSessionConverter;
+    private final FilmSaleDtoConverter filmSaleDtoConverter;
 
-    public FilmSessionService(FilmSessionDao filmSessionDao, FilmSessionDtoConverter filmSessionDtoConverter, FilmSessionConverter filmSessionConverter) {
+    public FilmSessionService(FilmSessionDao filmSessionDao,
+                              FilmSessionDtoConverter filmSessionDtoConverter,
+                              FilmSaleDtoConverter filmSaleDtoConverter) {
         this.filmSessionDao = filmSessionDao;
         this.filmSessionDtoConverter = filmSessionDtoConverter;
-        this.filmSessionConverter = filmSessionConverter;
+        this.filmSaleDtoConverter = filmSaleDtoConverter;
     }
 
     public List<FilmSessionDto> showFilmSessions(FilmSessionDto filmSessionDto) throws ServiceException {
@@ -93,9 +97,22 @@ public class FilmSessionService {
         }
     }
 
-    public FilmSessionDto receiveFilmSessionById(int filmSessionId)  throws ServiceException {
+    public FilmSessionDto receiveFilmSessionById(int filmSessionId) throws ServiceException {
         try {
             return filmSessionDtoConverter.convertFromFilmEntity(filmSessionDao.findById(filmSessionId));
+        } catch (Exception e) {
+            throw new ServiceException("Film session receive failed", e);
+        }
+    }
+
+    public List<FilmSaleDto> receiveFilmSalesByDate(Date currentDate) throws ServiceException {
+        try {
+            List<FilmSaleDto> filmSalesDto = new ArrayList<>();
+            Date beginOfDay = TimeConverter.receiveBeginOfDay(currentDate);
+            Date endOfDay = TimeConverter.receiveEndOfDay(currentDate);
+            List<FilmSale> filmSales = filmSessionDao.findFilmSalesByDate(beginOfDay, endOfDay);
+            filmSales.forEach(filmSale -> filmSalesDto.add(filmSaleDtoConverter.convert(filmSale)));
+            return filmSalesDto;
         } catch (Exception e) {
             throw new ServiceException("Film session receive failed", e);
         }

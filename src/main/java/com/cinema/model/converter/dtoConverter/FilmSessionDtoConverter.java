@@ -84,4 +84,10 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return Integer.valueOf(splitURI[splitURI.length - 1]);
     }
 
+    public Date receiveFilmSessionDate(HttpServletRequest request) {
+        String date_filter = request.getParameter("date_filter");
+        Date currentDate = (date_filter == null) ? new Date() :
+                TimeConverter.convertStringToDate(date_filter, "yyyy-MM-dd");
+        return currentDate;
+    }
 }

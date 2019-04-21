@@ -3,8 +3,6 @@ package com.cinema.config;
 import com.cinema.model.converter.resultSetConverter.*;
 import com.cinema.model.dao.*;
 
-import java.util.Properties;
-
 public class DataComponentInitializer {
 
     private static DataComponentInitializer initializer;
@@ -23,6 +21,7 @@ public class DataComponentInitializer {
     private final RoomResultSetConverter roomResultSetConverter;
     private final TicketResultSetConverter ticketResultSetConverter;
     private final UserResultSetConverter userResultSetConverter;
+    private final FilmSaleResultSetConverter filmSaleResultSetConverter;
 
     private DataComponentInitializer() {
 
@@ -34,15 +33,15 @@ public class DataComponentInitializer {
         filmSessionResultSetConverter = new FilmSessionResultSetConverter(filmResultSetConverter, roomResultSetConverter);
         roomPlaceResultSetConverter = new RoomPlaceResultSetConverter(roomResultSetConverter);
         ticketResultSetConverter = new TicketResultSetConverter(userResultSetConverter, roomPlaceResultSetConverter, filmSessionResultSetConverter);
+        filmSaleResultSetConverter = new FilmSaleResultSetConverter(filmResultSetConverter);
 
         userDao = new UserDao(dataSource, userResultSetConverter);
         filmDao = new FilmDao(dataSource, filmResultSetConverter);
         roomDao = new RoomDao(dataSource, roomResultSetConverter);
         roomPlaceDao = new RoomPlaceDao(dataSource, roomPlaceResultSetConverter);
-        filmSessionDao = new FilmSessionDao(dataSource, filmSessionResultSetConverter);
+        filmSessionDao = new FilmSessionDao(dataSource, filmSessionResultSetConverter, filmSaleResultSetConverter);
         ticketDao = new TicketDao(dataSource, ticketResultSetConverter);
     }
-
 
     public static DataComponentInitializer getInstance() {
         if (initializer == null) {

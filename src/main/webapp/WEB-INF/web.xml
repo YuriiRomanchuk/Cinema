@@ -36,7 +36,7 @@
             <param-name>forbiddenPagesUser</param-name>
             <param-value>admin-personal-area,login,registration-form,admin-add-film,admin-add-room,
                 admin-add-room-place,admin-personal-area,admin-session,admin-session-room,admin-show-all-films,
-                session-room,index
+                unknown-session-room,index
             </param-value>
         </init-param>
         <init-param>
@@ -49,8 +49,8 @@
         <init-param>
             <param-name>forbiddenPagesAdmin</param-name>
             <param-value>
-                "user-personal-area,login,registration-form,user-session-room,user-session,user-personal-area,user-buy-history,
-                session-room,index
+                user-personal-area,login,registration-form,user-session-room,user-session,user-personal-area,user-buy-history,
+                unknown-session-room,index
             </param-value>
         </init-param>
         <init-param>
@@ -58,7 +58,7 @@
             <param-value>
                 index,login,registration-form,admin-personal-area,user-personal-area,admin-add-film,admin-add-room,admin-add-room-place,
                 admin-personal-area,admin-session,admin-session-room,admin-show-all-films,user-session-room,
-                user-session,user-personal-area,user-buy-history, session-room
+                user-session,user-personal-area,user-buy-history,unknown-session-room
             </param-value>
         </init-param>
     </filter>

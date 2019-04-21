@@ -26,7 +26,7 @@ public class RequestResolver {
         getControllers.put("/index", r -> webComponentInitializer.getWelcomeController().showIndexPage(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         getControllers.put("/registration-form", r -> webComponentInitializer.getUserController().showRegistrationPage());
         getControllers.put("/login", r -> webComponentInitializer.getUserController().showUserLoginPage());
-        getControllers.put("/admin-personal-area", r -> webComponentInitializer.getUserController().showAdminPersonalArea());
+        getControllers.put("/admin-personal-area", r -> webComponentInitializer.getUserController().showAdminPersonalArea(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDate(r)));
         getControllers.put("/user-personal-area", r -> webComponentInitializer.getUserController().showUserPersonalArea(webComponentInitializer.getUserDtoConverter().convertFromRequestForUserId(r)));
         getControllers.put("/logout", r -> webComponentInitializer.getUserController().logout());
         getControllers.put("/admin-add-film", r -> webComponentInitializer.getFilmController().showAddFilmPage());
@@ -56,7 +56,6 @@ public class RequestResolver {
         postControllers.put("/show-unknown-session-room", r -> webComponentInitializer.getWelcomeController().showSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().convertFilmSessionWithLineShow(r)));
         postControllers.put("/index", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUnknown(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
     }
-
 
     public void resolveGetRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         reference(request, response, getControllers);
@@ -101,12 +100,10 @@ public class RequestResolver {
         return destinationView;
     }
 
-
     private String receiveRequestURI(HttpServletRequest request) {
         String requestURI = request.getRequestURI().replace(request.getContextPath() + "/main", "");
         String[] splitURI = requestURI.split("/");
         String lastElement = splitURI[splitURI.length - 1];
         return lastElement.matches("\\d+") ? requestURI.replace(lastElement, "{id}") : "/" + lastElement;
     }
-
 }
