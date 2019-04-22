@@ -2,8 +2,12 @@ package com.cinema.config;
 
 import com.cinema.model.converter.resultSetConverter.*;
 import com.cinema.model.dao.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DataComponentInitializer {
+
+    private static final Logger LOGGER = LogManager.getLogger(WebComponentInitializer.class);
 
     private static DataComponentInitializer initializer;
 
@@ -24,6 +28,8 @@ public class DataComponentInitializer {
     private final FilmSaleResultSetConverter filmSaleResultSetConverter;
 
     private DataComponentInitializer() {
+
+        LOGGER.debug("DataComponentInitializer created");
 
         dataSource = new DataSource();
 

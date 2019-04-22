@@ -8,8 +8,12 @@ import com.cinema.model.converter.entityConverter.*;
 import com.cinema.service.*;
 import com.cinema.servlet.RequestResolver;
 import com.cinema.validator.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class WebComponentInitializer {
+
+    private static final Logger LOGGER = LogManager.getLogger(WebComponentInitializer.class);
 
     private static WebComponentInitializer initializer;
     private final RequestResolver requestResolver;
@@ -53,6 +57,8 @@ public class WebComponentInitializer {
     private final TicketController ticketController;
 
     private WebComponentInitializer() {
+
+        LOGGER.debug("WebComponentInitializer created");
 
         DataComponentInitializer dataComponentInitializer = DataComponentInitializer.getInstance();
 

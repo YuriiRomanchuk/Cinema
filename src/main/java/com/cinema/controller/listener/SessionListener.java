@@ -1,7 +1,10 @@
 package com.cinema.controller.listener;
 
 import com.cinema.config.UserAuthorization;
+import com.cinema.config.WebComponentInitializer;
 import com.cinema.model.entity.enums.Role;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSessionEvent;
@@ -10,6 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SessionListener implements HttpSessionListener {
+
+    private static final Logger LOGGER = LogManager.getLogger(WebComponentInitializer.class);
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
@@ -22,5 +27,7 @@ public class SessionListener implements HttpSessionListener {
         Map<String, UserAuthorization> usersAuthorization = (HashMap<String, UserAuthorization>) servletContext.getAttribute("usersAuthorization");
         usersAuthorization.remove(httpSessionEvent.getSession().getId());
         httpSessionEvent.getSession().setAttribute("role", Role.UNKNOWN);
+
+        LOGGER.debug("user logout" + httpSessionEvent.getSession().getId());
     }
 }

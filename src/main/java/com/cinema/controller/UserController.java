@@ -13,12 +13,15 @@ import com.cinema.validator.UserRegistrationDataValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.List;
 
 public class UserController {
 
+    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
     private final UserService userService;
     private final TicketService ticketService;
     private final FilmSessionService filmSessionService;
@@ -50,6 +53,7 @@ public class UserController {
         try {
             view = new ViewModel("WEB-INF/jsp/admin/admin-personal-area.jsp");
             view.addParameter("filmSaleDto", filmSessionService.receiveFilmSalesByDate(currentDate));
+            LOGGER.debug("showAdminPersonalArea");
         } catch (ServiceException e) {
             view = receiveViewModel("index", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
@@ -69,12 +73,14 @@ public class UserController {
     }
 
     public View logout() {
+        LOGGER.debug("logout");
         return new RedirectViewModel(new ViewModel("index"));
     }
 
     public View loginUser(UserDto userDto) {
         View view;
         try {
+            LOGGER.debug("loginUser");
             view = validateLoginUser(userDto);
         } catch (ServiceException e) {
             view = receiveViewModel("login", e.getMessage());
