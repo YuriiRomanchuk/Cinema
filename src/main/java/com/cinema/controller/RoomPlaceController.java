@@ -8,11 +8,14 @@ import com.cinema.validator.AddRoomPlaceValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class RoomPlaceController {
 
+    private static final Logger LOGGER = LogManager.getLogger(RoomPlaceController.class);
     private final RoomPlaceService roomPlaceService;
     private final RoomService roomService;
     private final AddRoomPlaceValidator addRoomPlaceValidator;
@@ -30,6 +33,7 @@ public class RoomPlaceController {
         try {
             view = new ViewModel("WEB-INF/jsp/admin/admin-add-room-place.jsp");
             view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
+            LOGGER.debug("Room place added!");
             return view;
         } catch (ServiceException e) {
             view = receiveViewModel("admin-personal-area", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
@@ -50,6 +54,7 @@ public class RoomPlaceController {
     }
 
     private View receiveViewModel(String path, String error) {
+        LOGGER.debug(error);
         View view;
         view = new ViewModel(path);
         view.addParameter("Error", error);

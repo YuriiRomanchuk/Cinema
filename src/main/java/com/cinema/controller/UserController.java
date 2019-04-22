@@ -53,9 +53,10 @@ public class UserController {
         try {
             view = new ViewModel("WEB-INF/jsp/admin/admin-personal-area.jsp");
             view.addParameter("filmSaleDto", filmSessionService.receiveFilmSalesByDate(currentDate));
-            LOGGER.debug("showAdminPersonalArea");
+            LOGGER.debug("show admin personal area");
         } catch (ServiceException e) {
             view = receiveViewModel("index", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            LOGGER.debug("Admin personal area is not shown!" + e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return view;
     }
@@ -73,15 +74,15 @@ public class UserController {
     }
 
     public View logout() {
-        LOGGER.debug("logout");
+        LOGGER.debug("User logout");
         return new RedirectViewModel(new ViewModel("index"));
     }
 
     public View loginUser(UserDto userDto) {
         View view;
         try {
-            LOGGER.debug("loginUser");
             view = validateLoginUser(userDto);
+            LOGGER.debug("User login");
         } catch (ServiceException e) {
             view = receiveViewModel("login", e.getMessage());
         }
@@ -92,8 +93,10 @@ public class UserController {
         View view;
         try {
             view = validateRegistrationUser(userDto);
+            LOGGER.debug("User create");
         } catch (ServiceException e) {
             view = receiveViewModel("registration-form", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            LOGGER.debug("User is not created" + e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }
@@ -127,6 +130,7 @@ public class UserController {
         View view;
         view = new ViewModel(path);
         view.addParameter("Error", error);
+        LOGGER.debug("error");
         return view;
     }
 

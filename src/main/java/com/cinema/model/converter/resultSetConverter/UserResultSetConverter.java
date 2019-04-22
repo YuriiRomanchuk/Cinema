@@ -3,12 +3,15 @@ package com.cinema.model.converter.resultSetConverter;
 import com.cinema.model.converter.Converter;
 import com.cinema.model.entity.User;
 import com.cinema.model.entity.enums.Role;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserResultSetConverter implements Converter<ResultSet, User> {
 
+    private static final Logger LOGGER = LogManager.getLogger(UserResultSetConverter.class);
     @Override
     public User convert(ResultSet resultSet) throws SQLException {
         User user = new User();
@@ -21,6 +24,7 @@ public class UserResultSetConverter implements Converter<ResultSet, User> {
         user.setPassword(resultSet.getString("password"));
         user.setPhone(resultSet.getString("phone"));
         user.setRole(Role.valueOf(resultSet.getString("role")));
+        LOGGER.debug("User result set is converted!");
         return user;
     }
 }

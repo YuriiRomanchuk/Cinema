@@ -9,11 +9,14 @@ import com.cinema.service.RoomService;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 
 public class WelcomeController {
 
+    private static final Logger LOGGER = LogManager.getLogger(WelcomeController.class);
     private final FilmService filmService;
     private final RoomService roomService;
     private final FilmSessionService filmSessionService;
@@ -32,10 +35,12 @@ public class WelcomeController {
             view.addParameter("filmsDto", filmService.receiveAllFilmsDto());
             view.addParameter("roomsDto", roomService.receiveAllRoomsDto());
             view.addParameter("filterDate", TimeConverter.changeDataToStringFormat(new Date(), "yyyy-MM-dd "));
+            LOGGER.debug("Index page show");
             return view;
         } catch (ServiceException e) {
             view = new ViewModel("error");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            LOGGER.debug("Page is not shown!" + e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }

@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 public class DataComponentInitializer {
 
-    private static final Logger LOGGER = LogManager.getLogger(WebComponentInitializer.class);
+    private static final Logger LOGGER = LogManager.getLogger(DataComponentInitializer.class);
 
     private static DataComponentInitializer initializer;
 

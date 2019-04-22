@@ -4,6 +4,8 @@ import com.cinema.model.converter.Converter;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.FilmSessionDto;
 import com.cinema.model.entity.FilmSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -11,6 +13,7 @@ import java.util.Date;
 
 public class FilmSessionDtoConverter implements Converter<HttpServletRequest, FilmSessionDto> {
 
+    private static final Logger LOGGER = LogManager.getLogger(FilmSaleDtoConverter.class);
     private final FilmDtoConverter filmDtoConverter;
     private final RoomDtoConverter roomDtoConverter;
 
@@ -29,7 +32,7 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("film_filter")));
-
+        LOGGER.debug("Film session dto is converted from request!");
         return filmSessionDto;
     }
 
@@ -64,8 +67,8 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         filmSessionDto.setDate(session_date);
         filmSessionDto.setId(Integer.valueOf(session_id));
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(session_film_id));
-        filmSessionDto.setRoomDto(roomDtoConverter.convertForRoomId(session_room_id));
-
+        filmSessionDto.setRoomDto(roomDtoConverter.convertByRoomId(session_room_id));
+        LOGGER.debug("Film session dto by id");
         return filmSessionDto;
     }
 
@@ -75,12 +78,14 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmEntity(filmSession.getFilm()));
         filmSessionDto.setId(filmSession.getId());
         filmSessionDto.setDate(TimeConverter.changeDataToStringFormat(filmSession.getDate(), "yyyy-MM-dd kk:mm:ss"));
+        LOGGER.debug("Film session dto by entity");
         return filmSessionDto;
     }
 
     public int receiveFilmSessionId(HttpServletRequest request) {
         String requestURI = request.getRequestURI().replace(request.getContextPath() + "/main", "");
         String[] splitURI = requestURI.split("/");
+        LOGGER.debug("Film session id from command line received from request");
         return Integer.valueOf(splitURI[splitURI.length - 1]);
     }
 
@@ -88,6 +93,7 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         String date_filter = request.getParameter("date_filter");
         Date currentDate = (date_filter == null) ? new Date() :
                 TimeConverter.convertStringToDate(date_filter, "yyyy-MM-dd");
+        LOGGER.debug("Film session date received from request");
         return currentDate;
     }
 }

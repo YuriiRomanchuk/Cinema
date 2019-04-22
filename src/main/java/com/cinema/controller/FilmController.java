@@ -7,9 +7,12 @@ import com.cinema.validator.AddFilmValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FilmController {
 
+    private static final Logger LOGGER = LogManager.getLogger(FilmController.class);
     private final FilmService filmService;
     private final AddFilmValidator addFilmValidator;
 
@@ -41,6 +44,7 @@ public class FilmController {
             return view;
         } catch (ServiceException e) {
             view = receiveModelWithMessage("admin-personal-area", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            LOGGER.debug(e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
             return new RedirectViewModel(view);
         }
     }
@@ -62,6 +66,7 @@ public class FilmController {
         View view;
         view = new ViewModel(path);
         view.addParameter("Error", error);
+        LOGGER.debug(error);
         return view;
     }
 }

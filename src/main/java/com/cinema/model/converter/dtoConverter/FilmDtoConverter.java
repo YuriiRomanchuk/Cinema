@@ -4,10 +4,14 @@ import com.cinema.model.converter.Converter;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> {
+
+    private static final Logger LOGGER = LogManager.getLogger(FilmDtoConverter.class);
 
     @Override
     public FilmDto convert(HttpServletRequest request) {
@@ -18,6 +22,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         filmDto.setDescription(request.getParameter("description"));
         filmDto.setDescriptionEnglish(request.getParameter("description_english"));
         filmDto.setRunningTime(Integer.valueOf(request.getParameter("running_time")));
+        LOGGER.debug("Film dto is converted from request!");
         return filmDto;
     }
 
@@ -30,6 +35,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         filmDto.setDescription(film.getDescription());
         filmDto.setDescriptionEnglish(film.getDescriptionEnglish());
         filmDto.setRunningTime(film.getRunningTime());
+        LOGGER.debug("Film dto is converted from entity!");
         return filmDto;
     }
 
@@ -40,6 +46,7 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         } else {
             filmDto.setId(-1);
         }
+        LOGGER.debug("Film dto is converted from id");
         return filmDto;
     }
 

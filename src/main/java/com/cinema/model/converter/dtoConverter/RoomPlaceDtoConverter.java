@@ -4,6 +4,8 @@ import com.cinema.model.converter.Converter;
 import com.cinema.model.dto.RoomDto;
 import com.cinema.model.dto.RoomPlaceDto;
 import com.cinema.model.entity.RoomPlace;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List<RoomPlaceDto>> {
 
+    private static final Logger LOGGER = LogManager.getLogger(RoomPlaceDtoConverter.class);
     private final RoomDtoConverter roomDtoConverter;
 
     public RoomPlaceDtoConverter(RoomDtoConverter roomDtoConverter) {
@@ -26,7 +29,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         int maxCountPlacesInRow = countOfPlaces <= placesInRow ? countOfPlaces : placesInRow;
         int countOfRow = countOfPlaces <= placesInRow ? 1 : Integer.valueOf(request.getParameter("row"));
 
-        RoomDto roomDto = roomDtoConverter.convertForRoomId(request.getParameter("room"));
+        RoomDto roomDto = roomDtoConverter.convertByRoomId(request.getParameter("room"));
 
         int countAllPlaces = 1;
         for (int r = 1; r <= countOfRow && countAllPlaces < countOfPlaces; r++) {
@@ -42,6 +45,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
             }
         }
 
+        LOGGER.debug("Room place dto list is converted from request!");
         return roomPlacesDto;
     }
 
@@ -51,6 +55,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         placeDto.setRow(roomPlace.getRow());
         placeDto.setPlace(roomPlace.getPlace());
         placeDto.setRoomDto(roomDtoConverter.convertFromRoomEntity(roomPlace.getRoom()));
+        LOGGER.debug("Room place dto is converted from entity!");
         return placeDto;
     }
 
@@ -59,7 +64,8 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         placeDto.setId(Integer.valueOf(placeId));
         placeDto.setRow(Integer.valueOf(placeRow));
         placeDto.setPlace(Integer.valueOf(placePlace));
-        placeDto.setRoomDto(roomDtoConverter.convertForRoomId(sessionRoomId));
+        placeDto.setRoomDto(roomDtoConverter.convertByRoomId(sessionRoomId));
+        LOGGER.debug("Room place dto is converted from ticket fields!");
         return placeDto;
     }
 }

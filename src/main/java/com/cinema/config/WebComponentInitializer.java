@@ -96,7 +96,7 @@ public class WebComponentInitializer {
         filmController = new FilmController(filmService, addFilmValidator);
         roomController = new RoomController(roomService, addRoomValidator);
         roomPlaceController = new RoomPlaceController(roomPlaceService, roomService, addRoomPlaceValidator);
-        filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService, ticketService, roomPlaceService);
+        filmSessionController = new FilmSessionController(filmSessionService, filmService, roomService);
         ticketController = new TicketController(ticketService, roomPlaceService, filmSessionService);
         errorController = new ErrorController();
 

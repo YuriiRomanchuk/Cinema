@@ -7,9 +7,12 @@ import com.cinema.validator.AddRoomValidator;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RoomController {
 
+    private static final Logger LOGGER = LogManager.getLogger(RoomController.class);
     private final RoomService roomService;
     private final AddRoomValidator addRoomValidator;
 
@@ -46,6 +49,7 @@ public class RoomController {
     private View receiveViewModel(String path, String error) {
         View view;
         view = new ViewModel(path);
+        LOGGER.debug(error);
         view.addParameter("Error", error);
         return view;
     }

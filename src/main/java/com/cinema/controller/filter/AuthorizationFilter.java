@@ -6,6 +6,8 @@ import com.cinema.model.converter.dtoConverter.user.UserLoginDtoConverter;
 import com.cinema.model.dto.UserDto;
 import com.cinema.model.entity.enums.Role;
 import com.cinema.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import java.util.Map;
 
 public class AuthorizationFilter implements Filter {
 
+    private static final Logger LOGGER = LogManager.getLogger(AuthorizationFilter.class);
     private final String loginPageName = "login";
     private final String logoutPageName = "logout";
     private UserLoginDtoConverter userLoginDtoConverter;
@@ -72,6 +75,7 @@ public class AuthorizationFilter implements Filter {
         if (httpRequest.getRequestURI().contains(logoutPageName)) {
             removeUserAuthorization(usersAuthorization, sessionId);
             httpRequest.getSession().setAttribute("role", Role.UNKNOWN);
+            LOGGER.debug("user logout " + sessionId);
         }
     }
 
@@ -105,6 +109,7 @@ public class AuthorizationFilter implements Filter {
             usersAuthorization.put(httpRequest.getSession().getId(), userAuthorization);
             httpRequest.getSession().setAttribute("role", role);
             httpRequest.getSession().setAttribute("user_id", userId);
+            LOGGER.debug("user login: " + userId + " session: " + userId);
         }
     }
 

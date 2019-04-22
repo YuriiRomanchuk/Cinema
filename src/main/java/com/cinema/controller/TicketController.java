@@ -9,9 +9,12 @@ import com.cinema.service.TicketService;
 import com.cinema.view.RedirectViewModel;
 import com.cinema.view.View;
 import com.cinema.view.ViewModel;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TicketController {
 
+    private static final Logger LOGGER = LogManager.getLogger(TicketController.class);
     private final TicketService ticketService;
     private final RoomPlaceService roomPlaceService;
     private final FilmSessionService filmSessionService;
@@ -27,11 +30,13 @@ public class TicketController {
     public View buyTicket(TicketDto ticketDto) {
         View view;
         try {
-            view = new ViewModel("user-session-room/"+ticketDto.getFilmSessionDto().getId());
+            view = new ViewModel("user-session-room/" + ticketDto.getFilmSessionDto().getId());
             ticketService.buyTicket(ticketDto);
+            LOGGER.debug("Ticket bought!");
         } catch (ServiceException e) {
             view = new ViewModel("user-personal-area");
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            LOGGER.debug("Ticket is not bought! " + e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }
@@ -61,6 +66,7 @@ public class TicketController {
         } catch (ServiceException e) {
             view = new ViewModel(pathException);
             view.addParameter("Error", e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
+            LOGGER.debug("Session room is not shown! " + e.getCause() == null ? e.getMessage() : e.getCause().getMessage());
         }
         return new RedirectViewModel(view);
     }

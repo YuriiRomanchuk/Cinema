@@ -5,11 +5,14 @@ import com.cinema.model.converter.dtoConverter.user.UserDtoConverter;
 import com.cinema.model.converter.utility.TimeConverter;
 import com.cinema.model.dto.TicketDto;
 import com.cinema.model.entity.Ticket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class TicketDtoConverter implements Converter<HttpServletRequest, TicketDto> {
 
+    private static final Logger LOGGER = LogManager.getLogger(TicketDtoConverter.class);
     private UserDtoConverter userDtoConverter;
     private RoomPlaceDtoConverter roomPlaceDtoConverter;
     private FilmSessionDtoConverter filmSessionDtoConverter;
@@ -42,6 +45,7 @@ public class TicketDtoConverter implements Converter<HttpServletRequest, TicketD
         ticketDto.setUserDto(userDtoConverter.convertForUserId((Integer) request.getSession().getAttribute("user_id")));
 
         request.getSession().setAttribute("filmSessionDto", ticketDto.getFilmSessionDto());
+        LOGGER.debug("Ticket dto is converted from request!");
         return ticketDto;
     }
 
@@ -51,6 +55,7 @@ public class TicketDtoConverter implements Converter<HttpServletRequest, TicketD
         ticketDto.setUserDto(userDtoConverter.convertFromUserEntity(ticket.getUser()));
         ticketDto.setRoomPlaceDto(roomPlaceDtoConverter.convertFromRoomPlaceEntity(ticket.getRoomPlace()));
         ticketDto.setFilmSessionDto(filmSessionDtoConverter.convertFromFilmEntity(ticket.getFilmSession()));
+        LOGGER.debug("Ticket dto is converted from entity!");
         return ticketDto;
     }
 
