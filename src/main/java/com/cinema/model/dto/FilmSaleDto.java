@@ -6,6 +6,7 @@ public class FilmSaleDto {
     private String filmName;
     private String filmNameEnglish;
     private int numberOfTickets;
+    private String ReleaseDate;
 
     public int getFilmId() {
         return filmId;
@@ -37,5 +38,13 @@ public class FilmSaleDto {
 
     public void setNumberOfTickets(int numberOfTickets) {
         this.numberOfTickets = numberOfTickets;
+    }
+
+    public String getReleaseDate() {
+        return ReleaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.ReleaseDate = releaseDate;
     }
 }

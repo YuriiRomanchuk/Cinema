@@ -18,7 +18,7 @@ public class FilmSaleResultSetConverter implements Converter<ResultSet, FilmSale
     public FilmSale convert(ResultSet resultSet) throws SQLException {
         FilmSale filmSale = new FilmSale();
         filmSale.setFilm(filmResultSetConverter.convert(resultSet));
-        filmSale.setNumberOfTickets(resultSet.getInt("NumberOfTickets"));
+        filmSale.setNumberOfTickets(resultSet.getInt("number_of_tickets"));
         return filmSale;
     }
 }

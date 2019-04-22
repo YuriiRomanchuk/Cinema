@@ -52,7 +52,7 @@
         <tr>
             <td>${film.getId()}</td>
             <td>${film.getName()}</td>
-            <td>${film.getReleaseDate()}</td>
+            <td>${film.releaseDate()}</td>
             <td>${film.getRunningTime()}</td>
             <td>${film.getDescription()}</td>
         </tr>

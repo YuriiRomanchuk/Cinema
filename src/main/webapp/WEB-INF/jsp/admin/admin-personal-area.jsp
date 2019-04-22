@@ -22,8 +22,8 @@
 
             <!-- center content -->
             <div class="col fluid bg-faded py-3">
-                <div class="row my-3 offset-md-3">
-                    <div class="col-sm-4">
+                <div class="row w-100">
+                    <div class="col w-100">
                         <div class="row w-100 justify-content-center">
                             <div class="col-6 col-sm-4">
                                 <c:if test="${error !=null}">
@@ -42,33 +42,35 @@
                                 </div>
                             </div>
                         </div>
-
-                   <%--     <form method="post" action="admin-personal-area">
-                            <div class="form-group field-middle_name row">
-                                <div class="col-sm-6 col-md-6 col-xs-6 no-padding">
-                                    <label for="date_filter">Date:</label>
-                                    <input required type="date" class="form-control" id="date_filter" name="date_filter"
-                                           placeholder="Enter session date"
-                                           value=${filterDate}>
-                                </div>
-                            </div>
-                            <div class="help-block row"></div>
-                            <button type="submit" class="btn btn-primary my-sm-2">Show</button>
-                        </form>--%>
+                        <%--//TODO: add date filter--%>
+                            <%--     <form method="post" action="admin-personal-area">
+                                     <div class="form-group field-middle_name row">
+                                         <div class="col-sm-6 col-md-6 col-xs-6 no-padding">
+                                             <label for="date_filter">Date:</label>
+                                             <input required type="date" class="form-control" id="date_filter" name="date_filter"
+                                                    placeholder="Enter session date"
+                                                    value=${filterDate}>
+                                         </div>
+                                     </div>
+                                     <div class="help-block row"></div>
+                                     <button type="submit" class="btn btn-primary my-sm-2">Show</button>
+                                 </form>--%>
 
                         <table id="filmsTable" class="table table-sm table-striped">
                             <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
+                                <th>Release date</th>
                                 <th>Sale</th>
                             </thead>
 
                             <c:forEach var="filmSale" items="${filmSaleDto}">
                                 <tr>
-                                    <td>${filmSale.getId()}</td>
-                                    <td>${filmSale.getName()}</td>
+                                    <td>${filmSale.getFilmId()}</td>
+                                    <td>${filmSale.getFilmName()}</td>
                                     <td>${filmSale.getReleaseDate()}</td>
+                                    <td>${filmSale.getNumberOfTickets()}</td>
                                 </tr>
                             </c:forEach>
                         </table>
