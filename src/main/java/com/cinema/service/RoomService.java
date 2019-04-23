@@ -7,8 +7,8 @@ import com.cinema.model.dao.RoomDao;
 import com.cinema.model.dto.RoomDto;
 import com.cinema.model.entity.Room;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RoomService {
 
@@ -33,10 +33,7 @@ public class RoomService {
 
     public List<RoomDto> receiveAllRoomsDto() throws ServiceException {
         try {
-            List<RoomDto> roomsDto = new ArrayList<>();
-            List<Room> rooms = roomDao.findAll();
-            rooms.forEach(r -> roomsDto.add(roomDtoConverter.convertFromRoomEntity(r)));
-            return roomsDto;
+            return roomDao.findAll().stream().map(roomDtoConverter::convertFromRoomEntity).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("Create room dto failed", e);
         }

@@ -7,8 +7,8 @@ import com.cinema.model.dao.RoomPlaceDao;
 import com.cinema.model.dto.RoomPlaceDto;
 import com.cinema.model.entity.RoomPlace;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RoomPlaceService {
 
@@ -26,10 +26,8 @@ public class RoomPlaceService {
 
     public void createRoomPlaceService(List<RoomPlaceDto> roomPlacesDto) throws ServiceException {
         try {
-            List<RoomPlace> roomPlaces = new ArrayList<>();
-            RoomPlace roomPlace = roomPlaceDao.findByRoomId(receiveRoomIdFromList(roomPlacesDto)).orElse(null);
-            if (roomPlace == null) {
-                roomPlacesDto.forEach(f -> roomPlaces.add(roomPlaceConverter.convert(f)));
+            if (!roomPlaceDao.findByRoomId(receiveRoomIdFromList(roomPlacesDto)).isPresent()) {
+                List<RoomPlace> roomPlaces = roomPlacesDto.stream().map(roomPlaceConverter::convert).collect(Collectors.toList());
                 roomPlaceDao.insertRoomPlaces(roomPlaces);
             } else {
                 throw new ServiceException("The places have already been distributed for this room.");
@@ -40,19 +38,13 @@ public class RoomPlaceService {
     }
 
     private int receiveRoomIdFromList(List<RoomPlaceDto> roomPlacesDto) {
-        int roomId = -1;
-        if (roomPlacesDto.size() > 0) {
-            roomId = roomPlacesDto.get(0).getRoomDto().getId();
-        }
-        return roomId;
+        return roomPlacesDto.stream().map(p -> p.getRoomDto().getId()).findFirst().orElse(-1);
     }
 
     public List<RoomPlaceDto> receiveRoomPlacesForRoom(int roomId) throws ServiceException {
         try {
-            List<RoomPlaceDto> roomPlacesDto = new ArrayList<>();
             List<RoomPlace> roomPlaces = roomPlaceDao.findAllByRoomId(roomId);
-            roomPlaces.forEach(roomPlace -> roomPlacesDto.add(roomPlaceDtoConverter.convertFromRoomPlaceEntity(roomPlace)));
-            return roomPlacesDto;
+            return roomPlaces.stream().map(roomPlaceDtoConverter::convertFromRoomPlaceEntity).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("Create room places dto failed", e);
         }

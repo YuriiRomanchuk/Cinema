@@ -7,8 +7,8 @@ import com.cinema.model.dao.FilmDao;
 import com.cinema.model.dto.FilmDto;
 import com.cinema.model.entity.Film;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FilmService {
 
@@ -33,10 +33,7 @@ public class FilmService {
 
     public List<FilmDto> receiveAllFilmsDto() throws ServiceException {
         try {
-            List<FilmDto> filmsDto = new ArrayList<>();
-            List<Film> films = filmDao.findAll();
-            films.forEach(f -> filmsDto.add(filmDtoConverter.convertFromFilmEntity(f)));
-            return filmsDto;
+            return filmDao.findAll().stream().map(filmDtoConverter::convertFromFilmEntity).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("Create film dto failed", e);
         }

@@ -9,6 +9,7 @@ import com.cinema.model.entity.Ticket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TicketService {
 
@@ -35,10 +36,8 @@ public class TicketService {
 
     public List<TicketDto> receivePurchasedSessionTicketsByUserId(int userId) throws ServiceException {
         try {
-            List<TicketDto> ticketsDto = new ArrayList<>();
             List<Ticket> tickets = ticketDao.findTicketByUserId(userId);
-            tickets.forEach(roomPlace -> ticketsDto.add(ticketDtoConverter.convertFromTicketEntity(roomPlace)));
-            return ticketsDto;
+            return tickets.stream().map(ticket -> ticketDtoConverter.convertFromTicketEntity(ticket)).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("Receive tickets dto failed", e);
         }

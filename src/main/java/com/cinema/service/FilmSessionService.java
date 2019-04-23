@@ -13,6 +13,7 @@ import com.cinema.model.statistics.FilmSale;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FilmSessionService {
 
@@ -107,12 +108,10 @@ public class FilmSessionService {
 
     public List<FilmSaleDto> receiveFilmSalesByDate(Date currentDate) throws ServiceException {
         try {
-            List<FilmSaleDto> filmSalesDto = new ArrayList<>();
             Date beginOfDay = TimeConverter.receiveBeginOfDay(currentDate);
             Date endOfDay = TimeConverter.receiveEndOfDay(currentDate);
             List<FilmSale> filmSales = filmSessionDao.findFilmSalesByDate(beginOfDay, endOfDay);
-            filmSales.forEach(filmSale -> filmSalesDto.add(filmSaleDtoConverter.convert(filmSale)));
-            return filmSalesDto;
+            return filmSales.stream().map(filmSale -> filmSaleDtoConverter.convert(filmSale)).collect(Collectors.toList());
         } catch (Exception e) {
             throw new ServiceException("Film session receive failed", e);
         }
