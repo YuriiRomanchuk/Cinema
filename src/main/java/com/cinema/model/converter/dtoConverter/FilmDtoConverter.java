@@ -26,6 +26,8 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         return filmDto;
     }
 
+
+    //TODO: refactoring to other class
     public FilmDto convertFromFilmEntity(Film film) {
         FilmDto filmDto = new FilmDto();
         filmDto.setId(film.getId());
@@ -39,7 +41,8 @@ public class FilmDtoConverter implements Converter<HttpServletRequest, FilmDto> 
         return filmDto;
     }
 
-    public FilmDto convertFromFilmSessionRequest(String film_id) {
+    //TODO: refactoring to other class
+    public FilmDto convertFromFilmSessionRequestById(String film_id) {
         FilmDto filmDto = new FilmDto();
         if (film_id != null && !film_id.contains("...")) {
             filmDto.setId(Integer.valueOf(film_id));

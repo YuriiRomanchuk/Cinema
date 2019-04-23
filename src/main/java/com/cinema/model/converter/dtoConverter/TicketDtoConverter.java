@@ -49,6 +49,7 @@ public class TicketDtoConverter implements Converter<HttpServletRequest, TicketD
         return ticketDto;
     }
 
+    //TODO: refactoring to another class
     public TicketDto convertFromTicketEntity(Ticket ticket) {
         TicketDto ticketDto = new TicketDto();
         ticketDto.setId(ticket.getId());

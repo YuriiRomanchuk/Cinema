@@ -45,6 +45,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         return roomPlacesDto;
     }
 
+    //TODO: refactoring to another class
     public RoomPlaceDto convertFromRoomPlaceEntity(RoomPlace roomPlace) {
         RoomPlaceDto placeDto = new RoomPlaceDto();
         placeDto.setId(roomPlace.getId());
@@ -55,6 +56,7 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
         return placeDto;
     }
 
+    //TODO: refactoring to another class
     public RoomPlaceDto convertFromTicketFields(String placeId, String placePlace, String placeRow, String sessionRoomId) {
         RoomPlaceDto placeDto = new RoomPlaceDto();
         placeDto.setId(Integer.valueOf(placeId));

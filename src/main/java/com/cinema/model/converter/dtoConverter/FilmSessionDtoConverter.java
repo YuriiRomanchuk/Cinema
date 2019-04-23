@@ -31,7 +31,7 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
 
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(currentDate);
-        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(request.getParameter("film_filter")));
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequestById(request.getParameter("film_filter")));
         LOGGER.debug("Film session dto is converted from request!");
         return filmSessionDto;
     }
@@ -62,16 +62,18 @@ public class FilmSessionDtoConverter implements Converter<HttpServletRequest, Fi
         return convertFilmSessionByIdes(session_id, session_film_id, session_room_id, session_date);
     }
 
+    //TODO: refactoring to another class
     public FilmSessionDto convertFilmSessionByIdes(String session_id, String session_film_id, String session_room_id, String session_date) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setDate(session_date);
         filmSessionDto.setId(Integer.valueOf(session_id));
-        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequest(session_film_id));
+        filmSessionDto.setFilmDto(filmDtoConverter.convertFromFilmSessionRequestById(session_film_id));
         filmSessionDto.setRoomDto(roomDtoConverter.convertByRoomId(session_room_id));
         LOGGER.debug("Film session dto by id");
         return filmSessionDto;
     }
 
+    //TODO: refactoring to another class
     public FilmSessionDto convertFromFilmEntity(FilmSession filmSession) {
         FilmSessionDto filmSessionDto = new FilmSessionDto();
         filmSessionDto.setRoomDto(roomDtoConverter.convertFromRoomEntity(filmSession.getRoom()));

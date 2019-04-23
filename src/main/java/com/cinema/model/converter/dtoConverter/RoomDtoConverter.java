@@ -21,6 +21,7 @@ public class RoomDtoConverter implements Converter<HttpServletRequest, RoomDto> 
         return roomDto;
     }
 
+    //TODO: refactoring to another class
     public RoomDto convertFromRoomEntity(Room room) {
         RoomDto roomDto = new RoomDto();
         roomDto.setId(room.getId());
@@ -30,6 +31,7 @@ public class RoomDtoConverter implements Converter<HttpServletRequest, RoomDto> 
         return roomDto;
     }
 
+    //TODO: refactoring to another class
     public RoomDto convertByRoomId(String room_id) {
         RoomDto roomDto = new RoomDto();
         roomDto.setId(room_id == null ? 0 : Integer.valueOf(room_id));
