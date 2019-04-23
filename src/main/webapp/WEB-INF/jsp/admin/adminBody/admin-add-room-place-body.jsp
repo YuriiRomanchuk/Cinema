@@ -46,17 +46,16 @@
     <div class="form-group">
         <label for="row"><fmt:message key="local.admin.add.room.places.row" bundle="${messages}"/></label>
         <input required type="number" class="form-control" id="row" name="row"
-               placeholder="<fmt:message key="local.admin.add.room.places.row.placeholder" bundle="${messages}"/>" pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
-        <label for="place"><fmt:message key="local.admin.add.room.places.place" bundle="${messages}"/></label>
+               placeholder="<fmt:message key="local.admin.add.room.places.row.placeholder" bundle="${messages}"/>"
+               pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
+        <label for="place"><fmt:message key="local.admin.add.room.places.place.im.row" bundle="${messages}"/></label>
         <input required type="number" class="form-control" id="place" name="place"
-               placeholder="<fmt:message key="local.admin.add.room.places.place.placeholder" bundle="${messages}"/>" pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
-        <label for="placesInRow"><fmt:message key="local.admin.add.room.places.place.im.row" bundle="${messages}"/></label>
-        <input required type="number" class="form-control" id="placesInRow" name="placesInRow"
                placeholder="<fmt:message key="local.admin.add.room.places.place.im.row.placeholder" bundle="${messages}"/>"
-               value=10 pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
+               pattern="<fmt:message key="regexNumber" bundle="${regexpValidator}"/>">
     </div>
-    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.places.button.add" bundle="${messages}"/></button>
- <%--   <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
+    <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.places.button.add"
+                                                               bundle="${messages}"/></button>
+    <%--   <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 
 <script>

@@ -24,24 +24,20 @@ public class RoomPlaceDtoConverter implements Converter<HttpServletRequest, List
     public List<RoomPlaceDto> convert(HttpServletRequest request) {
 
         List<RoomPlaceDto> roomPlacesDto = new ArrayList<>();
-        int countOfPlaces = Integer.valueOf(request.getParameter("place"));
-        int placesInRow = Integer.valueOf(request.getParameter("placesInRow"));
-        int maxCountPlacesInRow = countOfPlaces <= placesInRow ? countOfPlaces : placesInRow;
-        int countOfRow = countOfPlaces <= placesInRow ? 1 : Integer.valueOf(request.getParameter("row"));
+        int placesInRow = Integer.valueOf(request.getParameter("place"));
+        int countOfRow = Integer.valueOf(request.getParameter("row"));
 
         RoomDto roomDto = roomDtoConverter.convertByRoomId(request.getParameter("room"));
 
-        int countAllPlaces = 1;
-        for (int r = 1; r <= countOfRow && countAllPlaces < countOfPlaces; r++) {
-            int countPlace = 0;
-            for (int i = countAllPlaces; i <= countOfPlaces && countPlace < maxCountPlacesInRow; i++) {
+        int countPlace = 1;
+        for (int r = 1; r <= countOfRow; r++) {
+            for (int i = 1; i <= placesInRow; i++) {
                 RoomPlaceDto placeDto = new RoomPlaceDto();
-                placeDto.setPlace(i);
+                placeDto.setPlace(countPlace);
                 placeDto.setRow(r);
                 placeDto.setRoomDto(roomDto);
                 roomPlacesDto.add(placeDto);
                 countPlace++;
-                countAllPlaces++;
             }
         }
 

@@ -130,7 +130,7 @@ public class UserController {
         View view;
         view = new ViewModel(path);
         view.addParameter("Error", error);
-        LOGGER.debug("error");
+        LOGGER.debug(error);
         return view;
     }
 

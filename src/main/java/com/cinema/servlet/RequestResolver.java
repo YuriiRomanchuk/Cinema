@@ -24,6 +24,7 @@ public class RequestResolver {
     public RequestResolver(WebComponentInitializer webComponentInitializer) {
 
         getControllers.put("/index", r -> webComponentInitializer.getWelcomeController().showIndexPage(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
+
         getControllers.put("/registration-form", r -> webComponentInitializer.getUserController().showRegistrationPage());
         getControllers.put("/login", r -> webComponentInitializer.getUserController().showUserLoginPage());
         getControllers.put("/admin-personal-area", r -> webComponentInitializer.getUserController().showAdminPersonalArea(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionDate(r)));
@@ -103,7 +104,7 @@ public class RequestResolver {
     private String receiveRequestURI(HttpServletRequest request) {
         String requestURI = request.getRequestURI().replace(request.getContextPath() + "/main", "");
         String[] splitURI = requestURI.split("/");
-        String lastElement = splitURI[splitURI.length - 1];
+        String lastElement = splitURI.length > 0 ? splitURI[splitURI.length - 1] : "";
         return lastElement.matches("\\d+") ? requestURI.replace(lastElement, "{id}") : "/" + lastElement;
     }
 }
