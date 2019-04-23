@@ -7,7 +7,8 @@
 <%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="messages"/>
+<fmt:setBundle basename="regexpValidator" var="regexpValidator"/>
+<fmt:setBundle basename="messages" var="messages"/>
 
 <!DOCTYPE html>
 
@@ -35,7 +36,7 @@
     </c:if>
 
     <div class="w-100 justify-content-center">
-        <h1>Film session</h1>
+        <h1><fmt:message key="local.admin.session" bundle="${messages}"/></h1>
     </div>
 </div>
 
@@ -44,9 +45,9 @@
 <form method="post" action="admin-session">
     <div class="form-group field-middle_name row">
         <div class="col-sm-6 col-md-6 col-xs-6 no-padding">
-            <label for="film_filter">Film:</label>
+            <label for="film_filter"><fmt:message key="local.admin.session.film" bundle="${messages}"/></label>
             <select name="film_filter" id="film_filter" class="form-control" title="Film" required="required">
-                <option selected>Choose...</option>
+                <option selected><fmt:message key="local.admin.session.film.choose" bundle="${messages}"/></option>
                 <c:forEach var="film" items="${filmsDto}">
                     <c:choose>
                         <c:when test="${ (currentFilm_id !=null && film.getId() == currentFilm_id)}">
@@ -61,7 +62,7 @@
             </select>
         </div>
         <div class="col-sm-6 col-md-6 col-xs-6 no-padding">
-            <label for="date_filter">Session date:</label>
+            <label for="date_filter"><fmt:message key="local.admin.session.date" bundle="${messages}"/></label>
             <input required type="date" class="form-control" id="date_filter" name="date_filter"
                    placeholder="Enter session date"
                    value=${filterDate}>
@@ -69,17 +70,17 @@
     </div>
     <div class="help-block row"></div>
 
-    <button type="submit" class="btn btn-primary my-sm-2">Find</button>
+    <button type="submit" class="btn btn-primary my-sm-2"><fmt:message key="local.admin.session.button.find" bundle="${messages}"/></button>
     <%--</form>--%>
 
     <table class="table table-sm table-striped">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Date</th>
-            <th>Room</th>
-            <th>Film</th>
-            <th>Action</th>
+            <th><fmt:message key="local.admin.session.table.id" bundle="${messages}"/></th>
+            <th><fmt:message key="local.admin.session.table.date" bundle="${messages}"/></th>
+            <th><fmt:message key="local.admin.session.table.room" bundle="${messages}"/></th>
+            <th><fmt:message key="local.admin.session.table.film" bundle="${messages}"/></th>
+            <th><fmt:message key="local.admin.session.table.action" bundle="${messages}"/></th>
         </thead>
         <c:forEach var="filmSessionDto" items="${filmsSessionDto}" varStatus="loop">
             <tr>
@@ -112,7 +113,7 @@
                             <select
                                     class="custom-select mr-sm-2" id="session_room_${loop.index}"
                                     name="session_room_${loop.index}">
-                                <option selected>Choose...</option>
+                                <option selected><fmt:message key="local.admin.session.film.choose" bundle="${messages}"/></option>
                                 <c:forEach var="room" items="${roomsDto}">
                                     <option selected="selected" value=${room.getId()}>${room.getName()}
                                     </option>
@@ -139,7 +140,7 @@
                             <select
                                     class="custom-select mr-sm-2" id="session_film_${loop.index}"
                                     name="session_film_${loop.index}">
-                                <option selected>Choose...</option>
+                                <option selected><fmt:message key="local.admin.session.film.choose" bundle="${messages}"/></option>
                                 <c:forEach var="film" items="${filmsDto}">
                                     <option value=${film.getId()}>${film.getName()}
                                     </option>
@@ -157,14 +158,14 @@
                             <button onclick="form.action='show-session';" type="submit" name="show-session"
                                     value="${loop.index}"
                                     class="btn btn-primary ml-2 mr-1">
-                                show
+                                <fmt:message key="local.admin.session.button.show" bundle="${messages}"/>
                             </button>
 
                             <c:if test="${!isLastDay}">
                                 <button onclick="form.action='delete-session';" type="submit" name="delete-session"
                                         value="${loop.index}"
                                         class="btn btn-danger">
-                                    delete
+                                    <fmt:message key="local.admin.session.button.delete" bundle="${messages}"/>
                                 </button>
                             </c:if>
                         </c:if>
@@ -173,7 +174,7 @@
                             <button onclick="form.action='add-session';" type="submit" name="add-session"
                                     value="${loop.index}"
                                     class="btn btn-success ml-2">
-                                add
+                                <fmt:message key="local.admin.session.button.add" bundle="${messages}"/>
                             </button>
                         </c:if>
 

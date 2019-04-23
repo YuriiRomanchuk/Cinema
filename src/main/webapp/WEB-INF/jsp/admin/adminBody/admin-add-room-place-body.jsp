@@ -55,7 +55,6 @@
     </div>
     <button type="submit" class="btn btn-primary"><fmt:message key="local.admin.add.room.places.button.add"
                                                                bundle="${messages}"/></button>
-    <%--   <a href="${pageContext.request.contextPath}/main/index" class="btn btn-primary">Main</a>--%>
 </form>
 
 <script>
