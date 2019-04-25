@@ -32,3 +32,11 @@
 [DEBUG] 2019-04-25 08:58:12.844 [main] FilmDtoConverter - Film dto is converted from request!
 [DEBUG] 2019-04-25 08:58:12.855 [main] FilmDtoConverter - Film dto is converted from id
 [DEBUG] 2019-04-25 08:58:12.861 [main] FilmDtoConverter - Film dto is converted from entity!
+[DEBUG] 2019-04-25 09:07:10.522 [main] FilmDtoConverter - Film dto is converted from id
+[DEBUG] 2019-04-25 09:08:42.536 [main] FilmDtoConverter - Film dto is converted from id
+[DEBUG] 2019-04-25 09:10:58.296 [main] FilmDtoConverter - Film dto is converted from request!
+[DEBUG] 2019-04-25 09:10:58.306 [main] FilmDtoConverter - Film dto is converted from id
+[DEBUG] 2019-04-25 09:10:58.314 [main] FilmDtoConverter - Film dto is converted from entity!
+[DEBUG] 2019-04-25 09:12:00.587 [main] FilmDtoConverter - Film dto is converted from request!
+[DEBUG] 2019-04-25 09:12:00.597 [main] FilmDtoConverter - Film dto is converted from id
+[DEBUG] 2019-04-25 09:12:00.604 [main] FilmDtoConverter - Film dto is converted from entity!

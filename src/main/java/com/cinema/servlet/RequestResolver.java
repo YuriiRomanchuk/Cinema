@@ -39,7 +39,7 @@ public class RequestResolver {
         getControllers.put("/user-session", r -> webComponentInitializer.getFilmSessionController().showFilmSessionPageFiltersUser(webComponentInitializer.getFilmSessionDtoConverter().convert(r)));
         getControllers.put("/user-session-room/{id}", r -> webComponentInitializer.getTicketController().showUserSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
         getControllers.put("/error", r -> webComponentInitializer.getErrorController().getErrorPage((Exception) r.getAttribute("error")));
-        getControllers.put("/session-room/{id}", r -> webComponentInitializer.getTicketController().showUnknownSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
+        getControllers.put("/unknown-session-room/{id}", r -> webComponentInitializer.getTicketController().showUnknownSessionRoom(webComponentInitializer.getFilmSessionDtoConverter().receiveFilmSessionId(r)));
 
         postControllers.put("/login", r -> webComponentInitializer.getUserController().loginUser(webComponentInitializer.getUserLoginDtoConverter().convert(r)));
         postControllers.put("/registration-form", r -> webComponentInitializer.getUserController().createUser(webComponentInitializer.getUserDtoConverter().convert(r)));
