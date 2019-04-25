@@ -70,7 +70,8 @@
     </div>
     <div class="help-block row"></div>
 
-    <button type="submit" class="btn btn-primary my-sm-2"><fmt:message key="local.admin.session.button.find" bundle="${messages}"/></button>
+    <button type="submit" class="btn btn-primary my-sm-2"><fmt:message key="local.admin.session.button.find"
+                                                                       bundle="${messages}"/></button>
     <%--</form>--%>
 
     <table class="table table-sm table-striped">
@@ -113,9 +114,18 @@
                             <select
                                     class="custom-select mr-sm-2" id="session_room_${loop.index}"
                                     name="session_room_${loop.index}">
-                                <option selected><fmt:message key="local.admin.session.film.choose" bundle="${messages}"/></option>
+                                <option selected><fmt:message key="local.admin.session.film.choose"
+                                                              bundle="${messages}"/></option>
                                 <c:forEach var="room" items="${roomsDto}">
-                                    <option selected="selected" value=${room.getId()}>${room.getName()}
+                                    <option selected="selected" value=${room.getId()}>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.lang = 'uk'}">
+                                                ${room.getName()}
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${room.getNameEnglish()}
+                                            </c:otherwise>
+                                        </c:choose>
                                     </option>
                                 </c:forEach>
                             </select>
@@ -131,7 +141,16 @@
                                     name="session_film_${loop.index}">
                                 <c:if test="${filmSessionDto.getFilmDto() !=null}">
                                     <option selected="selected"
-                                            value=${filmSessionDto.getFilmDto().getId()}>${filmSessionDto.getFilmDto().getName()}
+                                            value=${filmSessionDto.getFilmDto().getId()}>
+
+                                        <c:choose>
+                                            <c:when test="${sessionScope.lang = 'uk'}">
+                                                ${filmSessionDto.getFilmDto().getName()}
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${filmSessionDto.getFilmDto().getNameEnglish()}
+                                            </c:otherwise>
+                                        </c:choose>
                                     </option>
                                 </c:if>
                             </select>
@@ -140,9 +159,19 @@
                             <select
                                     class="custom-select mr-sm-2" id="session_film_${loop.index}"
                                     name="session_film_${loop.index}">
-                                <option selected><fmt:message key="local.admin.session.film.choose" bundle="${messages}"/></option>
+                                <option selected><fmt:message key="local.admin.session.film.choose"
+                                                              bundle="${messages}"/></option>
                                 <c:forEach var="film" items="${filmsDto}">
-                                    <option value=${film.getId()}>${film.getName()}
+                                    <option value=${film.getId()}>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.lang = 'uk'}">
+                                                ${film.getName()}
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${film.getNameEnglish()}
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </option>
                                 </c:forEach>
                             </select>

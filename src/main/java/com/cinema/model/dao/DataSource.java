@@ -50,6 +50,7 @@ public class DataSource {
     public void transactionUpdate(QueryData... queriesData) {
 
         try (Connection connection = receiveConnection()) {
+            connection.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
             connection.setAutoCommit(false);
             for (QueryData queryData : queriesData) {
                 try (PreparedStatement preparedStatement = connection.prepareStatement(queryData.getQuery(), Statement.RETURN_GENERATED_KEYS)) {

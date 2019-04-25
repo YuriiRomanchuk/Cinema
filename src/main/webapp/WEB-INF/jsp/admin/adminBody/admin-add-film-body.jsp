@@ -38,11 +38,11 @@
 <form id="form" method="post" action="admin-add-film" class="needs-validation" novalidate>
     <div class="form-group">
         <label for="name"><fmt:message key="local.admin.add.film.name" bundle="${messages}"/></label>
-        <input required type="text" pattern="<fmt:message key="regexString" bundle="${regexpValidator}"/>" class="form-control" id="name"
+        <input required type="text" pattern="<fmt:message key="regexStringNumber" bundle="${regexpValidator}"/>" class="form-control" id="name"
                name="name"
                placeholder="<fmt:message key="local.admin.add.film.name.placeholder" bundle="${messages}"/>">
         <label for="name_english"><fmt:message key="local.admin.add.film.name.english" bundle="${messages}"/></label>
-        <input required type="text" pattern="<fmt:message key="regexStringEnglish" bundle="${regexpValidator}"/>" class="form-control"
+        <input required type="text" pattern="<fmt:message key="regexStringNumberEnglish" bundle="${regexpValidator}"/>" class="form-control"
                id="name_english" name="name_english"
                placeholder="<fmt:message key="local.admin.add.film.name.english.placeholder" bundle="${messages}"/>">
         <label for="release_date"><fmt:message key="local.admin.add.film.year" bundle="${messages}"/></label>

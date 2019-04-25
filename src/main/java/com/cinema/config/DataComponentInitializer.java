@@ -51,7 +51,7 @@ public class DataComponentInitializer {
 
     public static DataComponentInitializer getInstance() {
         if (initializer == null) {
-            synchronized (WebComponentInitializer.class) {
+            synchronized (DataComponentInitializer.class) {
                 if (initializer == null) {
                     initializer = new DataComponentInitializer();
                 }

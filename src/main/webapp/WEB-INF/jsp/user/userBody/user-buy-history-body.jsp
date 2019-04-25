@@ -25,7 +25,7 @@
 <c:set var='error' value="${Error}"/>
 <div class="col w-100">
 
-    <c:if test="${error !=null}">
+   <%-- <c:if test="${error !=null}">
         <div id="my-alert" class="alert alert-danger alert-dismissible fade show w-100" role="alert">
                 ${error}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -33,7 +33,7 @@
             </button>
         </div>
         <div class="w-100 d-none d-md-block"></div>
-    </c:if>
+    </c:if>--%>
 
     <div class="w-100 justify-content-center">
         <h1>History</h1>
